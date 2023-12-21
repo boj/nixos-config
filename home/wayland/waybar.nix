@@ -1,14 +1,12 @@
-{ pkgs, config, theme, ... }:
-
-{
+{theme, ...}: {
   programs.waybar = {
     enable = true;
-    settings  = {
+    settings = {
       mainBar = {
         layer = "top";
         position = "left";
-        modules-left = [ "hyprland/workspaces" ];
-        modules-right = [ "clock"];
+        modules-left = ["hyprland/workspaces"];
+        modules-right = ["clock"];
         "hyprland/workspaces" = {
           on-click = "activate";
           format = "{icon}";
@@ -39,23 +37,23 @@
           font-size: 12px;
           margin: 0;
       }
-            
+
       #window {
           padding-left: 12px;
           background-color: ${theme.colors.nord2};
           padding-right: 12px;
       }
-      
+
       #waybar.stacked #window {
           background-color: ${theme.colors.nord6};
           color: ${theme.colors.nord6};
       }
-      
+
       #waybar.empty #window {
           color: ${theme.colors.nord6};
           background-color: ${theme.colors.nord6};
       }
-      
+
       #workspaces {
           color: ${theme.colors.nord6};
           margin-left: 15px;
@@ -64,11 +62,11 @@
           border-top-left-radius: 0;
           border-top-right-radius: 0;
       }
-      
+
       #waybar {
           background-color: transparent;
       }
-      
+
       #workspaces button {
         color: ${theme.colors.nord6};
         padding-bottom: 2px;
@@ -84,21 +82,21 @@
         margin-left: 0.25rem;
         margin-right: 0.25rem;
       }
-      
+
       #workspaces button.active {
           color: ${theme.colors.nord4};
           border-width: 1.5px;
           border-radius: 0;
           border-color: ${theme.colors.nord9};
       }
-      
+
       #custom-logout {
           font-family: Iosevka Slab;
           font-weight: normal;
           margin-bottom: 10px;
           margin-left: 15px;
       }
-      
+
       #clock {
           margin-bottom: 20px;
           margin-left: 15px;

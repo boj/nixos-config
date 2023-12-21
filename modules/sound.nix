@@ -1,6 +1,4 @@
-{ pkgs, lib, ... }:
-
-{
+{pkgs, ...}: {
   hardware.enableAllFirmware = true;
   hardware.pulseaudio.enable = false;
   sound.enable = false;

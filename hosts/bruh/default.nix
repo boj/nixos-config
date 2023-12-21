@@ -1,22 +1,20 @@
-{ config, lib, pkgs, inputs, ... }:
-
 {
-  imports =
-    [
-      ../../modules/kernel.nix
-      ../../modules/openrgb.nix
-      ../../modules/sound.nix
-      ../../modules/steam.nix
-      ../../modules/system.nix
-      ../../modules/user.nix
-      ../../modules/xdg.nix
+  imports = [
+    ../../modules/docker.nix
+    ../../modules/kernel.nix
+    ../../modules/openrgb.nix
+    ../../modules/sound.nix
+    ../../modules/steam.nix
+    ../../modules/system.nix
+    ../../modules/user.nix
+    ../../modules/xdg.nix
 
-      ./hardware-configuration.nix
-    ];
+    ./hardware-configuration.nix
+  ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelModules = [ "i2c-dev" "i2c-piix4" ];
+  boot.kernelModules = ["i2c-dev" "i2c-piix4"];
 
   networking.hostName = "bruh";
 
@@ -27,4 +25,3 @@
 
   system.stateVersion = "23.11";
 }
-
