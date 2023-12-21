@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, config, theme, ... }:
 
 {
   programs.waybar = {
@@ -39,29 +39,28 @@
           font-size: 12px;
           margin: 0;
       }
-      
-      
+            
       #window {
           padding-left: 12px;
-          background-color: #E6E5E4;
+          background-color: ${theme.colors.nord2};
           padding-right: 12px;
       }
       
       #waybar.stacked #window {
-          background-color: #FFF;
-          color: #FFF
+          background-color: ${theme.colors.nord6};
+          color: ${theme.colors.nord6};
       }
       
       #waybar.empty #window {
-          color: #FFF;
-          background-color: #fff;
+          color: ${theme.colors.nord6};
+          background-color: ${theme.colors.nord6};
       }
       
       #workspaces {
-          color: #Fff;
+          color: ${theme.colors.nord6};
           margin-left: 15px;
           margin-top: 15px;
-          background-color: #323232;
+          background-color: ${theme.colors.nord3};
           border-top-left-radius: 0;
           border-top-right-radius: 0;
       }
@@ -71,7 +70,7 @@
       }
       
       #workspaces button {
-        color: #Fff;
+        color: ${theme.colors.nord6};
         padding-bottom: 2px;
         padding-top: 2px;
         padding-left: 0px;
@@ -87,10 +86,10 @@
       }
       
       #workspaces button.active {
-          color: #FFF;
+          color: ${theme.colors.nord4};
           border-width: 1.5px;
           border-radius: 0;
-          border-color: #FFF;
+          border-color: ${theme.colors.nord10};
       }
       
       #custom-logout {
@@ -105,7 +104,7 @@
           margin-left: 15px;
           font-family: Iosevka Slab;
           font-weight: normal;
-          color: #242424;
+          color: ${theme.colors.nord5};
       }
     '';
   };

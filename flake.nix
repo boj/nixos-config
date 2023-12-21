@@ -20,6 +20,7 @@
     ...
   }: let
     system = "x86_64-linux";
+    theme = import ./home/themes/nord;
   in {
     nixosConfigurations = {
       "bruh" = nixpkgs.lib.nixosSystem {
@@ -32,7 +33,10 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.bojo = import ./home;
-            home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager.extraSpecialArgs = {
+              inherit inputs;
+              inherit theme;
+            };
           }
           hyprland.nixosModules.default
           { programs.hyprland.enable = true; }

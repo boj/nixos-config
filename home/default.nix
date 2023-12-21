@@ -5,6 +5,7 @@
     ./fish.nix
     ./git.nix
     ./helix.nix
+    ./hyprland.nix
     ./waybar.nix
     ./wezterm.nix
     ./wofi.nix
@@ -47,15 +48,6 @@
     usbutils
     xdg-utils
 
-    # wayland
-    dunst
-    grim
-    slurp
-    swayidle
-    waybar
-    wl-clipboard
-    wofi
-    
     # terminals
     alacritty
     wezterm

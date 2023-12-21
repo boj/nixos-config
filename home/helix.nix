@@ -5,7 +5,7 @@
     enable = true;
     defaultEditor = true;
     settings = {
-      theme = "ayu_light";
+      theme = "nord";
     };
   };
 }
