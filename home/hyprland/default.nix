@@ -3,6 +3,7 @@
 {
   imports = [
     ./gtk.nix
+    ./qt.nix
     ./binds.nix
     ./settings.nix  
   ];

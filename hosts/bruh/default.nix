@@ -4,10 +4,12 @@
   imports =
     [
       ../../modules/kernel.nix
-      ../../modules/user.nix
-      ../../modules/system.nix
       ../../modules/openrgb.nix
+      ../../modules/sound.nix
       ../../modules/steam.nix
+      ../../modules/system.nix
+      ../../modules/user.nix
+      ../../modules/xdg.nix
 
       ./hardware-configuration.nix
     ];

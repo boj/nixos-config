@@ -17,7 +17,6 @@
     nixpkgs,
     home-manager,
     hyprland,
-    hyprpaper,
     ...
   }: let
     system = "x86_64-linux";

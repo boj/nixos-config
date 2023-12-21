@@ -59,8 +59,9 @@
       border_size = 2;
       "col.active_border" = "rgba(bf616aee) rgba(ebcb8bee) 45deg";
       "col.inactive_border" = "rgba(4c566aaa)";
-      cursor_inactive_timeout = 2;
       layout = "dwindle";
+      cursor_inactive_timeout = 2;
+      no_cursor_warps = true;
     };
     
     group = {
@@ -87,7 +88,7 @@
 			shadow_ignore_window = true;
 			shadow_offset = "0 2";
       shadow_range = 10;
-      shadow_render_power = 3;
+      shadow_render_power = 2;
       "col.shadow" = "rgba(81a1c1dd)";
     };
     
