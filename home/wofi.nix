@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, config, theme, ... }:
 
 {
   programs.wofi = {
@@ -6,27 +6,27 @@
     style = ''
       window {
         margin: 0px;
-        border: 1px solid #000000;
-        background-color: #FFFFFF;
+        border: 1px solid ${theme.colors.nord7};
+        background-color: ${theme.colors.nord3};
       }
       
       #input {
         margin: 5px;
         border: none;
-        color: #C8C093;
-        background-color: #FFFFFF;
+        color: ${theme.colors.nord4};
+        background-color: ${theme.colors.nord0};
       }
       
       #inner-box {
         margin: 5px;
         border: none;
-        background-color: #FFFFFF;
+        background-color: ${theme.colors.nord1};
       }
       
       #outer-box {
         margin: 5px;
         border: none;
-        background-color: #EEEEEE;
+        background-color: ${theme.colors.nord2};
       }
       
       #scroll {
@@ -37,12 +37,12 @@
       #text {
         margin: 5px;
         border: none;
-        color: #000000;
+        color: ${theme.colors.nord6};
       } 
       
       #entry:selected {
-        color: #000000;
-        background-color: #DDDDDD;
+        color: ${theme.colors.nord10};
+        background-color: ${theme.colors.nord9};
       }
     '';
   };

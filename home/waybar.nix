@@ -42,7 +42,7 @@
             
       #window {
           padding-left: 12px;
-          background-color: ${theme.colors.nord2};
+          background-color: ${theme.colors.nord0};
           padding-right: 12px;
       }
       
@@ -60,7 +60,7 @@
           color: ${theme.colors.nord6};
           margin-left: 15px;
           margin-top: 15px;
-          background-color: ${theme.colors.nord3};
+          background-color: ${theme.colors.nord0};
           border-top-left-radius: 0;
           border-top-right-radius: 0;
       }
