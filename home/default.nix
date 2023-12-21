@@ -5,7 +5,7 @@
     ./fish.nix
     ./git.nix
     ./helix.nix
-    ./hyprland.nix
+    ./hyprland
     ./waybar.nix
     ./wezterm.nix
     ./wofi.nix
@@ -63,9 +63,12 @@
     signal-desktop
 
     # fonts
+    font-awesome
     iosevka
     noto-fonts
     noto-fonts-emoji
+    powerline-fonts
+    powerline-symbols
 
     # sound
     easyeffects

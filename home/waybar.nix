@@ -13,16 +13,16 @@
           on-click = "activate";
           format = "{icon}";
           format-icons = {
-            "1" = "I";
-            "2" = "II";
-            "3" = "III";
-            "4" = "IV";
-            "5" = "V";
-            "6" = "VI";
-            "7" = "VII";
-            "8" = "VIII";
-            "9" = "IX";
-            "10" = "X";
+            "1" = "1";
+            "2" = "2";
+            "3" = "3";
+            "4" = "4";
+            "5" = "5";
+            "6" = "6";
+            "7" = "7";
+            "8" = "8";
+            "9" = "9";
+            "10" = "0";
           };
         };
         "clock" = {
@@ -42,7 +42,7 @@
             
       #window {
           padding-left: 12px;
-          background-color: ${theme.colors.nord0};
+          background-color: ${theme.colors.nord2};
           padding-right: 12px;
       }
       
@@ -60,7 +60,7 @@
           color: ${theme.colors.nord6};
           margin-left: 15px;
           margin-top: 15px;
-          background-color: ${theme.colors.nord0};
+          background-color: ${theme.colors.nord2};
           border-top-left-radius: 0;
           border-top-right-radius: 0;
       }

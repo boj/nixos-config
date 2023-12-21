@@ -17,6 +17,7 @@
     nixpkgs,
     home-manager,
     hyprland,
+    hyprpaper,
     ...
   }: let
     system = "x86_64-linux";
@@ -39,7 +40,9 @@
             };
           }
           hyprland.nixosModules.default
-          { programs.hyprland.enable = true; }
+          {
+            programs.hyprland.enable = true;
+          }
         ];
       };
     };
