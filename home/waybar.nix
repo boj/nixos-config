@@ -89,7 +89,7 @@
           color: ${theme.colors.nord4};
           border-width: 1.5px;
           border-radius: 0;
-          border-color: ${theme.colors.nord10};
+          border-color: ${theme.colors.nord9};
       }
       
       #custom-logout {

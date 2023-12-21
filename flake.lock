@@ -93,11 +93,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1702814678,
-        "narHash": "sha256-zDtO0jV2QLoddUJinLlTQrQqCUW3dPiIWOSYgg98T7E=",
+        "lastModified": 1703113038,
+        "narHash": "sha256-oxkyzjpD+mNT7arzU/zHrkNHLuY9tKwmnD2MNaZiSDw=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "1488651d02c1a7a15e284210f0d380a62d8d8cef",
+        "rev": "0c2353d5d930c3d93724df6858aef064a31b3c00",
         "type": "github"
       },
       "original": {
@@ -116,11 +116,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1702942390,
-        "narHash": "sha256-RrYg08s00PAoIIrXMbmyqHbNpj7MER0vUmdI8oaOSQI=",
+        "lastModified": 1703112892,
+        "narHash": "sha256-jCE0cUG/knifhUnkdEffuBRQ/KfPkuDVT4EYvjB2D/0=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "ef445093f9fbd9a41a91914ef45e6499b3afa54d",
+        "rev": "79f3888b4bd9796850189ed3e151a6c831e6faae",
         "type": "github"
       },
       "original": {
@@ -188,11 +188,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1702780907,
-        "narHash": "sha256-blbrBBXjjZt6OKTcYX1jpe9SRof2P9ZYWPzq22tzXAA=",
+        "lastModified": 1702921762,
+        "narHash": "sha256-O/rP7gulApQAB47u6szEd8Pn8Biw0d84j5iuP2tcxzY=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "1e2e384c5b7c50dbf8e9c441a9e58d85f408b01f",
+        "rev": "d02ffbbe834b5599fc5f134e644e49397eb07188",
         "type": "github"
       },
       "original": {
@@ -268,11 +268,11 @@
     },
     "unstable": {
       "locked": {
-        "lastModified": 1702830618,
-        "narHash": "sha256-lvhwIvRwhOLgzbRuYkqHy4M5cQHYs4ktL6/hyuBS6II=",
+        "lastModified": 1703013332,
+        "narHash": "sha256-+tFNwMvlXLbJZXiMHqYq77z/RfmpfpiI3yjL6o/Zo9M=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "91a00709aebb3602f172a0bf47ba1ef013e34835",
+        "rev": "54aac082a4d9bb5bbc5c4e899603abfb76a3f6d6",
         "type": "github"
       },
       "original": {

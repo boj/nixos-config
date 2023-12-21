@@ -10,6 +10,31 @@
     wl-clipboard
     wofi
   ];
+
+  home.pointerCursor = {
+    gtk.enable = true;  
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Classic";
+    size = 16;
+  };
+
+  gtk = {
+    enable = true;
+    theme = {
+      package = pkgs.flat-remix-gtk;
+      name = "Flat-Remix-GKT-Grey-Darkest";
+    };
+
+    iconTheme = {
+      package = pkgs.gnome.adwaita-icon-theme;
+      name = "Adwaita";
+    };
+
+    font = {
+      name = "Sans";
+      size = 11;
+    };
+  };
 	
   wayland.windowManager.hyprland = {
 		enable = true;
@@ -37,8 +62,6 @@
       exec-once=[workspace 6 silent] wezterm start btop
       exec-once=[workspace 9 silent] easyeffects
       exec-once=[workspace 10 silent] qbittorrent
-      
-      env = XCURSOR_SIZE,24
       
       input {
           kb_layout = us
@@ -72,7 +95,7 @@
           gaps_in = 5
           gaps_out = 20
           border_size = 2
-          col.active_border = rgba(d8dee9ee) rgba(eceff4ee) 45deg
+          col.active_border = rgba(bf616aee) rgba(ebcb8bee) 45deg
           col.inactive_border = rgba(4c566aaa)
       
           cursor_inactive_timeout = 2
