@@ -4,6 +4,10 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
     unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     eww = {
       url = "github:elkowar/eww";
@@ -25,6 +29,7 @@
   outputs = inputs @ {
     self,
     nixpkgs,
+    nixos-wsl,
     home-manager,
     hyprland,
     ...
@@ -58,7 +63,9 @@
         inherit system;
         specialArgs = {inherit inputs;};
         modules = [
+          #./configuration.nix
           ./hosts/wsl
+          nixos-wsl.nixosModules.wsl
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;

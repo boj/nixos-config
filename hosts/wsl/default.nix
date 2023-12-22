@@ -1,6 +1,5 @@
 {
   imports = [
-    <nixos-wsl/modules>
     ../../modules/docker.nix
     ../../modules/system.nix
     ../../modules/user.nix
