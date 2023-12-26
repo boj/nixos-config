@@ -7,6 +7,7 @@
     ../../modules/steam.nix
     ../../modules/system.nix
     ../../modules/user.nix
+    ../../modules/wine.nix
     ../../modules/xdg.nix
 
     ./hardware-configuration.nix
