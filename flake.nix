@@ -9,11 +9,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    eww = {
-      url = "github:elkowar/eww";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.rust-overlay.follows = "rust-overlay";
-    };
     helix.url = "github:helix-editor/helix";
     home-manager = {
       url = "github:nix-community/home-manager/release-23.11";
@@ -75,6 +70,10 @@
               inherit inputs;
               inherit theme;
             };
+          }
+          hyprland.nixosModules.default
+          {
+            programs.hyprland.enable = true;
           }
         ];
       };
