@@ -11,6 +11,7 @@
     zip
 
     # utils
+    duf
     fd
     fzf
     ripgrep
