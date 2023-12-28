@@ -58,7 +58,6 @@
         inherit system;
         specialArgs = {inherit inputs;};
         modules = [
-          #./configuration.nix
           ./hosts/wsl
           nixos-wsl.nixosModules.wsl
           home-manager.nixosModules.home-manager
@@ -70,10 +69,6 @@
               inherit inputs;
               inherit theme;
             };
-          }
-          hyprland.nixosModules.default
-          {
-            programs.hyprland.enable = true;
           }
         ];
       };
