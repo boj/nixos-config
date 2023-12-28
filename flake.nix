@@ -42,7 +42,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.bojo = import ./profiles/bojo;
+            home-manager.users.bojo = import ./home/profiles/bojo;
             home-manager.extraSpecialArgs = {
               inherit inputs;
               inherit theme;
@@ -64,7 +64,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.bojo = import ./profiles/wsl;
+            home-manager.users.bojo = import ./home/profiles/wsl;
             home-manager.extraSpecialArgs = {
               inherit inputs;
               inherit theme;
