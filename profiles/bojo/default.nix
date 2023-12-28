@@ -5,5 +5,6 @@
     ../../home/programs/work.nix
     ../../home/terminals/wezterm.nix
     ../../home/wayland
+    ../../home/wayland/hyprland
   ];
 }

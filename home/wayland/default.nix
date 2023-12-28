@@ -1,6 +1,5 @@
 {pkgs, ...}: {
   imports = [
-    ./hyprland
     ./waybar.nix
     ./wofi.nix
     ./gtk.nix
