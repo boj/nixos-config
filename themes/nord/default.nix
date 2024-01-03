@@ -2,24 +2,24 @@
   # https://www.nordtheme.com/
   colors = {
     # Polar Night
-    nord0 = "#2E3440";
-    nord1 = "#3B4252";
-    nord2 = "#434C5E";
-    nord3 = "#4C566A";
+    color0 = "#2E3440";
+    color1 = "#3B4252";
+    color2 = "#434C5E";
+    color3 = "#4C566A";
     # Snow Storm
-    nord4 = "#D8DEE9";
-    nord5 = "#E5E9F0";
-    nord6 = "#ECEFF4";
+    color4 = "#D8DEE9";
+    color5 = "#E5E9F0";
+    color6 = "#ECEFF4";
     # Frost
-    nord7 = "#8FBCBB";
-    nord8 = "#88C0D0";
-    nord9 = "#81A1C1";
-    nord10 = "#5E81AC";
+    color7 = "#8FBCBB";
+    color8 = "#88C0D0";
+    color9 = "#81A1C1";
+    color10 = "#5E81AC";
     # Aurora
-    nord11 = "#BF616A";
-    nord12 = "#D08770";
-    nord13 = "#EBCB8B";
-    nord14 = "#A3BE8C";
-    nord15 = "#B48EAD";
+    color11 = "#BF616A";
+    color12 = "#D08770";
+    color13 = "#EBCB8B";
+    color14 = "#A3BE8C";
+    color15 = "#B48EAD";
   };
 }

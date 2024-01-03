@@ -40,25 +40,25 @@
 
       #window {
           padding-left: 12px;
-          background-color: ${theme.colors.nord2};
+          background-color: ${theme.colors.color2};
           padding-right: 12px;
       }
 
       #waybar.stacked #window {
-          background-color: ${theme.colors.nord6};
-          color: ${theme.colors.nord6};
+          background-color: ${theme.colors.color6};
+          color: ${theme.colors.color6};
       }
 
       #waybar.empty #window {
-          color: ${theme.colors.nord6};
-          background-color: ${theme.colors.nord6};
+          color: ${theme.colors.color6};
+          background-color: ${theme.colors.color6};
       }
 
       #workspaces {
-          color: ${theme.colors.nord6};
+          color: ${theme.colors.color6};
           margin-left: 15px;
           margin-top: 15px;
-          background-color: ${theme.colors.nord2};
+          background-color: ${theme.colors.color2};
           border-top-left-radius: 0;
           border-top-right-radius: 0;
       }
@@ -68,7 +68,7 @@
       }
 
       #workspaces button {
-        color: ${theme.colors.nord6};
+        color: ${theme.colors.color6};
         padding-bottom: 2px;
         padding-top: 2px;
         padding-left: 0px;
@@ -84,17 +84,10 @@
       }
 
       #workspaces button.active {
-          color: ${theme.colors.nord4};
+          color: ${theme.colors.color4};
           border-width: 1.5px;
           border-radius: 0;
-          border-color: ${theme.colors.nord9};
-      }
-
-      #custom-logout {
-          font-family: Iosevka Slab;
-          font-weight: normal;
-          margin-bottom: 10px;
-          margin-left: 15px;
+          border-color: ${theme.colors.color9};
       }
 
       #clock {
@@ -102,7 +95,7 @@
           margin-left: 15px;
           font-family: Iosevka Slab;
           font-weight: normal;
-          color: ${theme.colors.nord5};
+          color: ${theme.colors.color5};
       }
     '';
   };

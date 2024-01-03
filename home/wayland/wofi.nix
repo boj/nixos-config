@@ -4,27 +4,27 @@
     style = ''
       window {
         margin: 0px;
-        border: 1px solid ${theme.colors.nord7};
-        background-color: ${theme.colors.nord3};
+        border: 1px solid ${theme.colors.color7};
+        background-color: ${theme.colors.color3};
       }
 
       #input {
         margin: 5px;
         border: none;
-        color: ${theme.colors.nord4};
-        background-color: ${theme.colors.nord0};
+        color: ${theme.colors.color4};
+        background-color: ${theme.colors.color0};
       }
 
       #inner-box {
         margin: 5px;
         border: none;
-        background-color: ${theme.colors.nord1};
+        background-color: ${theme.colors.color1};
       }
 
       #outer-box {
         margin: 5px;
         border: none;
-        background-color: ${theme.colors.nord2};
+        background-color: ${theme.colors.color2};
       }
 
       #scroll {
@@ -35,12 +35,12 @@
       #text {
         margin: 5px;
         border: none;
-        color: ${theme.colors.nord6};
+        color: ${theme.colors.color6};
       }
 
       #entry:selected {
-        color: ${theme.colors.nord10};
-        background-color: ${theme.colors.nord9};
+        color: ${theme.colors.color10};
+        background-color: ${theme.colors.color9};
       }
     '';
   };
