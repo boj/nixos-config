@@ -1,5 +1,6 @@
 {pkgs, ...}: {
   imports = [
+    ./dunst.nix
     ./waybar.nix
     ./wofi.nix
     ./gtk.nix
@@ -8,7 +9,6 @@
 
   home.packages = with pkgs; [
     # wayland
-    dunst
     grim
     slurp
     swayidle

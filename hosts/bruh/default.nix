@@ -2,7 +2,7 @@
   imports = [
     ../../modules/docker.nix
     ../../modules/kernel.nix
-    ../../modules/openrgb.nix
+    #../../modules/openrgb.nix
     ../../modules/sound.nix
     ../../modules/steam.nix
     ../../modules/system.nix

@@ -13,16 +13,24 @@
     package = inputs.helix.packages.${pkgs.system}.helix;
     defaultEditor = true;
     settings = {
-      theme = "nord";
+      theme = "nord-trans";
+    };
+    themes = {
+      nord-trans = {
+        inherits = "nord";
+        "ui.background" = "none";
+      };
     };
     languages = {
-      language = [{
-        name = "nix";
-        auto-format = true;
-        formatter = {
-          command = "${pkgs.alejandra}/bin/alejandra";
-        };
-      }];
+      language = [
+        {
+          name = "nix";
+          auto-format = true;
+          formatter = {
+            command = "${pkgs.alejandra}/bin/alejandra";
+          };
+        }
+      ];
     };
   };
 
