@@ -22,7 +22,10 @@
   fileSystems."/mnt/data0" = {
     device = "192.168.1.96:/mnt/data0";
     fsType = "nfs";
+    options = ["x-systemd.automount" "noauto"];
   };
+
+  programs.dconf.enable = true;
 
   system.stateVersion = "23.11";
 }

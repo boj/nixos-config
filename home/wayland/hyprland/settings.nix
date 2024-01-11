@@ -29,7 +29,6 @@
       "[workspace 1 silent] firefox"
       "[workspace 6 silent] discord"
       "[workspace 6 silent] wezterm start btop"
-      "[workspace 9 silent] easyeffects"
       "[workspace 10 silent] qbittorrent"
     ];
 
