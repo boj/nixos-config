@@ -26,7 +26,7 @@
   ];
 
   home.sessionVariables = {
-    SDL_VIDEODRIVER = "wayland";
+    # SDL_VIDEODRIVER = "wayland";
     WLR_RENDERER = "vulkan";
     XDG_SESSION_TYPE = "wayland";
     GTK_USE_PORTAL = "1";

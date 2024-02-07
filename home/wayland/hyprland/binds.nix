@@ -21,7 +21,8 @@ in {
     bind =
       [
         "$mod, RETURN, exec, wezterm"
-        "$mod, D, exec, wofi -f --show run --lines=5 --prompt=\"\""
+        # "$mod, D, exec, wofi -f --show run --lines=5 --prompt=\"\""
+        "$mod, D, exec, wofi -f --show=drun --lines=5 --prompt=\"\""
         "$mod SHIFT, D, exec, shot.sh crop"
         "$mod SHIFT, F, exec, shot.sh full DP-1"
         "$mod SHIFT, G, exec, shot.sh full DP-3"
