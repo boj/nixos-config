@@ -6,6 +6,7 @@
     ../../modules/sound.nix
     ../../modules/steam.nix
     ../../modules/system.nix
+    ../../modules/udev.nix
     ../../modules/user.nix
     ../../modules/wine.nix
     ../../modules/xdg.nix
