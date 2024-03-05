@@ -56,6 +56,9 @@ in {
         "$mod SHIFT, TAB, changegroupactive, b"
         "$mod CTRL, L, moveoutofgroup, r"
         "$mod CTRL, H, moveoutofgroup, l"
+
+        "$mod, Prior, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+        "$mod, Next, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
       ]
       ++ workspaces;
   };

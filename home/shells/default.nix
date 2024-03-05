@@ -11,12 +11,16 @@
     zip
 
     # utils
+    alsa-utils
     duf
     fd
     fzf
+    jq
     ripgrep
+    socat
     usbutils
     xdg-utils
+    ydotool
 
     # cli
     bat
