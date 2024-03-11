@@ -27,12 +27,15 @@
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-colors.url = "github:misterio77/nix-colors";
   };
 
   outputs = inputs @ {
     self,
     nixpkgs,
     nixos-wsl,
+    nix-colors,
     home-manager,
     hyprland,
     hyprpaper,
@@ -40,7 +43,6 @@
     ...
   }: let
     system = "x86_64-linux";
-    theme = import ./themes/nord;
   in {
     nixosConfigurations = {
       "bruh" = nixpkgs.lib.nixosSystem {
@@ -55,7 +57,7 @@
             home-manager.users.bojo = import ./home/profiles/bojo;
             home-manager.extraSpecialArgs = {
               inherit inputs;
-              inherit theme;
+              inherit nix-colors;
             };
           }
           hyprland.nixosModules.default
@@ -77,7 +79,6 @@
             home-manager.users.bojo = import ./home/profiles/wsl;
             home-manager.extraSpecialArgs = {
               inherit inputs;
-              inherit theme;
             };
           }
         ];

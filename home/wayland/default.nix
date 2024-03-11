@@ -1,11 +1,18 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  nix-colors,
+  ...
+}: {
   imports = [
     ./dunst.nix
     ./waybar.nix
     ./wofi.nix
     ./gtk.nix
     ./qt.nix
+    nix-colors.homeManagerModules.default
   ];
+
+  colorScheme = nix-colors.colorSchemes.nord;
 
   home.packages = with pkgs; [
     # wayland

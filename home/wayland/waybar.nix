@@ -1,4 +1,4 @@
-{theme, ...}: {
+{config, ...}: {
   programs.waybar = {
     enable = true;
     settings = {
@@ -40,25 +40,25 @@
 
       #window {
           padding-left: 12px;
-          background-color: ${theme.colors.color2};
+          background-color: #${config.colorScheme.palette.base02};
           padding-right: 12px;
       }
 
       #waybar.stacked #window {
-          background-color: ${theme.colors.color6};
-          color: ${theme.colors.color6};
+          background-color: #${config.colorScheme.palette.base06};
+          color: #${config.colorScheme.palette.base06};
       }
 
       #waybar.empty #window {
-          color: ${theme.colors.color6};
-          background-color: ${theme.colors.color6};
+          color: #${config.colorScheme.palette.base06};
+          background-color: #${config.colorScheme.palette.base06};
       }
 
       #workspaces {
-          color: ${theme.colors.color6};
+          color: #${config.colorScheme.palette.base06};
           margin-left: 15px;
           margin-top: 15px;
-          background-color: ${theme.colors.color2};
+          background-color: #${config.colorScheme.palette.base02};
           border-top-left-radius: 0;
           border-top-right-radius: 0;
       }
@@ -68,7 +68,7 @@
       }
 
       #workspaces button {
-        color: ${theme.colors.color6};
+        color: #${config.colorScheme.palette.base06};
         padding-bottom: 2px;
         padding-top: 2px;
         padding-left: 0px;
@@ -84,10 +84,10 @@
       }
 
       #workspaces button.active {
-          color: ${theme.colors.color4};
+          color: #${config.colorScheme.palette.base08};
           border-width: 1.5px;
           border-radius: 0;
-          border-color: ${theme.colors.color9};
+          border-color: #${config.colorScheme.palette.base0D};
       }
 
       #clock {
@@ -95,7 +95,7 @@
           margin-left: 15px;
           font-family: Iosevka Slab;
           font-weight: normal;
-          color: ${theme.colors.color5};
+          color: #${config.colorScheme.palette.base05};
       }
     '';
   };

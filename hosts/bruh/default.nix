@@ -9,7 +9,7 @@
     ../../modules/system.nix
     ../../modules/udev.nix
     ../../modules/user.nix
-    ../../modules/virtualbox.nix
+    ../../modules/virtualization.nix
     ../../modules/wine.nix
     ../../modules/xdg.nix
 
