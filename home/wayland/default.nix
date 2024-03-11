@@ -10,6 +10,7 @@
   home.packages = with pkgs; [
     # wayland
     grim
+    libnotify
     slurp
     swayidle
     waybar

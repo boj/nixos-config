@@ -23,9 +23,9 @@ in {
         "$mod, RETURN, exec, wezterm"
         # "$mod, D, exec, wofi -f --show run --lines=5 --prompt=\"\""
         "$mod, D, exec, wofi -f --show=drun --lines=5 --prompt=\"\""
-        "$mod SHIFT, D, exec, shot.sh crop"
-        "$mod SHIFT, F, exec, shot.sh full DP-1"
-        "$mod SHIFT, G, exec, shot.sh full DP-3"
+        "$mod SHIFT, D, exec, grimblast copy area"
+        "$mod SHIFT, F, exec, grimblast copy output"
+        "$mod SHIFT, G, exec, grimblast copy active"
         "$mod CTRL, P, exec, swayidle timeout 2 'sleep 1; hyprctl dispatcher dpms off' resume 'hyprctl dispatcher dpms on & pkill swayidle'"
 
         "$mod SHIFT, Q, killactive,"

@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  inputs,
+  ...
+}: {
   imports = [
     ./binds.nix
     ./rules.nix
@@ -7,6 +11,8 @@
 
   home.packages = with pkgs; [
     hyprpaper
+    hyprpicker
+    inputs.hyprland-contrib.packages.${pkgs.system}.grimblast
   ];
 
   wayland.windowManager.hyprland = {
