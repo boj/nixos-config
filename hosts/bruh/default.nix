@@ -4,6 +4,7 @@
     ../../modules/greet.nix
     ../../modules/kernel.nix
     #../../modules/openrgb.nix
+    ../../modules/plex.nix
     ../../modules/sound.nix
     ../../modules/steam.nix
     ../../modules/system.nix

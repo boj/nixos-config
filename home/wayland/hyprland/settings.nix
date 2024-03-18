@@ -1,4 +1,4 @@
-{
+{config, ...}: {
   wayland.windowManager.hyprland.settings = {
     "$mod" = "SUPER";
 
@@ -47,26 +47,26 @@
       key_press_enables_dpms = true;
       disable_hyprland_logo = true;
       disable_splash_rendering = true;
-      background_color = "rgb(3b4252)";
+      background_color = "rgb(${config.colorScheme.palette.base01})";
     };
 
     general = {
       gaps_in = 5;
       gaps_out = 20;
       border_size = 2;
-      "col.active_border" = "rgba(bf616aee) rgba(ebcb8bee) 45deg";
-      "col.inactive_border" = "rgba(4c566aaa)";
+      "col.active_border" = "rgba(${config.colorScheme.palette.base08}ee) rgba(${config.colorScheme.palette.base0A}ee) 45deg";
+      "col.inactive_border" = "rgba(${config.colorScheme.palette.base03}aa)";
       layout = "dwindle";
       cursor_inactive_timeout = 2;
       no_cursor_warps = true;
     };
 
     group = {
-      "col.border_active" = "rgba(8fbcbbee) rgba(5e81acee) 45deg";
-      "col.border_inactive" = "rgba(b48eadaa)";
+      "col.border_active" = "rgba(${config.colorScheme.palette.base07}ee) rgba(${config.colorScheme.palette.base0F}ee) 45deg";
+      "col.border_inactive" = "rgba(${config.colorScheme.palette.base0E}aa)";
       groupbar = {
         render_titles = false;
-        "col.active" = "rgba(5e81acee) rgba(8fbcbbee) 45deg";
+        "col.active" = "rgba(${config.colorScheme.palette.base0F}ee) rgba(${config.colorScheme.palette.base07}ee) 45deg";
         "col.inactive" = "rgba(aaaaaaee)";
       };
     };
@@ -86,7 +86,7 @@
       shadow_offset = "0 2";
       shadow_range = 10;
       shadow_render_power = 2;
-      "col.shadow" = "rgba(81a1c1dd)";
+      "col.shadow" = "rgba(${config.colorScheme.palette.base0D}dd)";
     };
 
     animations = {
