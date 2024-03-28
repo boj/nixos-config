@@ -7,6 +7,7 @@
       "audio"
       "docker"
       "input"
+      "plugdev"
       "sound"
       "tty"
       "video"
