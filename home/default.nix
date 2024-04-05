@@ -1,11 +1,11 @@
-{
+{username, ...}: {
   imports = [
     ./editors/helix.nix
     ./shells
   ];
 
-  home.username = "bojo";
-  home.homeDirectory = "/home/bojo";
+  home.username = "${username}";
+  home.homeDirectory = "/home/${username}";
 
   home.sessionPath = [
     "$HOME/.local/bin"

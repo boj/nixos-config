@@ -9,7 +9,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    helix.url = "github:helix-editor/helix";
+    helix = {
+      url = "github:helix-editor/helix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -43,21 +46,26 @@
     ...
   }: let
     system = "x86_64-linux";
+    username = "bojo";
   in {
     nixosConfigurations = {
       "bruh" = nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = {inherit inputs;};
+        specialArgs = {
+          inherit inputs;
+          inherit username;
+        };
         modules = [
           ./hosts/bruh
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.bojo = import ./home/profiles/bojo;
+            home-manager.users."${username}" = import ./home/profiles/bojo;
             home-manager.extraSpecialArgs = {
               inherit inputs;
               inherit nix-colors;
+              inherit username;
             };
           }
           hyprland.nixosModules.default
@@ -68,7 +76,10 @@
       };
       "wsl" = nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = {inherit inputs;};
+        specialArgs = {
+          inherit inputs;
+          inherit username;
+        };
         modules = [
           ./hosts/wsl
           nixos-wsl.nixosModules.wsl
@@ -76,9 +87,10 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.bojo = import ./home/profiles/wsl;
+            home-manager.users."${username}" = import ./home/profiles/wsl;
             home-manager.extraSpecialArgs = {
               inherit inputs;
+              inherit username;
             };
           }
         ];

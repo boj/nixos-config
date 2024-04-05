@@ -1,4 +1,4 @@
-{
+{username, ...}: {
   imports = [
     ../../modules/docker.nix
     ../../modules/system.nix
@@ -8,7 +8,7 @@
   ];
 
   wsl.enable = true;
-  wsl.defaultUser = "bojo";
+  wsl.defaultUser = "${username}";
 
   networking.hostName = "mta-wsl";
 

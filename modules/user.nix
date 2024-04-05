@@ -1,7 +1,11 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  username,
+  ...
+}: {
   programs.fish.enable = true;
 
-  users.users.bojo = {
+  users.users."${username}" = {
     isNormalUser = true;
     extraGroups = [
       "audio"
@@ -16,5 +20,5 @@
     shell = pkgs.fish;
   };
 
-  nix.settings.trusted-users = ["bojo"];
+  nix.settings.trusted-users = ["${username}"];
 }
