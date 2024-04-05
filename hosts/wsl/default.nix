@@ -1,8 +1,8 @@
 {username, ...}: {
   imports = [
-    ../../modules/docker.nix
     ../../modules/system.nix
     ../../modules/user.nix
+    ../../modules/virtualization/docker.nix
 
     # ./hardware-configuration.nix
   ];

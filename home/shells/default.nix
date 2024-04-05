@@ -20,7 +20,6 @@
     socat
     usbutils
     xdg-utils
-    ydotool
 
     # cli
     bat
