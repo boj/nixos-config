@@ -5,7 +5,12 @@
       mainBar = {
         layer = "top";
         position = "left";
-        modules-left = ["hyprland/workspaces"];
+        width = 40;
+        margin-top = 8;
+        margin-bottom = 8;
+        spacing = 15;
+        modules-left = ["hyprland/window"];
+        modules-center = ["hyprland/workspaces"];
         modules-right = ["clock"];
         "hyprland/workspaces" = {
           on-click = "activate";
@@ -23,6 +28,11 @@
             "10" = "0";
           };
         };
+        "hyprland/window" = {
+          format = "{initialTitle}";
+          max-length = 50;
+          rotate = 270;
+        };
         "clock" = {
           format = "{:%R}";
           tooltip-format = "{:%A, %B, %d, %Y}";
@@ -38,64 +48,54 @@
           margin: 0;
       }
 
+      window#waybar {
+          background-color: #${config.colorScheme.palette.base02};
+          border-top-right-radius: 12px;
+          border-bottom-right-radius: 12px;
+      }
+
+      window#waybar.hidden {
+        opacity: 0;
+      }
+
       #window {
-          padding-left: 12px;
-          background-color: #${config.colorScheme.palette.base02};
-          padding-right: 12px;
-      }
-
-      #waybar.stacked #window {
-          background-color: #${config.colorScheme.palette.base06};
-          color: #${config.colorScheme.palette.base06};
-      }
-
-      #waybar.empty #window {
-          color: #${config.colorScheme.palette.base06};
-          background-color: #${config.colorScheme.palette.base06};
-      }
-
-      #workspaces {
-          color: #${config.colorScheme.palette.base06};
-          margin-left: 15px;
-          margin-top: 15px;
-          background-color: #${config.colorScheme.palette.base02};
-          border-top-left-radius: 0;
-          border-top-right-radius: 0;
-      }
-
-      #waybar {
-          background-color: transparent;
+        padding: 100px 20px;
+        color: #${config.colorScheme.palette.base0A};
       }
 
       #workspaces button {
+        padding: 10px 0px;
+        background-color: transparent;
         color: #${config.colorScheme.palette.base06};
-        padding-bottom: 2px;
-        padding-top: 2px;
-        padding-left: 0px;
-        padding-right: 0px;
-        margin-top: 0.3rem;
-        margin-bottom: 0.3rem;
-        min-height: 0;
-        border-radius: 0;
-        min-width: 20px;
-        border-radius: 2px;
-        margin-left: 0.25rem;
-        margin-right: 0.25rem;
+      }
+
+      #worksapces button.persistent {
+        padding: 10px 0px;
+        background-color: transparent;
+        color: #${config.colorScheme.palette.base05};
+     }
+
+      #workspaces button.hover {
+          color: #${config.colorScheme.palette.base09};
       }
 
       #workspaces button.active {
           color: #${config.colorScheme.palette.base08};
-          border-width: 1.5px;
-          border-radius: 0;
-          border-color: #${config.colorScheme.palette.base0D};
       }
 
       #clock {
           margin-bottom: 20px;
-          margin-left: 15px;
           font-family: Iosevka Slab;
           font-weight: normal;
           color: #${config.colorScheme.palette.base05};
+      }
+
+      .modules-left > widget:first-child > #workspaces {
+          margin-left: 0;
+      }
+
+      .modules-right > widget:last-child > #workspaces {
+          margin-right: 0;
       }
     '';
   };

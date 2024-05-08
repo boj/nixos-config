@@ -20,6 +20,10 @@
 
     # misc
     qbittorrent
+
+    # art / dev
+    blender
+    godot_4
   ];
 
   home.sessionVariables = {

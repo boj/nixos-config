@@ -16,6 +16,7 @@
     fd
     fzf
     jq
+    mplayer
     ripgrep
     socat
     usbutils
