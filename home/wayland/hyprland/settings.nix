@@ -65,6 +65,7 @@
       "col.border_active" = "rgba(${config.colorScheme.palette.base07}ee) rgba(${config.colorScheme.palette.base0F}ee) 45deg";
       "col.border_inactive" = "rgba(${config.colorScheme.palette.base0E}aa)";
       groupbar = {
+        height = 2;
         render_titles = false;
         "col.active" = "rgba(${config.colorScheme.palette.base0F}ee) rgba(${config.colorScheme.palette.base07}ee) 45deg";
         "col.inactive" = "rgba(aaaaaaee)";
