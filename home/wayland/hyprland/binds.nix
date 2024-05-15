@@ -24,7 +24,7 @@ in {
         # "$mod, D, exec, wofi -f --show run --lines=5 --prompt=\"\""
         "$mod, D, exec, wofi -f --show=drun --lines=5 --prompt=\"\""
         "$mod SHIFT, D, exec, grimblast copy area"
-        "$mod SHIFT, F, exec, grimblast copy output"
+        "$mod SHIFT, F, exec, grimblast copysave output ~/.screenshots/$(date +'%s_hypr.png')"
         "$mod SHIFT, G, exec, grimblast copy active"
         "$mod CTRL, P, exec, swayidle timeout 2 'sleep 1; hyprctl dispatcher dpms off' resume 'hyprctl dispatcher dpms on & pkill swayidle'"
 

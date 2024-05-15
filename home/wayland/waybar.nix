@@ -11,7 +11,7 @@
         reload_style_on_change = true;
         modules-left = ["hyprland/workspaces"];
         modules-center = ["clock#date" "clock#time"];
-        modules-right = ["pulseaudio/slider" "pulseaudio#percentage"];
+        modules-right = ["pulseaudio/slider" "pulseaudio#percentage" "cava"];
         "hyprland/workspaces" = {
           on-click = "activate";
           format = "{icon}";
@@ -27,13 +27,22 @@
             "9" = "9";
             "10" = "0";
           };
+          persistent-workspaces = {
+            "*" = 5;
+          };
+        };
+        "cava" = {
+          bars = 6;
+          bar_delimiter = 0;
+          format-icons = ["▁" "▂" "▃" "▄" "▅" "▆" "▇" "█"];
         };
         "clock#date" = {
-          format = "{:%a\n%d}";
+          format = "{:%a %B %d}";
           tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+          rotate = 270;
         };
         "clock#time" = {
-          format = "{:%I\n%M}";
+          format = "{:%I:%M}";
         };
         "pulseaudio" = {
           format = "{icon}";
@@ -61,10 +70,18 @@
       @define-color mainbg #${config.colorScheme.palette.base00};
       @define-color modulesbg #${config.colorScheme.palette.base02};
       @define-color text #${config.colorScheme.palette.base04};
+      @define-color alttext1 #${config.colorScheme.palette.base0D};
+      @define-color alttext2 #${config.colorScheme.palette.base0F};
       @define-color border #${config.colorScheme.palette.base0F};
-      @define-color buttons #${config.colorScheme.palette.base08};
+      @define-color empty #${config.colorScheme.palette.base00};
+      @define-color persistent #${config.colorScheme.palette.base03};
       @define-color hover #${config.colorScheme.palette.base09};
       @define-color white #${config.colorScheme.palette.base05};
+      @define-color red #${config.colorScheme.palette.base08};
+      @define-color orange #${config.colorScheme.palette.base09};
+      @define-color yellow #${config.colorScheme.palette.base0A};
+      @define-color green #${config.colorScheme.palette.base0B};
+      @define-color pink #${config.colorScheme.palette.base0E};
 
       * {
         all: initial;
@@ -104,26 +121,34 @@
       }
 
       #workspaces button {
+        font-size: 18pt;
         padding: 2px;
         margin: 5px 6px;
+        border-radius: 10px;
+      }
+
+      #workspaces button.persistent {
+        background-color: @persistent;
+      }
+
+      #workspaces button.empty {
+        background-color: @empty;
+      }
+
+      #workspaces button.visible {
+        background-color: @empty;
       }
 
       #workspaces button.active {
-        background-color: @buttons;
-        font-size: 18pt;
-        border-top-right-radius: 5px;
-        border-top-left-radius: 50px;
-        border-bottom-right-radius: 50px;
-        border-bottom-left-radius: 5px;
+        background-color: @green;
+      }
+
+      #workspaces button.urgent {
+        background-color: @red;
       }
 
       #workspaces button:hover {
-        background: inherit;
         background-color: @hover;
-        border-top-right-radius: 5px;
-        border-top-left-radius: 50px;
-        border-bottom-right-radius: 50px;
-        border-bottom-left-radius: 5px;
       }
 
       #pulseaudio, #clock, #clock.date, #clock.time {
@@ -137,18 +162,18 @@
       }
 
       #clock.date {
-        padding: 20px 5px 10px 5px;
+        padding: 30px 5px 10px 5px;
         font-size: 14px;
-        color: @text;
+        color: @alttext2;
         border-top:3px solid @border;
         border-top-left-radius: 50px;
         border-top-right-radius: 5px;
       }
 
       #clock.time {
-        padding: 10px 5px 20px 5px;
+        padding: 10px 5px 30px 5px;
         font-size: 14px;
-        color: @text;
+        color: @alttext1;
         border-bottom: 3px solid @border;
         border-bottom-left-radius: 5px;
         border-bottom-right-radius: 50px;
@@ -189,6 +214,11 @@
         margin: 0px 0px;
         padding: 2px 5px;
         color: @text;
+      }
+
+      #cava {
+        font-size: 8pt;
+        color: @pink;
       }
     '';
   };

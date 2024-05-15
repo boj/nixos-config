@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
     # utils
+    cava
     feh
     openrgb
     pavucontrol
