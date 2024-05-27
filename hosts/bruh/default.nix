@@ -13,7 +13,7 @@
     ../../modules/user.nix
     ../../modules/virtualization/docker.nix
     ../../modules/virtualization/general.nix
-    ../../modules/virtualization/virtualbox.nix
+    #../../modules/virtualization/virtualbox.nix
     ../../modules/wine.nix
     ../../modules/xdg.nix
 

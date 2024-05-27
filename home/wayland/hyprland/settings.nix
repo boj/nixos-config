@@ -30,6 +30,8 @@
       "[workspace 6 silent] discord"
       "[workspace 6 silent] wezterm start btop"
       "[workspace 10 silent] qbittorrent"
+
+      "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
     ];
 
     input = {
@@ -57,8 +59,11 @@
       "col.active_border" = "rgba(${config.colorScheme.palette.base08}ee) rgba(${config.colorScheme.palette.base0A}ee) 45deg";
       "col.inactive_border" = "rgba(${config.colorScheme.palette.base03}aa)";
       layout = "dwindle";
-      cursor_inactive_timeout = 2;
-      no_cursor_warps = true;
+    };
+
+    cursor = {
+      inactive_timeout = 2;
+      no_warps = true;
     };
 
     group = {
