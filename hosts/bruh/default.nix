@@ -1,6 +1,5 @@
 {
   imports = [
-    ../../modules/docker.nix
     ../../modules/greet.nix
     ../../modules/kernel.nix
     #../../modules/openrgb.nix
