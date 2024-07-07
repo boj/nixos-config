@@ -107,7 +107,6 @@
     };
 
     master = {
-      new_is_master = true;
       no_gaps_when_only = 0;
       mfact = 0.3;
     };
