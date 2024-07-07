@@ -61,10 +61,10 @@
       layout = "dwindle";
     };
 
-    cursor = {
-      inactive_timeout = 2;
-      no_warps = true;
-    };
+    #cursor = {
+    #  inactive_timeout = 2;
+    #  no_warps = true;
+    #};
 
     group = {
       "col.border_active" = "rgba(${config.colorScheme.palette.base07}ee) rgba(${config.colorScheme.palette.base0F}ee) 45deg";
