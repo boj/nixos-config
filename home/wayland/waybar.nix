@@ -11,7 +11,7 @@
         reload_style_on_change = true;
         modules-left = ["hyprland/workspaces"];
         modules-center = ["clock#date" "clock#time"];
-        modules-right = ["pulseaudio/slider" "pulseaudio#percentage" "cava"];
+        modules-right = ["pulseaudio/slider" "pulseaudio#percentage"];
         "hyprland/workspaces" = {
           on-click = "activate";
           format = "{icon}";
@@ -214,11 +214,6 @@
         margin: 0px 0px;
         padding: 2px 5px;
         color: @text;
-      }
-
-      #cava {
-        font-size: 8pt;
-        color: @pink;
       }
     '';
   };
