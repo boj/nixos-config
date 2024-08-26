@@ -23,14 +23,6 @@
     waybar
     wl-clipboard
     wofi
-
-    # fonts
-    font-awesome
-    iosevka
-    noto-fonts
-    noto-fonts-emoji
-    powerline-fonts
-    powerline-symbols
   ];
 
   home.sessionVariables = {

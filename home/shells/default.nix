@@ -27,6 +27,16 @@
     bat
     btop
     eza
+
+    # fonts
+    fira-code
+    fira-code-symbols
+    font-awesome
+    iosevka
+    noto-fonts
+    noto-fonts-emoji
+    powerline-fonts
+    powerline-symbols
   ];
 
   home.sessionVariables = {

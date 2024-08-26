@@ -25,6 +25,7 @@
         bottom = 20,
       }
 
+      config.front_end = "WebGpu"
       config.enable_wayland = false
 
       return config
