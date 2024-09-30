@@ -20,7 +20,7 @@ in {
 
     bind =
       [
-        "$mod, RETURN, exec, wezterm"
+        "$mod, RETURN, exec, kitty"
         # "$mod, D, exec, wofi -f --show run --lines=5 --prompt=\"\""
         "$mod, D, exec, wofi -f --show=drun --lines=5 --prompt=\"\""
         "$mod SHIFT, D, exec, grimblast copy area"

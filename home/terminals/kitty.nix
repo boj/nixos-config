@@ -6,7 +6,7 @@
   programs.kitty = {
     enable = true;
     font = {
-      name = "Hack";
+      name = "JetBrainsMono Nerd Font";
       size = 11;
     };
     settings = {
@@ -18,6 +18,6 @@
       background_opacity = "0.5";
       background_blur = 5;
     };
-    theme = "Nord";
+    themeFile = "Nord";
   };
 }

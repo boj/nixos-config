@@ -11,6 +11,9 @@
     unzip
     zip
 
+    # dev
+    devenv
+
     # utils
     alsa-utils
     duf
@@ -33,6 +36,7 @@
     fira-code-symbols
     font-awesome
     iosevka
+    nerdfonts
     noto-fonts
     noto-fonts-emoji
     powerline-fonts

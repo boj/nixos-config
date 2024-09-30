@@ -23,6 +23,7 @@
     waybar
     wl-clipboard
     wofi
+    ydotool
   ];
 
   home.sessionVariables = {

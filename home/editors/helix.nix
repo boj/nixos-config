@@ -31,6 +31,9 @@
           };
         }
       ];
+      language-server.fsharp = {
+        command = "${pkgs.fsautocomplete}/bin/fsautocomplete";
+      };
     };
   };
 
