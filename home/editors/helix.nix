@@ -6,6 +6,8 @@
   home.packages = with pkgs; [
     alejandra
     nil
+    zig
+    zls
   ];
 
   programs.helix = {
@@ -33,6 +35,9 @@
       ];
       language-server.fsharp = {
         command = "${pkgs.fsautocomplete}/bin/fsautocomplete";
+      };
+      language-server.zig = {
+        command = "${pkgs.zls}/bin/zls";
       };
     };
   };

@@ -31,11 +31,6 @@
             "*" = 5;
           };
         };
-        "cava" = {
-          bars = 6;
-          bar_delimiter = 0;
-          format-icons = ["▁" "▂" "▃" "▄" "▅" "▆" "▇" "█"];
-        };
         "clock#date" = {
           format = "{:%a %B %d}";
           tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";

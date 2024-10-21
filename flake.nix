@@ -28,6 +28,7 @@
       url = "github:hyprwm/contrib";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -45,6 +46,7 @@
     hyprland,
     hyprpaper,
     hyprland-contrib,
+    hyprpanel,
     ...
   }: let
     system = "x86_64-linux";
@@ -59,6 +61,7 @@
         };
         modules = [
           ./hosts/bruh
+          {nixpkgs.overlays = [hyprpanel.overlay];}
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;

@@ -4,6 +4,7 @@
   ...
 }: {
   imports = [
+    # ./ags.nix
     ./dunst.nix
     ./waybar.nix
     ./wofi.nix

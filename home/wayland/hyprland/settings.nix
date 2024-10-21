@@ -22,6 +22,7 @@
     ];
 
     exec-once = [
+      # "ags"
       "dunst"
       "waybar"
       "hyprpaper"
