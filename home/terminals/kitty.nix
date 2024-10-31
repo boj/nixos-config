@@ -18,6 +18,6 @@
       background_opacity = "0.5";
       background_blur = 5;
     };
-    themeFile = "Nord";
+    themeFile = "Catppuccin-Mocha";
   };
 }

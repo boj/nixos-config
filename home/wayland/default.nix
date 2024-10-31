@@ -5,7 +5,7 @@
 }: {
   imports = [
     # ./ags.nix
-    ./dunst.nix
+    # ./dunst.nix
     ./waybar.nix
     ./wofi.nix
     ./gtk.nix
@@ -13,7 +13,7 @@
     nix-colors.homeManagerModules.default
   ];
 
-  colorScheme = nix-colors.colorSchemes.nord;
+  colorScheme = nix-colors.colorSchemes.catppuccin-mocha;
 
   home.packages = with pkgs; [
     # wayland

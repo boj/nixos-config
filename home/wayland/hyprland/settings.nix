@@ -1,4 +1,8 @@
-{config, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   wayland.windowManager.hyprland.settings = {
     "$mod" = "SUPER";
 
@@ -22,14 +26,14 @@
     ];
 
     exec-once = [
-      # "ags"
-      "dunst"
-      "waybar"
+      # "dunst"
+      # "waybar"
       "hyprpaper"
+      "${pkgs.hyprpanel}/bin/hyprpanel"
 
       "[workspace 1 silent] firefox"
       "[workspace 6 silent] discord"
-      "[workspace 6 silent] wezterm start btop"
+      "[workspace 6 silent] kitty btop"
       "[workspace 10 silent] qbittorrent"
 
       "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
