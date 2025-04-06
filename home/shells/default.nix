@@ -36,7 +36,7 @@
     fira-code-symbols
     font-awesome
     iosevka
-    nerdfonts
+    nerd-fonts.droid-sans-mono
     noto-fonts
     noto-fonts-emoji
     powerline-fonts

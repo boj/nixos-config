@@ -10,7 +10,7 @@
     ../../modules/system.nix
     ../../modules/udev.nix
     ../../modules/user.nix
-    ../../modules/virtualization/docker.nix
+    #../../modules/virtualization/docker.nix
     ../../modules/virtualization/general.nix
     #../../modules/virtualization/virtualbox.nix
     ../../modules/wine.nix

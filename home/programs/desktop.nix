@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
     # utils
-    cava
+    # cava
     feh
     openrgb
     pavucontrol
@@ -17,14 +17,18 @@
     easyeffects
 
     # video
-    obs-studio
+    # obs-studio
 
     # misc
+    obsidian
     qbittorrent
 
     # art / dev
     blender
     godot_4
+
+    # 3d printing
+    bambu-studio
   ];
 
   home.sessionVariables = {

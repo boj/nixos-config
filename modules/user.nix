@@ -11,6 +11,7 @@
       "audio"
       "docker"
       "input"
+      "libvirtd"
       "plugdev"
       "sound"
       "tty"

@@ -15,11 +15,15 @@
     package = inputs.helix.packages.${pkgs.system}.helix;
     defaultEditor = true;
     settings = {
-      theme = "nord-trans";
+      theme = "ao-trans";
     };
     themes = {
       nord-trans = {
         inherits = "nord";
+        "ui.background" = "none";
+      };
+      ao-trans = {
+        inherits = "ao";
         "ui.background" = "none";
       };
     };
@@ -31,6 +35,10 @@
           formatter = {
             command = "${pkgs.alejandra}/bin/alejandra";
           };
+        }
+        {
+          name = "markdown";
+          soft-wrap.enable = true;
         }
       ];
       language-server.fsharp = {

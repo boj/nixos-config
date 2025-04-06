@@ -1,14 +1,10 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{config, ...}: {
   wayland.windowManager.hyprland.settings = {
     "$mod" = "SUPER";
 
     monitor = [
-      "DP-1,1920x1080@240,0x0,1,bitdepth,10"
-      "DP-3,1920x1080@240,1920x0,1,bitdepth,10"
+      "DP-1,1920x1080@240,0x0,1"
+      "DP-3,1920x1080@240,1920x0,1"
     ];
 
     workspace = [
@@ -26,10 +22,9 @@
     ];
 
     exec-once = [
-      # "dunst"
-      # "waybar"
+      "dunst"
+      "waybar"
       "hyprpaper"
-      "${pkgs.hyprpanel}/bin/hyprpanel"
 
       "[workspace 1 silent] firefox"
       "[workspace 6 silent] discord"
@@ -92,12 +87,14 @@
         size = 5;
         passes = 3;
       };
-      drop_shadow = true;
-      shadow_ignore_window = true;
-      shadow_offset = "0 2";
-      shadow_range = 10;
-      shadow_render_power = 2;
-      "col.shadow" = "rgba(${config.colorScheme.palette.base0D}dd)";
+      shadow = {
+        enabled = true;
+        ignore_window = true;
+        offset = "0 2";
+        range = 10;
+        render_power = 2;
+        # "col.shadow" = "rgba(${config.colorScheme.palette.base0D}dd)";
+      };
     };
 
     animations = {
@@ -107,17 +104,20 @@
     dwindle = {
       pseudotile = true;
       preserve_split = true;
-      no_gaps_when_only = 0;
       force_split = 2;
     };
 
     master = {
-      no_gaps_when_only = 0;
       mfact = 0.3;
     };
 
     gestures = {
       workspace_swipe = false;
+    };
+
+    ecosystem = {
+      no_update_news = true;
+      no_donation_nag = true;
     };
   };
 }

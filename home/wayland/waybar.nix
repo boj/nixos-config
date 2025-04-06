@@ -63,20 +63,19 @@
     };
     style = ''
       @define-color mainbg #${config.colorScheme.palette.base00};
-      @define-color modulesbg #${config.colorScheme.palette.base02};
-      @define-color text #${config.colorScheme.palette.base04};
-      @define-color alttext1 #${config.colorScheme.palette.base0D};
-      @define-color alttext2 #${config.colorScheme.palette.base0F};
-      @define-color border #${config.colorScheme.palette.base0F};
-      @define-color empty #${config.colorScheme.palette.base00};
-      @define-color persistent #${config.colorScheme.palette.base03};
+      @define-color modulesbg #${config.colorScheme.palette.base01};
+      @define-color text #${config.colorScheme.palette.base05};
+      @define-color alttext1 #${config.colorScheme.palette.base0C};
+      @define-color alttext2 #${config.colorScheme.palette.base05};
+      @define-color border #${config.colorScheme.palette.base0E};
+      @define-color empty #${config.colorScheme.palette.base02};
+      @define-color persistent #${config.colorScheme.palette.base04};
       @define-color hover #${config.colorScheme.palette.base09};
       @define-color white #${config.colorScheme.palette.base05};
       @define-color red #${config.colorScheme.palette.base08};
       @define-color orange #${config.colorScheme.palette.base09};
       @define-color yellow #${config.colorScheme.palette.base0A};
       @define-color green #${config.colorScheme.palette.base0B};
-      @define-color pink #${config.colorScheme.palette.base0E};
 
       * {
         all: initial;

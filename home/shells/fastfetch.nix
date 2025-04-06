@@ -2,76 +2,111 @@
   programs.fastfetch = {
     enable = true;
     settings = {
+      logo = {
+        type = "kitty-direct";
+        source = "~/.config/fastfetch/eldritch.png";
+        padding = {
+          right = 10;
+          top = 6;
+        };
+      };
+      general = {
+        multithreading = true;
+      };
       display = {
-        separator = "    ";
+        separator = "➜   ";
       };
       modules = [
         {
-          type = "custom";
-          format = "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓";
+          type = "title";
+          format = "                                {6}{7}{8}";
         }
         {
+          type = "custom";
+          format = "┌──────────────────────────────────────────────────────────────────────────────┐";
+        }
+        {
+          key = "     OS           ";
+          keyColor = "green";
           type = "os";
-          key = "  ";
-          keyColor = "blue";
         }
         {
-          type = "kernel";
-          key = "  ";
-          keyColor = "white";
-        }
-        {
-          type = "packages";
-          key = "  󰮯";
-          keyColor = "yellow";
-        }
-        {
-          type = "wm";
-          key = "  󰨇";
-          keyColor = "blue";
-        }
-        {
-          type = "terminal";
-          key = "  ";
-          keyColor = "magenta";
-        }
-        {
-          type = "shell";
-          key = "  ";
-          keyColor = "yellow";
-        }
-        {
-          type = "custom";
-          format = "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫";
-        }
-        {
+          key = "    󰌢 Machine      ";
+          keyColor = "cyan";
           type = "host";
-          key = "  ";
-          keyColor = "bright_blue";
         }
         {
+          key = "     Kernel       ";
+          keyColor = "blue";
+          type = "kernel";
+        }
+        {
+          key = "    󰅐 Uptime       ";
+          keyColor = "green";
+          type = "uptime";
+        }
+        {
+          key = "     Packages     ";
+          keyColor = "cyan";
+          type = "packages";
+        }
+        {
+          key = "     WM           ";
+          keyColor = "blue";
+          type = "wm";
+        }
+        {
+          key = "     Shell        ";
+          keyColor = "green";
+          type = "shell";
+        }
+        {
+          key = "     Terminal     ";
+          keyColor = "cyan";
+          type = "terminal";
+        }
+        {
+          key = "     Font         ";
+          keyColor = "blue";
+          type = "terminalfont";
+        }
+        {
+          key = "    󰻠 CPU          ";
+          keyColor = "green";
           type = "cpu";
-          key = "  ";
-          keyColor = "bright_green";
         }
         {
+          key = "    󰍛 GPU          ";
+          keyColor = "cyan";
           type = "gpu";
-          key = "  󱤓";
-          keyColor = "red";
         }
         {
+          key = "    󰑭 Memory       ";
+          keyColor = "blue";
           type = "memory";
-          key = "  󰍛";
-          keyColor = "bright_yellow";
         }
         {
-          type = "disk";
-          key = "  ";
-          keyColor = "bright_cyan";
+          key = "     Wifi         ";
+          keyColor = "green";
+          type = "wifi";
+        }
+        {
+          key = "    󰩟 Local IP     ";
+          keyColor = "cyan";
+          type = "localip";
+          compact = true;
         }
         {
           type = "custom";
-          format = "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛";
+          format = "└──────────────────────────────────────────────────────────────────────────────┘";
+        }
+        {
+          type = "colors";
+          paddingLeft = 34;
+          symbol = "circle";
+          block = {
+            width = 10;
+          };
         }
       ];
     };
