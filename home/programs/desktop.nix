@@ -26,6 +26,7 @@
     # art / dev
     blender
     godot_4
+    unityhub
 
     # 3d printing
     bambu-studio

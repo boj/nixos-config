@@ -19,9 +19,12 @@
     # wayland
     grim
     libnotify
+    mpvpaper
     slurp
+    swww
     swayidle
     waybar
+    waypaper
     wl-clipboard
     wofi
     ydotool
