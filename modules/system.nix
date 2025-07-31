@@ -4,6 +4,9 @@
   ...
 }: {
   nixpkgs.config.allowUnfree = lib.mkDefault true;
+  nixpkgs.config.permittedInsecurePackages = [
+    "libsoup-2.74.3"
+  ];
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
@@ -25,4 +28,6 @@
     git
     wget
   ];
+
+  environment.localBinInPath = true;
 }
