@@ -19,7 +19,7 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    hyprland.url = "git+https://github.com/hyprwm/Hyprland";
     hyprpaper.url = "github:hyprwm/hyprpaper";
     hyprland-contrib.url = "github:hyprwm/contrib";
     rust-overlay = {
@@ -30,64 +30,38 @@
     nix-colors.url = "github:misterio77/nix-colors";
   };
 
-  outputs = inputs @ {
-    self,
-    nixpkgs,
-    nixos-wsl,
-    nix-colors,
-    home-manager,
-    hyprland,
-    hyprpaper,
-    hyprland-contrib,
-    ...
-  }: let
+  outputs = inputs @ { self, nixpkgs, home-manager, nixos-wsl, ... }: let
     system = "x86_64-linux";
     username = "bojo";
+    specialArgs = { inherit inputs username; };
   in {
     nixosConfigurations = {
       "bruh" = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = {
-          inherit inputs;
-          inherit username;
-        };
+        inherit system specialArgs;
         modules = [
+          ./modules/nixos
           ./hosts/bruh
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users."${username}" = import ./home/profiles/bojo;
-            home-manager.extraSpecialArgs = {
-              inherit inputs;
-              inherit nix-colors;
-              inherit username;
-            };
-          }
-          hyprland.nixosModules.default
-          {
-            programs.hyprland.enable = true;
+            home-manager.users.${username} = import ./home/bojo.nix;
+            home-manager.extraSpecialArgs = { inherit inputs username; };
           }
         ];
       };
       "wsl" = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = {
-          inherit inputs;
-          inherit username;
-        };
+        inherit system specialArgs;
         modules = [
+          ./modules/nixos
           ./hosts/wsl
           nixos-wsl.nixosModules.wsl
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users."${username}" = import ./home/profiles/wsl;
-            home-manager.extraSpecialArgs = {
-              inherit inputs;
-              inherit username;
-            };
+            home-manager.users.${username} = import ./home/wsl.nix;
+            home-manager.extraSpecialArgs = { inherit inputs username; };
           }
         ];
       };

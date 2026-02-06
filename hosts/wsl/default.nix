@@ -1,16 +1,8 @@
-{username, ...}: {
-  imports = [
-    ../../modules/system.nix
-    ../../modules/user.nix
-    ../../modules/virtualization/docker.nix
-
-    # ./hardware-configuration.nix
-  ];
+{ username, ... }: {
+  my.virtualization.docker.enable = true;
 
   wsl.enable = true;
-  wsl.defaultUser = "${username}";
-
+  wsl.defaultUser = username;
   networking.hostName = "mta-wsl";
-
   system.stateVersion = "23.11";
 }

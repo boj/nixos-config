@@ -1,0 +1,21 @@
+{
+  imports = [
+    ./common.nix
+    ./ai.nix
+    ./greet.nix
+    ./hyprland.nix
+    ./kernel.nix
+    ./openrgb.nix
+    ./plex.nix
+    ./rust.nix
+    ./sound.nix
+    ./steam.nix
+    ./tailscale.nix
+    ./udev.nix
+    ./wine.nix
+    ./xdg.nix
+    ./virtualization/docker.nix
+    ./virtualization/general.nix
+    ./virtualization/virtualbox.nix
+  ];
+}

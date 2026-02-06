@@ -1,37 +1,25 @@
 {
-  imports = [
-    ../../modules/greet.nix
-    ../../modules/kernel.nix
-    #../../modules/openrgb.nix
-    ../../modules/plex.nix
-    ../../modules/sound.nix
-    ../../modules/steam.nix
-    ../../modules/streamdeck.nix
-    ../../modules/system.nix
-    ../../modules/udev.nix
-    ../../modules/user.nix
-    #../../modules/virtualization/docker.nix
-    ../../modules/virtualization/general.nix
-    #../../modules/virtualization/virtualbox.nix
-    ../../modules/wine.nix
-    ../../modules/xdg.nix
+  imports = [ ./hardware-configuration.nix ];
 
-    ./hardware-configuration.nix
-  ];
+  # Feature flags
+  my.ai.enable = true;
+  my.greet.enable = true;
+  my.hyprland.enable = true;
+  my.kernel.enable = true;
+  my.sound.enable = true;
+  my.steam.enable = true;
+  my.tailscale.enable = true;
+  my.udev.enable = true;
+  my.wine.enable = true;
+  my.xdg.enable = true;
+  my.rust.enable = true;
+  my.virtualization.docker.enable = true;
 
+  # Host-specific
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelModules = ["i2c-dev" "i2c-piix4"];
-
   networking.hostName = "bruh";
-
-  fileSystems."/mnt/data0" = {
-    device = "192.168.1.96:/mnt/data0";
-    fsType = "nfs";
-    options = ["x-systemd.automount" "noauto"];
-  };
-
   programs.dconf.enable = true;
-
   system.stateVersion = "23.11";
 }
