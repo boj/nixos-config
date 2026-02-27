@@ -20,7 +20,7 @@ in {
     home.packages = with pkgs; [
       hyprpaper
       hyprpicker
-      inputs.hyprland-contrib.packages.${pkgs.system}.grimblast
+      inputs.hyprland-contrib.packages.${pkgs.stdenv.hostPlatform.system}.grimblast
     ];
 
     wayland.windowManager.hyprland = {

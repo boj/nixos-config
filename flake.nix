@@ -2,7 +2,7 @@
   description = "bojo's NixOS Flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/master";
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -30,10 +30,16 @@
     nix-colors.url = "github:misterio77/nix-colors";
   };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, nixos-wsl, ... }: let
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    home-manager,
+    nixos-wsl,
+    ...
+  }: let
     system = "x86_64-linux";
     username = "bojo";
-    specialArgs = { inherit inputs username; };
+    specialArgs = {inherit inputs username;};
   in {
     nixosConfigurations = {
       "bruh" = nixpkgs.lib.nixosSystem {
@@ -46,7 +52,21 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.${username} = import ./home/bojo.nix;
-            home-manager.extraSpecialArgs = { inherit inputs username; };
+            home-manager.extraSpecialArgs = {inherit inputs username;};
+          }
+        ];
+      };
+      "worky" = nixpkgs.lib.nixosSystem {
+        inherit system specialArgs;
+        modules = [
+          ./modules/nixos
+          ./hosts/worky
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.${username} = import ./home/bojo.nix;
+            home-manager.extraSpecialArgs = {inherit inputs username;};
           }
         ];
       };
@@ -61,7 +81,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.${username} = import ./home/wsl.nix;
-            home-manager.extraSpecialArgs = { inherit inputs username; };
+            home-manager.extraSpecialArgs = {inherit inputs username;};
           }
         ];
       };

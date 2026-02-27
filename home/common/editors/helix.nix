@@ -7,12 +7,12 @@
     alejandra
     nil
     zig
-    zls
+    # zls
   ];
 
   programs.helix = {
     enable = true;
-    package = inputs.helix.packages.${pkgs.system}.helix;
+    package = inputs.helix.packages.${pkgs.stdenv.hostPlatform.system}.helix;
     defaultEditor = true;
     settings = {
       theme = "ao-trans";
@@ -47,9 +47,9 @@
       language-server.rust = {
         command = "${pkgs.rust-analyzer}/bin/rust-analyzer";
       };
-      language-server.zig = {
-        command = "${pkgs.zls}/bin/zls";
-      };
+      # language-server.zig = {
+      #   command = "${pkgs.zls}/bin/zls";
+      # };
     };
   };
 
