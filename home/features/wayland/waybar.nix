@@ -1,8 +1,70 @@
 {
   config,
   lib,
+  pkgs,
   ...
-}: {
+}: let
+  project-indicator = pkgs.writeShellScript "waybar-project-indicator" ''
+    export PATH="${lib.makeBinPath (with pkgs; [coreutils jq hyprland socat procps gitMinimal])}"
+
+    get_project() {
+      local win_json pid class
+      win_json=$(hyprctl activewindow -j 2>/dev/null) || return
+      pid=$(echo "$win_json" | jq -r '.pid // empty')
+      class=$(echo "$win_json" | jq -r '.class // empty')
+
+      if [ -z "$pid" ] || [ "$pid" = "null" ]; then
+        echo '{"text":"","class":"empty"}'
+        return
+      fi
+
+      local cwd=""
+      case "$class" in
+        ghostty|kitty|org.wezfurlong.wezterm|Alacritty|foot)
+          local child_pid
+          child_pid=$(pgrep -P "$pid" | head -1)
+          if [ -n "$child_pid" ]; then
+            cwd=$(readlink "/proc/$child_pid/cwd" 2>/dev/null)
+          fi
+          ;;
+        *)
+          cwd=$(readlink "/proc/$pid/cwd" 2>/dev/null)
+          ;;
+      esac
+
+      if [ -z "$cwd" ]; then
+        echo '{"text":"","class":"empty"}'
+        return
+      fi
+
+      local git_root branch project_name
+      git_root=$(git -C "$cwd" rev-parse --show-toplevel 2>/dev/null)
+
+      if [ -n "$git_root" ]; then
+        project_name=$(basename "$git_root")
+        branch=$(git -C "$git_root" symbolic-ref --short HEAD 2>/dev/null || git -C "$git_root" rev-parse --short HEAD 2>/dev/null)
+        local tooltip="$project_name  $branch\n$git_root"
+        printf '{"text":"%s","tooltip":"%s","class":"project"}\n' "$project_name" "$tooltip"
+      else
+        project_name=$(basename "$cwd")
+        printf '{"text":"%s","tooltip":"%s","class":"directory"}\n' "$project_name" "$cwd"
+      fi
+    }
+
+    # Initial output
+    get_project
+
+    # Listen to Hyprland socket2 events
+    HYPRLAND_SOCKET2="''${XDG_RUNTIME_DIR}/hypr/''${HYPRLAND_INSTANCE_SIGNATURE}/.socket2.sock"
+    socat -u "UNIX-CONNECT:''${HYPRLAND_SOCKET2}" - | while IFS= read -r line; do
+      case "$line" in
+        activewindow\>\>*|workspace\>\>*|focusedmon\>\>*|openwindow\>\>*|closewindow\>\>*)
+          get_project
+          ;;
+      esac
+    done
+  '';
+in {
   config = lib.mkIf config.my.wayland.enable {
     programs.waybar = {
       enable = true;
@@ -14,9 +76,15 @@
           margin-bottom = 8;
           margin-left = 8;
           reload_style_on_change = true;
-          modules-left = ["hyprland/workspaces"];
+          modules-left = ["custom/project" "hyprland/workspaces"];
           modules-center = ["clock#date" "clock#time"];
           modules-right = ["pulseaudio/slider" "pulseaudio#percentage"];
+          "custom/project" = {
+            exec = "${project-indicator}";
+            return-type = "json";
+            format = "{}";
+            rotate = 270;
+          };
           "hyprland/workspaces" = {
             on-click = "activate";
             format = "{icon}";
@@ -104,6 +172,35 @@
 
         tooltip label {
           padding: 10px;
+        }
+
+        #custom-project {
+          font-size: 12px;
+          padding: 20px 5px 10px 5px;
+          color: @text;
+          background: @modulesbg;
+          border-top: 3px solid @green;
+          border-top-left-radius: 50px;
+          border-top-right-radius: 5px;
+        }
+
+        #custom-project.project {
+          color: @green;
+          border-top-color: @green;
+        }
+
+        #custom-project.directory {
+          color: @alttext2;
+          border-top-color: @border;
+        }
+
+        #custom-project.empty {
+          padding: 0;
+          margin: 0;
+          border: none;
+          min-height: 0;
+          min-width: 0;
+          font-size: 0;
         }
 
         #workspaces {

@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: let
   workspaces = builtins.concatLists (builtins.genList (
@@ -15,6 +16,50 @@
       ]
     )
     10);
+
+  workspace-overview = pkgs.writeShellScript "workspace-overview" ''
+    export PATH="${lib.makeBinPath (with pkgs; [coreutils jq hyprland procps gitMinimal gnused wofi])}"
+
+    build_entries() {
+      hyprctl clients -j | jq -r '.[] | select(.workspace.id > 0) | [.workspace.id, .pid, .class, .title] | @tsv' | sort -t$'\t' -k1 -n | while IFS=$'\t' read -r ws pid class title; do
+        project=""
+        cwd=""
+
+        case "$class" in
+          ghostty|kitty|org.wezfurlong.wezterm|Alacritty|foot)
+            child_pid=$(pgrep -P "$pid" | head -1)
+            if [ -n "$child_pid" ]; then
+              cwd=$(readlink "/proc/$child_pid/cwd" 2>/dev/null)
+            fi
+            ;;
+          *)
+            cwd=$(readlink "/proc/$pid/cwd" 2>/dev/null)
+            ;;
+        esac
+
+        if [ -n "$cwd" ]; then
+          git_root=$(git -C "$cwd" rev-parse --show-toplevel 2>/dev/null)
+          if [ -n "$git_root" ]; then
+            project=$(basename "$git_root")
+          else
+            project=$(basename "$cwd")
+          fi
+        fi
+
+        if [ -n "$project" ]; then
+          echo "WS $ws | $project ($class)"
+        else
+          echo "WS $ws | $title ($class)"
+        fi
+      done
+    }
+
+    selected=$(build_entries | wofi --dmenu --prompt "Workspaces")
+    [ -z "$selected" ] && exit 0
+
+    ws_num=$(echo "$selected" | sed 's/WS \([0-9]*\) .*/\1/')
+    hyprctl dispatch workspace "$ws_num"
+  '';
 in {
   config = lib.mkIf config.my.wayland.hyprland.enable {
     wayland.windowManager.hyprland.settings = {
@@ -64,6 +109,8 @@ in {
 
           "$mod, Prior, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
           "$mod, Next, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+
+          "$mod, O, exec, ${workspace-overview}"
         ]
         ++ workspaces;
     };
