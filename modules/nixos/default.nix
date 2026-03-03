@@ -9,6 +9,7 @@
     ./plex.nix
     ./rust.nix
     ./sound.nix
+    ./ssh.nix
     ./steam.nix
     ./tailscale.nix
     ./udev.nix

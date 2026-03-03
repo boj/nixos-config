@@ -1,44 +1,9 @@
 {
   config,
   lib,
-  pkgs,
   ...
-}: let
-  claude-notify = pkgs.writeShellScriptBin "claude-notify" ''
-    export PATH="${lib.makeBinPath (with pkgs; [coreutils jq libnotify])}"
-
-    # Read hook JSON from stdin
-    input=$(cat)
-
-    # Extract fields from hook JSON
-    cwd=$(echo "$input" | jq -r '.cwd // empty')
-    hook_type=$(echo "$input" | jq -r '.type // "stop"')
-
-    # Derive project name from cwd
-    project=""
-    if [ -n "$cwd" ]; then
-      project=$(basename "$cwd")
-    fi
-
-    case "$hook_type" in
-      notification)
-        summary="Claude Code''${project:+ ($project)}"
-        body="Needs attention"
-        urgency="normal"
-        ;;
-      *)
-        summary="Claude Code''${project:+ ($project)}"
-        body="Response complete"
-        urgency="low"
-        ;;
-    esac
-
-    notify-send -a claude-code -u "$urgency" "$summary" "$body"
-  '';
-in {
+}: {
   config = lib.mkIf config.my.wayland.enable {
-    home.packages = [claude-notify];
-
     services.dunst = {
       enable = true;
       settings = {
@@ -79,14 +44,6 @@ in {
           foreground = "#${config.colorScheme.palette.base08}";
           frame_color = "#${config.colorScheme.palette.base08}";
           timeout = 0;
-        };
-
-        "claude-code" = {
-          appname = "claude-code";
-          frame_color = "#${config.colorScheme.palette.base0B}";
-          foreground = "#${config.colorScheme.palette.base0B}";
-          format = "<b>%s</b>\\n%b";
-          timeout = 10;
         };
       };
     };

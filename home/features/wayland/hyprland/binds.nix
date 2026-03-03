@@ -20,6 +20,18 @@
   workspace-overview = pkgs.writeShellScript "workspace-overview" ''
     export PATH="${lib.makeBinPath (with pkgs; [coreutils jq hyprland procps gitMinimal gnused wofi])}"
 
+    # Walk process tree to find the deepest descendant (the shell or its child)
+    find_leaf() {
+      local p=$1
+      local child
+      while true; do
+        child=$(pgrep -P "$p" | tail -1)
+        [ -z "$child" ] && break
+        p=$child
+      done
+      echo "$p"
+    }
+
     build_entries() {
       hyprctl clients -j | jq -r '.[] | select(.workspace.id > 0) | [.workspace.id, .pid, .class, .title] | @tsv' | sort -t$'\t' -k1 -n | while IFS=$'\t' read -r ws pid class title; do
         project=""
@@ -27,10 +39,8 @@
 
         case "$class" in
           ghostty|kitty|org.wezfurlong.wezterm|Alacritty|foot)
-            child_pid=$(pgrep -P "$pid" | head -1)
-            if [ -n "$child_pid" ]; then
-              cwd=$(readlink "/proc/$child_pid/cwd" 2>/dev/null)
-            fi
+            leaf_pid=$(find_leaf "$pid")
+            cwd=$(readlink "/proc/$leaf_pid/cwd" 2>/dev/null)
             ;;
           *)
             cwd=$(readlink "/proc/$pid/cwd" 2>/dev/null)

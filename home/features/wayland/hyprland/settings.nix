@@ -43,6 +43,8 @@
           natural_scroll = false;
         };
         sensitivity = -0.5;
+        scroll_factor = 0.75;
+        emulate_discrete_scroll = 2;
         repeat_delay = 200;
         repeat_rate = 50;
       };

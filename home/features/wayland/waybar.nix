@@ -7,6 +7,18 @@
   project-indicator = pkgs.writeShellScript "waybar-project-indicator" ''
     export PATH="${lib.makeBinPath (with pkgs; [coreutils jq hyprland socat procps gitMinimal])}"
 
+    # Walk process tree to find the deepest descendant
+    find_leaf() {
+      local p=$1
+      local child
+      while true; do
+        child=$(pgrep -P "$p" | tail -1)
+        [ -z "$child" ] && break
+        p=$child
+      done
+      echo "$p"
+    }
+
     get_project() {
       local win_json pid class
       win_json=$(hyprctl activewindow -j 2>/dev/null) || return
@@ -21,11 +33,9 @@
       local cwd=""
       case "$class" in
         ghostty|kitty|org.wezfurlong.wezterm|Alacritty|foot)
-          local child_pid
-          child_pid=$(pgrep -P "$pid" | head -1)
-          if [ -n "$child_pid" ]; then
-            cwd=$(readlink "/proc/$child_pid/cwd" 2>/dev/null)
-          fi
+          local leaf_pid
+          leaf_pid=$(find_leaf "$pid")
+          cwd=$(readlink "/proc/$leaf_pid/cwd" 2>/dev/null)
           ;;
         *)
           cwd=$(readlink "/proc/$pid/cwd" 2>/dev/null)
