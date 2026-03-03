@@ -13,6 +13,7 @@
   my.terminals.ghostty.enable = true;
   my.terminals.kitty.enable = true;
   my.terminals.wezterm.enable = true;
+  my.terminals.zellij.enable = true;
   my.wayland.enable = true;
   my.wayland.hyprland.enable = true;
 }

@@ -8,6 +8,7 @@
     ./terminals/ghostty.nix
     ./terminals/kitty.nix
     ./terminals/wezterm.nix
+    ./terminals/zellij.nix
     ./wayland
   ];
 }
