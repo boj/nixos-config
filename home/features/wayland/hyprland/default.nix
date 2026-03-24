@@ -14,7 +14,23 @@ in {
     ./settings.nix
   ];
 
-  options.my.wayland.hyprland.enable = lib.mkEnableOption "Hyprland window manager";
+  options.my.wayland.hyprland = {
+    enable = lib.mkEnableOption "Hyprland window manager";
+
+    monitors = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [];
+      description = "Hyprland monitor configuration strings";
+      example = [ "DP-1,1920x1080@240,0x0,1" ];
+    };
+
+    workspaces = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [];
+      description = "Hyprland workspace configuration strings";
+      example = [ "1,monitor:DP-1,default:true" ];
+    };
+  };
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [

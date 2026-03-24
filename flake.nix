@@ -51,7 +51,25 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.${username} = import ./home/bojo.nix;
+            home-manager.users.${username} = {
+              imports = [(import ./home/bojo.nix)];
+              my.wayland.hyprland.monitors = [
+                "DP-1,1920x1080@240,0x0,1"
+                "DP-3,1920x1080@240,1920x0,1"
+              ];
+              my.wayland.hyprland.workspaces = [
+                "1,monitor:DP-1,default:true"
+                "2,monitor:DP-1"
+                "3,monitor:DP-1"
+                "4,monitor:DP-1"
+                "5,monitor:DP-1"
+                "6,monitor:DP-3,default:true"
+                "7,monitor:DP-3"
+                "8,monitor:DP-3"
+                "9,monitor:DP-3"
+                "10,monitor:DP-3"
+              ];
+            };
             home-manager.extraSpecialArgs = {inherit inputs username;};
           }
         ];
@@ -65,7 +83,26 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.${username} = import ./home/bojo.nix;
+            home-manager.users.${username} = {
+              imports = [(import ./home/bojo.nix)];
+              my.wayland.hyprland.monitors = [
+                "DP-1,1920x1080@60,0x0,1"
+                "DP-2,1920x1080@60,1920x0,1"
+                "DP-3,3840x2160@120,0x0,1920"
+              ];
+              my.wayland.hyprland.workspaces = [
+                "1,monitor:DP-1,default:true"
+                "2,monitor:DP-1"
+                "3,monitor:DP-1"
+                "4,monitor:DP-1"
+                "5,monitor:DP-1"
+                "6,monitor:DP-2,default:true"
+                "7,monitor:DP-2"
+                "8,monitor:DP-2"
+                "9,monitor:DP-2"
+                "10,monitor:DP-2"
+              ];
+            };
             home-manager.extraSpecialArgs = {inherit inputs username;};
           }
         ];
