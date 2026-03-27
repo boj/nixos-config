@@ -57,6 +57,7 @@
             home-manager.useUserPackages = true;
             home-manager.users.${username} = {
               imports = [(import ./home/bojo.nix)];
+              my.wayland.hyprland.useFunctionKeys = true;
               my.wayland.hyprland.monitors = [
                 "DP-1,1920x1080@240,0x0,1"
                 "DP-3,1920x1080@240,1920x0,1"

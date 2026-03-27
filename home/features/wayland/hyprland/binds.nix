@@ -10,9 +10,10 @@
           c = (x + 1) / 10;
         in
           builtins.toString (x + 1 - (c * 10));
+        key = if config.my.wayland.hyprland.useFunctionKeys then "F${ws}" else ws;
       in [
-        "$mod, ${ws}, workspace, ${toString (x + 1)}"
-        "$mod SHIFT, ${ws}, movetoworkspacesilent, ${toString (x + 1)}"
+        "$mod, ${key}, workspace, ${toString (x + 1)}"
+        "$mod SHIFT, ${key}, movetoworkspacesilent, ${toString (x + 1)}"
       ]
     )
     10);

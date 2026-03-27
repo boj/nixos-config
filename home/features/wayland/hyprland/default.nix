@@ -32,6 +32,12 @@ in {
       example = [ "[workspace 1 silent] firefox" ];
     };
 
+    useFunctionKeys = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Use function keys (F1-F9, F10) instead of number keys for workspace switching";
+    };
+
     workspaces = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [];
