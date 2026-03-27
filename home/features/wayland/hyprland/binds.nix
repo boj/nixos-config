@@ -123,6 +123,9 @@ in {
           "$mod, Prior, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
           "$mod, Next, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
 
+          "$mod CTRL, bracketright, movecurrentworkspacetomonitor, +1"
+          "$mod CTRL, bracketleft, movecurrentworkspacetomonitor, -1"
+
           "$mod, O, exec, ${workspace-overview}"
         ]
         ++ workspaces;
