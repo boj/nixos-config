@@ -10,6 +10,7 @@ let
 in {
   imports = [
     ./binds.nix
+    ./hyprlock.nix
     ./rules.nix
     ./settings.nix
   ];
@@ -24,6 +25,13 @@ in {
       example = [ "DP-1,1920x1080@240,0x0,1" ];
     };
 
+    execOnce = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [];
+      description = "Hyprland exec-once commands (per-host startup apps)";
+      example = [ "[workspace 1 silent] firefox" ];
+    };
+
     workspaces = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [];
@@ -34,6 +42,7 @@ in {
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
+      hyprlock
       hyprpaper
       hyprpicker
       inputs.hyprland-contrib.packages.${pkgs.stdenv.hostPlatform.system}.grimblast

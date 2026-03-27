@@ -11,7 +11,7 @@
         in
           builtins.toString (x + 1 - (c * 10));
       in [
-        "$mod, F${ws}, workspace, ${toString (x + 1)}"
+        "$mod, ${ws}, workspace, ${toString (x + 1)}"
         "$mod SHIFT, ${ws}, movetoworkspacesilent, ${toString (x + 1)}"
       ]
     )
@@ -87,6 +87,9 @@ in {
           "$mod SHIFT, F, exec, grimblast copysave output ~/.screenshots/$(date +'%s_hypr.png')"
           "$mod SHIFT, G, exec, grimblast copy active"
           "$mod CTRL, P, exec, swayidle timeout 2 'sleep 1; hyprctl dispatcher dpms off' resume 'hyprctl dispatcher dpms on & pkill swayidle'"
+          "$mod CTRL, L, exec, hyprlock"
+          "$mod CTRL ALT, P, exec, hyprlock & sleep 1 && systemctl hibernate"
+          "$mod CTRL ALT, S, exec, hyprlock & sleep 1 && systemctl suspend"
 
           "$mod SHIFT, Q, killactive,"
           "$mod CTRL, E, exit,"

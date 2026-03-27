@@ -15,11 +15,7 @@
         "dunst"
         "waybar"
         "hyprpaper"
-
-        "[workspace 1 silent] firefox"
-        "[workspace 6 silent] discord"
-        "[workspace 6 silent] kitty btop"
-      ];
+      ] ++ config.my.wayland.hyprland.execOnce;
 
       input = {
         kb_layout = "us";
@@ -27,8 +23,8 @@
         touchpad = {
           natural_scroll = false;
         };
-        sensitivity = -0.5;
-        scroll_factor = 0.75;
+        sensitivity = 0.0;
+        scroll_factor = 1.0;
         emulate_discrete_scroll = 2;
         repeat_delay = 200;
         repeat_rate = 50;

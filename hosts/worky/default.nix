@@ -19,7 +19,11 @@
   # Host-specific
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.resumeDevice = "/dev/disk/by-uuid/919c6432-cc35-4991-9ef5-9b9a300dac2f";
+  boot.kernelParams = ["resume=/dev/disk/by-uuid/919c6432-cc35-4991-9ef5-9b9a300dac2f"];
   networking.hostName = "worky";
   programs.dconf.enable = true;
+  services.logind.lidSwitch = "hibernate";
+  services.logind.powerKey = "hibernate";
   system.stateVersion = "23.11";
 }
