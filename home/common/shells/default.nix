@@ -21,6 +21,7 @@
     fzf
     jq
     mplayer
+    ncdu
     ripgrep
     socat
     usbutils

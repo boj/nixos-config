@@ -16,6 +16,9 @@
   my.rust.enable = true;
   my.virtualization.docker.enable = true;
 
+  # Firewall — open syslog port for SIEM-Daimon
+  networking.firewall.allowedUDPPorts = [5514];
+
   # Host-specific
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;

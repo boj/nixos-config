@@ -28,6 +28,10 @@
     };
 
     nix-colors.url = "github:misterio77/nix-colors";
+    zjstatus = {
+      url = "github:dj95/zjstatus";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {

@@ -13,5 +13,7 @@ let cfg = config.my.ssh; in {
         PermitRootLogin = "no";
       };
     };
+
+    programs.mosh.enable = true;
   };
 }
