@@ -3,6 +3,7 @@
   lib,
   pkgs,
   inputs,
+  defaultWallpaper,
   ...
 }:
 let
@@ -30,11 +31,13 @@ in {
     stylix.targets.gtk.enable = false;
     stylix.targets.gnome.enable = false;
     stylix.targets.fontconfig.enable = false;
+    stylix.targets.btop.enable = false;
 
     home.packages = with pkgs; [
       # wayland
       grim
       libnotify
+      matugen
       mpvpaper
       slurp
       swww
@@ -45,6 +48,28 @@ in {
       wofi
       ydotool
     ];
+
+    xdg.configFile."matugen/config.toml".text = ''
+      [config]
+      variant = "dark"
+      palette = "scheme-tonal-spot"
+      contrast = 0.0
+
+      [templates.waybar]
+      input_path = "${./templates/waybar.css}"
+      output_path = "~/.config/waybar/style.css"
+
+      [templates.hyprland-colors]
+      input_path = "${./templates/hyprland-colors.conf}"
+      output_path = "~/.config/hypr/matugen-colors.conf"
+    '';
+
+    home.activation.matugenInit = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      rm -f "$HOME/.config/waybar/style.css"
+      mkdir -p "$HOME/.config/hypr"
+      touch "$HOME/.config/hypr/matugen-colors.conf"
+      ${pkgs.matugen}/bin/matugen image ${defaultWallpaper} --source-color-index 0 --continue-on-error -c "$HOME/.config/matugen/config.toml" 2>/dev/null || true
+    '';
 
     home.sessionVariables = {
       # SDL_VIDEODRIVER = "wayland";

@@ -1,0 +1,197 @@
+@define-color mainbg {{colors.surface_dim.default.hex}};
+@define-color modulesbg {{colors.surface_container.default.hex}};
+@define-color text {{colors.on_surface.default.hex}};
+@define-color empty {{colors.surface_container_low.default.hex}};
+@define-color persistent {{colors.outline.default.hex}};
+@define-color red {{colors.error.default.hex}};
+@define-color peach {{colors.tertiary.default.hex}};
+@define-color yellow {{colors.secondary.default.hex}};
+@define-color green {{colors.primary.default.hex}};
+@define-color teal {{colors.secondary.default.hex}};
+@define-color blue {{colors.primary.default.hex}};
+@define-color mauve {{colors.tertiary.default.hex}};
+@define-color rosewater {{colors.on_secondary_container.default.hex}};
+@define-color lavender {{colors.on_primary_container.default.hex}};
+
+* {
+  all: initial;
+  font-family:'JetBrainsMono Nerd Font';
+  padding-left: 1px;
+  padding-right: 1px;
+}
+
+window#waybar {
+	background: @mainbg;
+	border: 1px solid @lavender;
+	border-radius: 5px;
+}
+
+tooltip {
+  background: {{colors.surface_container_high.default.hex}};
+  border: 2px solid @teal;
+  border-radius: 5px;
+  font-size: 12pt;
+}
+
+tooltip label {
+  padding: 10px;
+}
+
+#custom-weather {
+  font-size: 14px;
+  padding: 20px 5px 10px 5px;
+  color: @teal;
+  background: @modulesbg;
+  border-bottom: 3px solid @teal;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 50px;
+}
+
+#workspaces {
+  margin: 100px 0px 0px 0px;
+  background: @modulesbg;
+  font-size: 12pt;
+  padding: 20px 0px;
+  border-top:3px solid @blue;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 5px;
+  border-bottom: 3px solid @blue;
+  border-bottom-right-radius: 50px;
+  border-bottom-left-radius: 5px;
+}
+
+#workspaces button {
+  font-size: 18pt;
+  padding: 2px;
+  margin: 5px 6px;
+  border-radius: 10px;
+}
+
+#workspaces button.persistent {
+  background-color: @persistent;
+}
+
+#workspaces button.empty {
+  background-color: @empty;
+}
+
+#workspaces button.visible {
+  background-color: @empty;
+}
+
+#workspaces button.active {
+  background-color: @blue;
+}
+
+#workspaces button.urgent {
+  background-color: @red;
+}
+
+#workspaces button:hover {
+  background-color: @peach;
+}
+
+#pulseaudio, #clock, #clock.date, #clock.time {
+  background: @modulesbg;
+}
+
+#pulseaudio {
+  padding: 1px 5px 1px 5px;
+  color: @text;
+  font-size: 16px;
+}
+
+#clock.date {
+  padding: 30px 5px 10px 5px;
+  font-size: 14px;
+  color: @rosewater;
+  border-top:3px solid @mauve;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 5px;
+}
+
+#clock.time {
+  padding: 10px 5px 30px 5px;
+  font-size: 14px;
+  color: @teal;
+  border-bottom: 3px solid @mauve;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 50px;
+}
+
+#pulseaudio-slider, #pulseaudio.percentage, #battery, #battery.percentage {
+  background-color: @modulesbg;
+}
+
+#pulseaudio-slider {
+  padding: 15px 0px 5px 0px;
+  border-top: 3px solid @peach;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 5px;
+}
+#pulseaudio-slider slider {
+    min-height: 0px;
+    min-width: 1px;
+    opacity: 0;
+    background-image: none;
+    border: none;
+    box-shadow: none;
+}
+#pulseaudio-slider trough {
+    min-height: 70px;
+    min-width: 0px;
+    border-radius: 5px;
+    background-color: @peach;
+}
+#pulseaudio-slider highlight {
+    min-width: 10px;
+    border-radius: 5px;
+    background-color: @teal;
+}
+
+#pulseaudio.percentage {
+  font-size: 12px;
+  margin: 0px 0px;
+  padding: 2px 5px;
+  color: @text;
+}
+
+#battery {
+  padding: 10px 5px 1px 5px;
+  color: @text;
+  font-size: 16px;
+}
+
+#battery.charging {
+  color: @green;
+}
+
+#battery.plugged {
+  color: @green;
+}
+
+#battery.warning:not(.charging):not(.plugged) {
+  color: @yellow;
+}
+
+#battery.critical:not(.charging):not(.plugged) {
+  color: @red;
+}
+
+#battery.percentage {
+  font-size: 12px;
+  margin: 0px 0px;
+  padding: 2px 5px 15px 5px;
+  color: @text;
+  border-bottom: 3px solid @peach;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 50px;
+}
+
+#battery.percentage.warning:not(.charging):not(.plugged) {
+  color: @yellow;
+}
+
+#battery.percentage.critical:not(.charging):not(.plugged) {
+  color: @red;
+}

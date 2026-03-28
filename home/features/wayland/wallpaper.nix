@@ -5,7 +5,7 @@
   ...
 }: let
   fetch-wallpaper = pkgs.writeShellScript "fetch-wallpaper" ''
-    export PATH="${lib.makeBinPath (with pkgs; [curl coreutils jq swww])}"
+    export PATH="${lib.makeBinPath (with pkgs; [curl coreutils jq swww matugen hyprland procps waybar])}"
     IMG="$HOME/.cache/wallpaper.jpg"
     TMP="$HOME/.cache/wallpaper-tmp.jpg"
 
@@ -16,13 +16,16 @@
     done
 
     # Fetch a random sci-fi wallpaper from wallhaven
-    URL=$(curl -fsSL "https://wallhaven.cc/api/v1/search?q=sci-fi+dark&categories=100&purity=100&sorting=random&atleast=1920x1080" \
+    URL=$(curl -fsSL "https://wallhaven.cc/api/v1/search?q=dark+nature&categories=100&purity=100&sorting=random&atleast=1920x1080" \
       | jq -r '.data[0].path')
 
     if [ -n "$URL" ] && [ "$URL" != "null" ]; then
       curl -fsSL -o "$TMP" "$URL" \
         && mv "$TMP" "$IMG" \
         && swww img "$IMG" --transition-type random --transition-duration 2 \
+        && matugen image "$IMG" --source-color-index 0 --continue-on-error -c "$HOME/.config/matugen/config.toml" 2>/dev/null \
+        && hyprctl reload 2>/dev/null \
+        && (pkill -SIGUSR2 waybar) \
         || rm -f "$TMP"
     fi
   '';

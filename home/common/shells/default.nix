@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{pkgs, config, ...}: {
   imports = [
     ./fastfetch.nix
     ./fish.nix
@@ -29,7 +29,6 @@
 
     # cli
     bat
-    btop-rocm
     eza
 
     # fonts
@@ -43,6 +42,27 @@
     powerline-fonts
     powerline-symbols
   ];
+
+  programs.btop = {
+    enable = true;
+    package = pkgs.btop-rocm;
+    settings = {
+      color_theme = "catppuccin_mocha";
+      theme_background = false;
+      vim_keys = true;
+      shown_boxes = "cpu mem net proc gpu0";
+      show_gpu_info = "On";
+    };
+  };
+
+  xdg.configFile."btop/themes/catppuccin_mocha.theme".source =
+    pkgs.fetchFromGitHub {
+      owner = "catppuccin";
+      repo = "btop";
+      rev = "1.0.0";
+      hash = "sha256-J3UezOQMDdxpflGax0rGBF/XMiKqdqZXuX4KMVGTxFk=";
+    }
+    + "/themes/catppuccin_mocha.theme";
 
   home.sessionVariables = {
     FZF_DEFAULT_COMMAND = "rg --files --hidden";

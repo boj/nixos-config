@@ -47,6 +47,7 @@
     system = "x86_64-linux";
     username = "bojo";
     specialArgs = {inherit inputs username;};
+    defaultWallpaper = ./hyprland.png;
     stylixConfig = {pkgs, ...}: {
       stylix = {
         enable = true;
@@ -79,7 +80,7 @@
                 "[workspace 1 silent] firefox"
               ];
             };
-            home-manager.extraSpecialArgs = {inherit inputs username;};
+            home-manager.extraSpecialArgs = {inherit inputs username defaultWallpaper;};
           }
         ];
       };
@@ -108,7 +109,7 @@
               ];
               my.wayland.hyprland.idleTimeout = 1200;
             };
-            home-manager.extraSpecialArgs = {inherit inputs username;};
+            home-manager.extraSpecialArgs = {inherit inputs username defaultWallpaper;};
           }
         ];
       };
@@ -123,7 +124,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.${username} = import ./home/wsl.nix;
-            home-manager.extraSpecialArgs = {inherit inputs username;};
+            home-manager.extraSpecialArgs = {inherit inputs username defaultWallpaper;};
           }
         ];
       };
