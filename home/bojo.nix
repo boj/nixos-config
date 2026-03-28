@@ -15,5 +15,6 @@
   my.terminals.wezterm.enable = true;
   my.terminals.zellij.enable = true;
   my.wayland.enable = true;
+  my.wayland.ags.enable = false;
   my.wayland.hyprland.enable = true;
 }

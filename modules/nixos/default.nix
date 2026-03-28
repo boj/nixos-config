@@ -13,6 +13,7 @@
     ./steam.nix
     ./tailscale.nix
     ./udev.nix
+    ./wifi.nix
     ./wine.nix
     ./xdg.nix
     ./virtualization/docker.nix
