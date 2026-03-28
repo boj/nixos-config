@@ -10,6 +10,7 @@ let
 in {
   imports = [
     ./binds.nix
+    ./hypridle.nix
     ./hyprlock.nix
     ./rules.nix
     ./settings.nix
@@ -38,6 +39,13 @@ in {
       description = "Use function keys (F1-F9, F10) instead of number keys for workspace switching";
     };
 
+    idleTimeout = lib.mkOption {
+      type = lib.types.nullOr lib.types.int;
+      default = null;
+      description = "Idle timeout in seconds before locking screen (null to disable hypridle)";
+      example = 1200;
+    };
+
     workspaces = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [];
@@ -48,6 +56,7 @@ in {
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
+      hypridle
       hyprlock
       hyprpaper
       hyprpicker

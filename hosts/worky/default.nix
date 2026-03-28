@@ -25,5 +25,14 @@
   programs.dconf.enable = true;
   services.logind.lidSwitch = "hibernate";
   services.logind.powerKey = "hibernate";
+
+  # Restart networking and tailscale after hibernate/suspend
+  powerManagement.resumeCommands = ''
+    systemctl restart NetworkManager
+    sleep 5
+    tailscale down
+    tailscale up
+  '';
+
   system.stateVersion = "23.11";
 }

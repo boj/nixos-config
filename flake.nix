@@ -86,9 +86,11 @@
                 "DP-2,1920x1080@60,1920x0,1"
                 "eDP-1,1920x1080@120,0x1080,1"
               ];
+              my.wayland.battery.enable = true;
               my.wayland.hyprland.execOnce = [
                 "[workspace 1 silent] firefox"
               ];
+              my.wayland.hyprland.idleTimeout = 1200;
             };
             home-manager.extraSpecialArgs = {inherit inputs username;};
           }

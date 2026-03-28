@@ -4,6 +4,8 @@
   pkgs,
   ...
 }: let
+  batteryEnabled = config.my.wayland.battery.enable;
+in let
   project-indicator = pkgs.writeShellScript "waybar-project-indicator" ''
     export PATH="${lib.makeBinPath (with pkgs; [coreutils jq hyprland socat procps gitMinimal])}"
 
@@ -75,6 +77,8 @@
     done
   '';
 in {
+  options.my.wayland.battery.enable = lib.mkEnableOption "battery indicator in waybar";
+
   config = lib.mkIf config.my.wayland.enable {
     programs.waybar = {
       enable = true;
@@ -88,7 +92,8 @@ in {
           reload_style_on_change = true;
           modules-left = ["custom/project" "hyprland/workspaces"];
           modules-center = ["clock#date" "clock#time"];
-          modules-right = ["pulseaudio/slider" "pulseaudio#percentage"];
+          modules-right = ["pulseaudio/slider" "pulseaudio#percentage"]
+            ++ lib.optionals batteryEnabled ["battery" "battery#percentage"];
           "custom/project" = {
             exec = "${project-indicator}";
             return-type = "json";
@@ -142,23 +147,44 @@ in {
             max = 100;
             orientation = "vertical";
           };
+          "battery" = lib.mkIf batteryEnabled {
+            interval = 10;
+            states = {
+              warning = 30;
+              critical = 15;
+            };
+            format = "{icon}";
+            format-charging = "󰂄";
+            format-plugged = "󰚥";
+            format-icons = ["󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
+          };
+          "battery#percentage" = lib.mkIf batteryEnabled {
+            interval = 10;
+            states = {
+              warning = 30;
+              critical = 15;
+            };
+            format = "{capacity}%";
+            format-charging = "{capacity}%";
+            format-plugged = "{capacity}%";
+          };
         };
       };
       style = ''
         @define-color mainbg #${config.colorScheme.palette.base00};
         @define-color modulesbg #${config.colorScheme.palette.base01};
         @define-color text #${config.colorScheme.palette.base05};
-        @define-color alttext1 #${config.colorScheme.palette.base0C};
-        @define-color alttext2 #${config.colorScheme.palette.base05};
-        @define-color border #${config.colorScheme.palette.base0E};
         @define-color empty #${config.colorScheme.palette.base02};
         @define-color persistent #${config.colorScheme.palette.base04};
-        @define-color hover #${config.colorScheme.palette.base09};
-        @define-color white #${config.colorScheme.palette.base05};
         @define-color red #${config.colorScheme.palette.base08};
-        @define-color orange #${config.colorScheme.palette.base09};
+        @define-color peach #${config.colorScheme.palette.base09};
         @define-color yellow #${config.colorScheme.palette.base0A};
         @define-color green #${config.colorScheme.palette.base0B};
+        @define-color teal #${config.colorScheme.palette.base0C};
+        @define-color blue #${config.colorScheme.palette.base0D};
+        @define-color mauve #${config.colorScheme.palette.base0E};
+        @define-color rosewater #${config.colorScheme.palette.base06};
+        @define-color lavender #${config.colorScheme.palette.base07};
 
         * {
           all: initial;
@@ -169,13 +195,13 @@ in {
 
         window#waybar {
         	background: @mainbg;
-        	border: 1px solid @border;
+        	border: 1px solid @lavender;
         	border-radius: 5px;
         }
 
         tooltip {
           background: #${config.colorScheme.palette.base03};
-          border: 2px solid #${config.colorScheme.palette.base0C};
+          border: 2px solid @teal;
           border-radius: 5px;
           font-size: 12pt;
         }
@@ -200,8 +226,8 @@ in {
         }
 
         #custom-project.directory {
-          color: @alttext2;
-          border-top-color: @border;
+          color: @rosewater;
+          border-top-color: @mauve;
         }
 
         #custom-project.empty {
@@ -218,10 +244,10 @@ in {
           background: @modulesbg;
           font-size: 12pt;
           padding: 20px 0px;
-          border-top:3px solid @border;
+          border-top:3px solid @blue;
           border-top-left-radius: 50px;
           border-top-right-radius: 5px;
-          border-bottom: 3px solid @border;
+          border-bottom: 3px solid @blue;
           border-bottom-right-radius: 50px;
           border-bottom-left-radius: 5px;
         }
@@ -246,7 +272,7 @@ in {
         }
 
         #workspaces button.active {
-          background-color: @green;
+          background-color: @blue;
         }
 
         #workspaces button.urgent {
@@ -254,7 +280,7 @@ in {
         }
 
         #workspaces button:hover {
-          background-color: @hover;
+          background-color: @peach;
         }
 
         #pulseaudio, #clock, #clock.date, #clock.time {
@@ -270,8 +296,8 @@ in {
         #clock.date {
           padding: 30px 5px 10px 5px;
           font-size: 14px;
-          color: @alttext2;
-          border-top:3px solid @border;
+          color: @rosewater;
+          border-top:3px solid @mauve;
           border-top-left-radius: 50px;
           border-top-right-radius: 5px;
         }
@@ -279,19 +305,19 @@ in {
         #clock.time {
           padding: 10px 5px 30px 5px;
           font-size: 14px;
-          color: @alttext1;
-          border-bottom: 3px solid @border;
+          color: @teal;
+          border-bottom: 3px solid @mauve;
           border-bottom-left-radius: 5px;
           border-bottom-right-radius: 50px;
         }
 
-        #pulseaudio-slider, #pulseaudio.percentage {
+        #pulseaudio-slider, #pulseaudio.percentage, #battery, #battery.percentage {
           background-color: @modulesbg;
         }
 
         #pulseaudio-slider {
           padding: 15px 0px 5px 0px;
-          border-top: 3px solid @border;
+          border-top: 3px solid @peach;
           border-top-left-radius: 50px;
           border-top-right-radius: 5px;
         }
@@ -307,12 +333,12 @@ in {
             min-height: 70px;
             min-width: 0px;
             border-radius: 5px;
-            background-color: @border;
+            background-color: @peach;
         }
         #pulseaudio-slider highlight {
             min-width: 10px;
             border-radius: 5px;
-            background-color: @white;
+            background-color: @teal;
         }
 
         #pulseaudio.percentage {
@@ -320,6 +346,46 @@ in {
           margin: 0px 0px;
           padding: 2px 5px;
           color: @text;
+        }
+
+        #battery {
+          padding: 10px 5px 1px 5px;
+          color: @text;
+          font-size: 16px;
+        }
+
+        #battery.charging {
+          color: @green;
+        }
+
+        #battery.plugged {
+          color: @green;
+        }
+
+        #battery.warning:not(.charging):not(.plugged) {
+          color: @yellow;
+        }
+
+        #battery.critical:not(.charging):not(.plugged) {
+          color: @red;
+        }
+
+        #battery.percentage {
+          font-size: 12px;
+          margin: 0px 0px;
+          padding: 2px 5px 15px 5px;
+          color: @text;
+          border-bottom: 3px solid @peach;
+          border-bottom-left-radius: 5px;
+          border-bottom-right-radius: 50px;
+        }
+
+        #battery.percentage.warning:not(.charging):not(.plugged) {
+          color: @yellow;
+        }
+
+        #battery.percentage.critical:not(.charging):not(.plugged) {
+          color: @red;
         }
       '';
     };
