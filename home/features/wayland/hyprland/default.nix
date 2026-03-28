@@ -60,6 +60,8 @@ in {
       hyprlock
       hyprpaper
       hyprpicker
+      brightnessctl
+      playerctl
       inputs.hyprland-contrib.packages.${pkgs.stdenv.hostPlatform.system}.grimblast
     ];
 

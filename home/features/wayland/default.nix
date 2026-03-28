@@ -12,17 +12,24 @@ in {
     ./dunst.nix
     ./waybar.nix
     ./wofi.nix
+    ./wallpaper.nix
     ./gtk.nix
     ./qt.nix
     ./ags.nix
     ./hyprland
-    inputs.nix-colors.homeManagerModules.default
   ];
 
   options.my.wayland.enable = lib.mkEnableOption "Wayland desktop environment";
 
   config = lib.mkIf cfg.enable {
-    colorScheme = inputs.nix-colors.colorSchemes.catppuccin-mocha;
+    stylix.targets.waybar.enable = false;
+    stylix.targets.hyprland.enable = false;
+    stylix.targets.hyprlock.enable = false;
+    stylix.targets.dunst.enable = false;
+    stylix.targets.wofi.enable = false;
+    stylix.targets.gtk.enable = false;
+    stylix.targets.gnome.enable = false;
+    stylix.targets.fontconfig.enable = false;
 
     home.packages = with pkgs; [
       # wayland

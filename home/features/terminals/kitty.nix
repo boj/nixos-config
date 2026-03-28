@@ -29,7 +29,6 @@ in {
         background_opacity = "0.5";
         background_blur = 5;
       };
-      themeFile = "Catppuccin-Mocha";
     };
   };
 }

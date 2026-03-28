@@ -35,7 +35,7 @@ in {
     };
 
     xdg.configFile."hypr/hyprlock.conf".text = let
-      palette = config.colorScheme.palette;
+      palette = config.lib.stylix.colors;
     in ''
       general {
         hide_cursor = true

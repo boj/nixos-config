@@ -6,78 +6,50 @@
 }: let
   batteryEnabled = config.my.wayland.battery.enable;
 in let
-  project-indicator = pkgs.writeShellScript "waybar-project-indicator" ''
-    export PATH="${lib.makeBinPath (with pkgs; [coreutils jq hyprland socat procps gitMinimal])}"
+  weather-indicator = pkgs.writeShellScript "waybar-weather" ''
+    export PATH="${lib.makeBinPath (with pkgs; [curl coreutils jq])}"
 
-    # Walk process tree to find the deepest descendant
-    find_leaf() {
-      local p=$1
-      local child
-      while true; do
-        child=$(pgrep -P "$p" | tail -1)
-        [ -z "$child" ] && break
-        p=$child
-      done
-      echo "$p"
-    }
+    DATA=$(curl -fsSL --max-time 10 "wttr.in/${config.my.wayland.weather.location}?format=j1" 2>/dev/null) || true
 
-    get_project() {
-      local win_json pid class
-      win_json=$(hyprctl activewindow -j 2>/dev/null) || return
-      pid=$(echo "$win_json" | jq -r '.pid // empty')
-      class=$(echo "$win_json" | jq -r '.class // empty')
+    if [ -z "$DATA" ] || ! echo "$DATA" | jq -e '.current_condition[0]' >/dev/null 2>&1; then
+      echo '{"text":"--°F","tooltip":"Weather unavailable","class":"error"}'
+      exit 0
+    fi
 
-      if [ -z "$pid" ] || [ "$pid" = "null" ]; then
-        echo '{"text":"","class":"empty"}'
-        return
-      fi
+    TEMP=$(echo "$DATA" | jq -r '.current_condition[0].temp_F')
+    CONDITION=$(echo "$DATA" | jq -r '.current_condition[0].weatherDesc[0].value')
+    FEELS_LIKE=$(echo "$DATA" | jq -r '.current_condition[0].FeelsLikeF')
+    HUMIDITY=$(echo "$DATA" | jq -r '.current_condition[0].humidity')
+    WIND_MPH=$(echo "$DATA" | jq -r '.current_condition[0].windspeedMiles')
+    AREA=$(echo "$DATA" | jq -r '.nearest_area[0].areaName[0].value')
+    REGION=$(echo "$DATA" | jq -r '.nearest_area[0].region[0].value')
 
-      local cwd=""
-      case "$class" in
-        ghostty|kitty|org.wezfurlong.wezterm|Alacritty|foot)
-          local leaf_pid
-          leaf_pid=$(find_leaf "$pid")
-          cwd=$(readlink "/proc/$leaf_pid/cwd" 2>/dev/null)
-          ;;
-        *)
-          cwd=$(readlink "/proc/$pid/cwd" 2>/dev/null)
-          ;;
-      esac
+    case "$CONDITION" in
+      *Thunder*)        ICON="⛈" ;;
+      *Snow*|*Blizzard*) ICON="❄" ;;
+      *Sleet*|*Ice*)    ICON="🌨" ;;
+      *Rain*|*Drizzle*|*Shower*) ICON="🌧" ;;
+      *Fog*|*Mist*|*Haze*) ICON="🌫" ;;
+      *Overcast*)       ICON="☁" ;;
+      *Cloud*)          ICON="⛅" ;;
+      *Sunny*|*Clear*)  ICON="☀" ;;
+      *)                ICON="🌤" ;;
+    esac
 
-      if [ -z "$cwd" ]; then
-        echo '{"text":"","class":"empty"}'
-        return
-      fi
+    TOOLTIP=$(printf "%s, %s\n%s\nFeels like: %s°F\nHumidity: %s%%\nWind: %s mph" \
+      "$AREA" "$REGION" "$CONDITION" "$FEELS_LIKE" "$HUMIDITY" "$WIND_MPH")
 
-      local git_root branch project_name
-      git_root=$(git -C "$cwd" rev-parse --show-toplevel 2>/dev/null)
-
-      if [ -n "$git_root" ]; then
-        project_name=$(basename "$git_root")
-        branch=$(git -C "$git_root" symbolic-ref --short HEAD 2>/dev/null || git -C "$git_root" rev-parse --short HEAD 2>/dev/null)
-        local tooltip="$project_name  $branch\n$git_root"
-        printf '{"text":"%s","tooltip":"%s","class":"project"}\n' "$project_name" "$tooltip"
-      else
-        project_name=$(basename "$cwd")
-        printf '{"text":"%s","tooltip":"%s","class":"directory"}\n' "$project_name" "$cwd"
-      fi
-    }
-
-    # Initial output
-    get_project
-
-    # Listen to Hyprland socket2 events
-    HYPRLAND_SOCKET2="''${XDG_RUNTIME_DIR}/hypr/''${HYPRLAND_INSTANCE_SIGNATURE}/.socket2.sock"
-    socat -u "UNIX-CONNECT:''${HYPRLAND_SOCKET2}" - | while IFS= read -r line; do
-      case "$line" in
-        activewindow\>\>*|workspace\>\>*|focusedmon\>\>*|openwindow\>\>*|closewindow\>\>*)
-          get_project
-          ;;
-      esac
-    done
+    jq -nc --arg text "$TEMP°F $ICON" --arg tooltip "$TOOLTIP" \
+      '{"text":$text,"tooltip":$tooltip,"class":"weather"}'
   '';
 in {
   options.my.wayland.battery.enable = lib.mkEnableOption "battery indicator in waybar";
+
+  options.my.wayland.weather.location = lib.mkOption {
+    type = lib.types.str;
+    default = "Eagle+River,Alaska";
+    description = "Location for weather widget (wttr.in format)";
+  };
 
   config = lib.mkIf config.my.wayland.enable {
     programs.waybar = {
@@ -90,15 +62,16 @@ in {
           margin-bottom = 8;
           margin-left = 8;
           reload_style_on_change = true;
-          modules-left = ["custom/project" "hyprland/workspaces"];
+          modules-left = ["custom/weather" "hyprland/workspaces"];
           modules-center = ["clock#date" "clock#time"];
           modules-right = ["pulseaudio/slider" "pulseaudio#percentage"]
             ++ lib.optionals batteryEnabled ["battery" "battery#percentage"];
-          "custom/project" = {
-            exec = "${project-indicator}";
+          "custom/weather" = {
+            exec = "${weather-indicator}";
             return-type = "json";
             format = "{}";
             rotate = 270;
+            interval = 600;
           };
           "hyprland/workspaces" = {
             on-click = "activate";
@@ -171,20 +144,20 @@ in {
         };
       };
       style = ''
-        @define-color mainbg #${config.colorScheme.palette.base00};
-        @define-color modulesbg #${config.colorScheme.palette.base01};
-        @define-color text #${config.colorScheme.palette.base05};
-        @define-color empty #${config.colorScheme.palette.base02};
-        @define-color persistent #${config.colorScheme.palette.base04};
-        @define-color red #${config.colorScheme.palette.base08};
-        @define-color peach #${config.colorScheme.palette.base09};
-        @define-color yellow #${config.colorScheme.palette.base0A};
-        @define-color green #${config.colorScheme.palette.base0B};
-        @define-color teal #${config.colorScheme.palette.base0C};
-        @define-color blue #${config.colorScheme.palette.base0D};
-        @define-color mauve #${config.colorScheme.palette.base0E};
-        @define-color rosewater #${config.colorScheme.palette.base06};
-        @define-color lavender #${config.colorScheme.palette.base07};
+        @define-color mainbg #${config.lib.stylix.colors.base00};
+        @define-color modulesbg #${config.lib.stylix.colors.base01};
+        @define-color text #${config.lib.stylix.colors.base05};
+        @define-color empty #${config.lib.stylix.colors.base02};
+        @define-color persistent #${config.lib.stylix.colors.base04};
+        @define-color red #${config.lib.stylix.colors.base08};
+        @define-color peach #${config.lib.stylix.colors.base09};
+        @define-color yellow #${config.lib.stylix.colors.base0A};
+        @define-color green #${config.lib.stylix.colors.base0B};
+        @define-color teal #${config.lib.stylix.colors.base0C};
+        @define-color blue #${config.lib.stylix.colors.base0D};
+        @define-color mauve #${config.lib.stylix.colors.base0E};
+        @define-color rosewater #${config.lib.stylix.colors.base06};
+        @define-color lavender #${config.lib.stylix.colors.base07};
 
         * {
           all: initial;
@@ -200,7 +173,7 @@ in {
         }
 
         tooltip {
-          background: #${config.colorScheme.palette.base03};
+          background: #${config.lib.stylix.colors.base03};
           border: 2px solid @teal;
           border-radius: 5px;
           font-size: 12pt;
@@ -210,37 +183,18 @@ in {
           padding: 10px;
         }
 
-        #custom-project {
-          font-size: 12px;
+        #custom-weather {
+          font-size: 14px;
           padding: 20px 5px 10px 5px;
-          color: @text;
+          color: @teal;
           background: @modulesbg;
-          border-top: 3px solid @green;
-          border-top-left-radius: 50px;
-          border-top-right-radius: 5px;
-        }
-
-        #custom-project.project {
-          color: @green;
-          border-top-color: @green;
-        }
-
-        #custom-project.directory {
-          color: @rosewater;
-          border-top-color: @mauve;
-        }
-
-        #custom-project.empty {
-          padding: 0;
-          margin: 0;
-          border: none;
-          min-height: 0;
-          min-width: 0;
-          font-size: 0;
+          border-bottom: 3px solid @teal;
+          border-bottom-left-radius: 5px;
+          border-bottom-right-radius: 50px;
         }
 
         #workspaces {
-          margin: 10px 0px;
+          margin: 100px 0px 0px 0px;
           background: @modulesbg;
           font-size: 12pt;
           padding: 20px 0px;

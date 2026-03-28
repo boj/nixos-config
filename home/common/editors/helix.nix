@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   inputs,
   ...
@@ -15,7 +16,7 @@
     package = inputs.helix.packages.${pkgs.stdenv.hostPlatform.system}.helix;
     defaultEditor = true;
     settings = {
-      theme = "ao-trans";
+      theme = lib.mkForce "ao-trans";
     };
     themes = {
       nord-trans = {

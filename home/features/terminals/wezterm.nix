@@ -24,7 +24,6 @@ in {
           config = wezterm.config_builder()
         end
 
-        config.color_scheme = 'nord'
         config.enable_tab_bar = false
         config.font_size = 10.5
         config.text_background_opacity = 0.5

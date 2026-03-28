@@ -16,5 +16,7 @@
 
   home.stateVersion = "23.11";
 
+  systemd.user.startServices = "sd-switch";
+
   programs.home-manager.enable = true;
 }

@@ -27,7 +27,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-colors.url = "github:misterio77/nix-colors";
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     zjstatus = {
       url = "github:dj95/zjstatus";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -44,6 +47,14 @@
     system = "x86_64-linux";
     username = "bojo";
     specialArgs = {inherit inputs username;};
+    stylixConfig = {pkgs, ...}: {
+      stylix = {
+        enable = true;
+        image = ./hyprland.png;
+        base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+        polarity = "dark";
+      };
+    };
   in {
     nixosConfigurations = {
       "bruh" = nixpkgs.lib.nixosSystem {
@@ -51,6 +62,8 @@
         modules = [
           ./modules/nixos
           ./hosts/bruh
+          inputs.stylix.nixosModules.stylix
+          stylixConfig
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
@@ -75,12 +88,15 @@
         modules = [
           ./modules/nixos
           ./hosts/worky
+          inputs.stylix.nixosModules.stylix
+          stylixConfig
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.${username} = {
               imports = [(import ./home/bojo.nix)];
+              my.wayland.weather.location = "Palmer,Alaska";
               my.wayland.hyprland.monitors = [
                 "DP-1,1920x1080@60,0x0,1"
                 "DP-2,1920x1080@60,1920x0,1"

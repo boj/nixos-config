@@ -14,7 +14,7 @@
       exec-once = [
         "dunst"
         "waybar"
-        "hyprpaper"
+        "swww-daemon"
       ] ++ config.my.wayland.hyprland.execOnce;
 
       input = {
@@ -35,25 +35,25 @@
         key_press_enables_dpms = true;
         disable_hyprland_logo = true;
         disable_splash_rendering = true;
-        background_color = "rgb(${config.colorScheme.palette.base01})";
+        background_color = "rgb(${config.lib.stylix.colors.base01})";
       };
 
       general = {
         gaps_in = 5;
         gaps_out = 20;
         border_size = 2;
-        "col.active_border" = "rgba(${config.colorScheme.palette.base08}ee) rgba(${config.colorScheme.palette.base0A}ee) 45deg";
-        "col.inactive_border" = "rgba(${config.colorScheme.palette.base03}aa)";
+        "col.active_border" = "rgba(${config.lib.stylix.colors.base08}ee) rgba(${config.lib.stylix.colors.base0A}ee) 45deg";
+        "col.inactive_border" = "rgba(${config.lib.stylix.colors.base03}aa)";
         layout = "dwindle";
       };
 
       group = {
-        "col.border_active" = "rgba(${config.colorScheme.palette.base07}ee) rgba(${config.colorScheme.palette.base0F}ee) 45deg";
-        "col.border_inactive" = "rgba(${config.colorScheme.palette.base0E}aa)";
+        "col.border_active" = "rgba(${config.lib.stylix.colors.base07}ee) rgba(${config.lib.stylix.colors.base0F}ee) 45deg";
+        "col.border_inactive" = "rgba(${config.lib.stylix.colors.base0E}aa)";
         groupbar = {
           height = 2;
           render_titles = false;
-          "col.active" = "rgba(${config.colorScheme.palette.base0F}ee) rgba(${config.colorScheme.palette.base07}ee) 45deg";
+          "col.active" = "rgba(${config.lib.stylix.colors.base0F}ee) rgba(${config.lib.stylix.colors.base07}ee) 45deg";
           "col.inactive" = "rgba(aaaaaaee)";
         };
       };
@@ -79,7 +79,19 @@
 
       animations = {
         enabled = true;
+        bezier = [
+          "overshoot, 0.05, 0.9, 0.1, 1.1"
+          "smoothOut, 0.36, 0, 0.66, -0.56"
+        ];
+        animation = [
+          "windowsIn, 1, 5, overshoot, popin 80%"
+          "windowsOut, 1, 4, smoothOut, popin 80%"
+          "fadeIn, 1, 5, overshoot"
+          "fadeOut, 1, 4, smoothOut"
+          "workspaces, 1, 6, overshoot, slide"
+        ];
       };
+
 
       dwindle = {
         pseudotile = true;

@@ -19,7 +19,6 @@ in {
       settings = {
         "font-family" = "JetBrainsMono Nerd Font";
         "font-size" = 11;
-        "theme" = "Catppuccin Mocha";
         "background-opacity" = 0.5;
         "background-blur-radius" = 5;
         "window-padding-x" = 10;

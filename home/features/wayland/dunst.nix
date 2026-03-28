@@ -15,34 +15,34 @@
           offset = "20x20";
           corner_radius = 8;
           frame_width = 2;
-          frame_color = "#${config.colorScheme.palette.base0E}";
+          frame_color = "#${config.lib.stylix.colors.base0E}";
           separator_color = "frame";
           font = "JetBrainsMono Nerd Font 11";
           padding = 12;
           horizontal_padding = 14;
           icon_position = "left";
-          background = "#${config.colorScheme.palette.base00}";
-          foreground = "#${config.colorScheme.palette.base05}";
+          background = "#${config.lib.stylix.colors.base00}";
+          foreground = "#${config.lib.stylix.colors.base05}";
         };
 
         urgency_low = {
-          background = "#${config.colorScheme.palette.base01}";
-          foreground = "#${config.colorScheme.palette.base05}";
-          frame_color = "#${config.colorScheme.palette.base04}";
+          background = "#${config.lib.stylix.colors.base01}";
+          foreground = "#${config.lib.stylix.colors.base05}";
+          frame_color = "#${config.lib.stylix.colors.base04}";
           timeout = 5;
         };
 
         urgency_normal = {
-          background = "#${config.colorScheme.palette.base00}";
-          foreground = "#${config.colorScheme.palette.base05}";
-          frame_color = "#${config.colorScheme.palette.base0E}";
+          background = "#${config.lib.stylix.colors.base00}";
+          foreground = "#${config.lib.stylix.colors.base05}";
+          frame_color = "#${config.lib.stylix.colors.base0E}";
           timeout = 8;
         };
 
         urgency_critical = {
-          background = "#${config.colorScheme.palette.base00}";
-          foreground = "#${config.colorScheme.palette.base08}";
-          frame_color = "#${config.colorScheme.palette.base08}";
+          background = "#${config.lib.stylix.colors.base00}";
+          foreground = "#${config.lib.stylix.colors.base08}";
+          frame_color = "#${config.lib.stylix.colors.base08}";
           timeout = 0;
         };
       };

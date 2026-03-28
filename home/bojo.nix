@@ -11,7 +11,7 @@
   my.programs.work.enable = true;
   my.services.easyeffects.enable = true;
   my.terminals.ghostty.enable = true;
-  my.terminals.kitty.enable = true;
+
   my.terminals.wezterm.enable = true;
   my.terminals.zellij.enable = true;
   my.wayland.enable = true;
