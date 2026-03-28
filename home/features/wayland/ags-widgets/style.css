@@ -1,0 +1,150 @@
+.notification-center,
+.quicksettings {
+  background: transparent;
+}
+
+.notification-center .container,
+.quicksettings .container {
+  background: alpha(#1e1e2e, 0.9);
+  border: 1px solid #45475a;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 8px;
+  min-width: 380px;
+}
+
+.notification-center .header {
+  padding: 4px 0 12px 0;
+}
+
+.notification-center .header label {
+  color: #cdd6f4;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.notification-center .header button {
+  background: #313244;
+  color: #a6adc8;
+  border: none;
+  border-radius: 6px;
+  padding: 4px 12px;
+}
+
+.notification-center .header button:hover {
+  background: #45475a;
+}
+
+.notification {
+  background: #313244;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 4px 0;
+}
+
+.notification .app-name {
+  color: #a6adc8;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.notification .summary {
+  color: #cdd6f4;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.notification .body {
+  color: #bac2de;
+  font-size: 12px;
+}
+
+.notification .close {
+  background: transparent;
+  color: #6c7086;
+  border: none;
+  min-width: 24px;
+  min-height: 24px;
+  border-radius: 12px;
+}
+
+.notification .close:hover {
+  background: #45475a;
+  color: #f38ba8;
+}
+
+.notification .actions button {
+  background: #45475a;
+  color: #cdd6f4;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  margin: 4px 4px 0 0;
+}
+
+.notification .actions button:hover {
+  background: #585b70;
+}
+
+.empty-label {
+  color: #6c7086;
+  font-size: 13px;
+  padding: 32px;
+}
+
+.quicksettings .volume-row image {
+  color: #cdd6f4;
+  margin-right: 8px;
+  min-width: 20px;
+}
+
+.quicksettings scale trough {
+  background: #313244;
+  border-radius: 8px;
+  min-height: 8px;
+}
+
+.quicksettings scale highlight {
+  background: #89b4fa;
+  border-radius: 8px;
+  min-height: 8px;
+}
+
+.quicksettings .toggles {
+  margin-top: 12px;
+}
+
+.quicksettings .toggle {
+  background: #313244;
+  color: #a6adc8;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 4px;
+}
+
+.quicksettings .toggle:hover {
+  background: #45475a;
+}
+
+.quicksettings .toggle.active {
+  background: #89b4fa;
+  color: #1e1e2e;
+}
+
+.quicksettings .toggle image {
+  min-width: 24px;
+  min-height: 24px;
+}
+
+.quicksettings .toggle label {
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+.quicksettings .section-label {
+  color: #a6adc8;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 8px 0 4px 0;
+}

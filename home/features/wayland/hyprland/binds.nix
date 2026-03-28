@@ -131,7 +131,6 @@ in {
           "$mod CTRL, bracketleft, movecurrentworkspacetomonitor, -1"
 
           "$mod, O, exec, ${workspace-overview}"
-          "$mod SHIFT, B, exec, pkill waybar && hyprpanel || (pkill hyprpanel && waybar &)"
         ]
         ++ workspaces;
 
