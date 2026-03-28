@@ -5,7 +5,7 @@
   ...
 }: let
   fetch-wallpaper = pkgs.writeShellScript "fetch-wallpaper" ''
-    export PATH="${lib.makeBinPath (with pkgs; [curl coreutils jq swww matugen hyprland procps waybar])}"
+    export PATH="${lib.makeBinPath (with pkgs; [curl coreutils jq swww matugen hyprland procps waybar imagemagick])}"
     IMG="$HOME/.cache/wallpaper.jpg"
     TMP="$HOME/.cache/wallpaper-tmp.jpg"
 
@@ -24,10 +24,10 @@
         && mv "$TMP" "$IMG" \
         && swww img "$IMG" --transition-type random --transition-duration 2 \
         && matugen image "$IMG" --source-color-index 0 --continue-on-error -c "$HOME/.config/matugen/config.toml" 2>/dev/null \
-        && hyprctl reload 2>/dev/null \
-        && (pkill -SIGUSR2 waybar) \
+        && hyprctl keyword source "$HOME/.config/hypr/matugen-colors.conf" 2>/dev/null \
         || rm -f "$TMP"
     fi
+
   '';
 in {
   config = lib.mkIf config.my.wayland.enable {

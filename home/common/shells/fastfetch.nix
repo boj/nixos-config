@@ -3,12 +3,7 @@
     enable = true;
     settings = {
       logo = {
-        type = "kitty-direct";
-        source = "~/.config/fastfetch/eldritch.png";
-        padding = {
-          right = 10;
-          top = 6;
-        };
+        type = "none";
       };
       display = {
         separator = "➜   ";
