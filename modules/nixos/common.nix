@@ -9,6 +9,15 @@
     "libsoup-2.74.3"
   ];
 
+  # TODO: remove once upower self-test is fixed upstream in nixpkgs
+  nixpkgs.overlays = [
+    (final: prev: {
+      upower = prev.upower.overrideAttrs (old: {
+        doCheck = false;
+      });
+    })
+  ];
+
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
   i18n.defaultLocale = "en_US.UTF-8";
