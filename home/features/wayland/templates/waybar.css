@@ -39,7 +39,7 @@ tooltip label {
 
 #custom-weather-temp {
   font-size: 14px;
-  padding: 20px 5px 2px 5px;
+  padding: 8px 5px 2px 5px;
   color: @teal;
   background: @modulesbg;
 }
