@@ -45,7 +45,7 @@
 
   programs.btop = {
     enable = true;
-    package = pkgs.btop-rocm;
+    package = if config.my.gpu == "amd" then pkgs.btop-rocm else pkgs.btop;
     settings = {
       color_theme = "catppuccin_mocha";
       theme_background = false;

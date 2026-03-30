@@ -69,6 +69,7 @@
             home-manager.useUserPackages = true;
             home-manager.users.${username} = {
               imports = [(import ./home/bojo.nix)];
+              my.gpu = "amd";
               my.wayland.weather.latitude = 61.32;
               my.wayland.weather.longitude = -149.39;
               my.wayland.hyprland.useFunctionKeys = true;
@@ -97,6 +98,7 @@
             home-manager.useUserPackages = true;
             home-manager.users.${username} = {
               imports = [(import ./home/bojo.nix)];
+              my.gpu = "nvidia";
               my.wayland.weather.latitude = 61.60;
               my.wayland.weather.longitude = -149.11;
               my.wayland.hyprland.monitors = [

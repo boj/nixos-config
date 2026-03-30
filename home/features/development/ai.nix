@@ -5,6 +5,7 @@
   ...
 }: let
   cfg = config.my.development.ai;
+  gpu = config.my.gpu;
 in {
   options.my.development.ai.enable = lib.mkEnableOption "AI development tools";
 
@@ -13,7 +14,7 @@ in {
       gemini-cli
       github-copilot-cli
       claude-code
-      llama-cpp-rocm
+      (if gpu == "amd" then llama-cpp-rocm else llama-cpp)
       ollama
     ];
   };

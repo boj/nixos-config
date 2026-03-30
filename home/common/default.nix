@@ -1,6 +1,7 @@
 {username, ...}: {
   imports = [
     ./editors
+    ./gpu.nix
     ./shells
   ];
 

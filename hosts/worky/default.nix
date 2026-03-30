@@ -3,6 +3,7 @@
 
   # Feature flags
   my.ai.enable = true;
+  my.gpu = "nvidia";
   my.greet.enable = true;
   my.hyprland.enable = true;
   my.kernel.enable = true;
