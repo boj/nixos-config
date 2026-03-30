@@ -112,6 +112,18 @@ in let
         '{"text":$text,"tooltip":$tooltip,"class":"weather"}'
     fi
   '';
+  mic-script = pkgs.writeShellScript "waybar-mic" ''
+    export PATH="${lib.makeBinPath (with pkgs; [wireplumber gawk gnugrep])}"
+    MIC=$(printf '\uF130')
+    MIC_MUTED=$(printf '\uF131')
+    STATUS=$(wpctl get-volume @DEFAULT_AUDIO_SOURCE@)
+    if echo "$STATUS" | grep -q MUTED; then
+      echo "{\"text\":\"$MIC_MUTED\",\"class\":\"muted\",\"tooltip\":\"Mic: Muted\"}"
+    else
+      VOL=$(echo "$STATUS" | awk '{printf "%.0f", $2 * 100}')
+      echo "{\"text\":\"$MIC\",\"class\":\"unmuted\",\"tooltip\":\"Mic: $VOL%\"}"
+    fi
+  '';
 in {
   options.my.wayland.battery.enable = lib.mkEnableOption "battery indicator in waybar";
 
@@ -140,7 +152,7 @@ in {
           reload_style_on_change = true;
           modules-left = ["custom/weather-temp" "custom/weather-icon" "hyprland/workspaces"];
           modules-center = ["clock#date" "clock#time"];
-          modules-right = ["pulseaudio/slider" "pulseaudio#percentage" "network" "network#percentage"]
+          modules-right = ["pulseaudio/slider" "pulseaudio#percentage" "custom/mic" "network" "network#percentage"]
             ++ lib.optionals batteryEnabled ["battery" "battery#percentage"];
           "custom/weather-temp" = {
             exec = "${weather-script} temp";
@@ -196,6 +208,12 @@ in {
           "pulseaudio#percentage" = {
             on-click = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
             format = "{volume}%";
+          };
+          "custom/mic" = {
+            exec = "${mic-script}";
+            return-type = "json";
+            interval = 2;
+            on-click = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
           };
           "pulseaudio/slider" = {
             min = 0;

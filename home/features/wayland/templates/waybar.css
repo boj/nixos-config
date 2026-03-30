@@ -126,7 +126,7 @@ tooltip label {
   border-bottom-right-radius: 50px;
 }
 
-#pulseaudio-slider, #pulseaudio.percentage, #network, #battery, #battery.percentage {
+#pulseaudio-slider, #pulseaudio.percentage, #custom-mic, #network, #battery, #battery.percentage {
   background-color: @modulesbg;
 }
 
@@ -161,6 +161,16 @@ tooltip label {
   margin: 0px 0px;
   padding: 2px 5px;
   color: @text;
+}
+
+#custom-mic {
+  font-size: 14px;
+  padding: 2px 5px;
+  color: @text;
+}
+
+#custom-mic.muted {
+  color: @red;
 }
 
 #network {
