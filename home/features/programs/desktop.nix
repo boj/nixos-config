@@ -3,8 +3,7 @@
   lib,
   pkgs,
   ...
-}:
-let
+}: let
   cfg = config.my.programs.desktop;
 in {
   options.my.programs.desktop.enable = lib.mkEnableOption "desktop programs";
@@ -18,7 +17,7 @@ in {
       pavucontrol
 
       # browse
-      firefox
+      chromium
 
       # comms
       (discord.override {nss = pkgs.nss_latest;})

@@ -97,6 +97,7 @@ in {
           "$mod, SPACE, togglesplit,"
           "$mod, F, fullscreen"
           "$mod, V, togglefloating,"
+          "$mod SHIFT, V, pin,"
           "$mod, P, pseudo,"
 
           "$mod, H, movefocus, l"

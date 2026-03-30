@@ -22,8 +22,9 @@
     if [ -n "$URL" ] && [ "$URL" != "null" ]; then
       curl -fsSL -o "$TMP" "$URL" \
         && mv "$TMP" "$IMG" \
-        && swww img "$IMG" --transition-type random --transition-duration 2 \
+        && swww img "$IMG" --transition-type fade --transition-duration 2 \
         && matugen image "$IMG" --source-color-index 0 --continue-on-error -c "$HOME/.config/matugen/config.toml" 2>/dev/null \
+        && mv "$HOME/.cache/matugen-waybar.css" "$HOME/.config/waybar/style.css" \
         && hyprctl keyword source "$HOME/.config/hypr/matugen-colors.conf" 2>/dev/null \
         || rm -f "$TMP"
     fi

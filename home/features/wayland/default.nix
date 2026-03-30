@@ -57,7 +57,7 @@ in {
 
       [templates.waybar]
       input_path = "${./templates/waybar.css}"
-      output_path = "~/.config/waybar/style.css"
+      output_path = "~/.cache/matugen-waybar.css"
 
       [templates.hyprland-colors]
       input_path = "${./templates/hyprland-colors.conf}"
@@ -65,10 +65,10 @@ in {
     '';
 
     home.activation.matugenInit = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      rm -f "$HOME/.config/waybar/style.css"
-      mkdir -p "$HOME/.config/hypr"
+      mkdir -p "$HOME/.config/hypr" "$HOME/.config/waybar"
       touch "$HOME/.config/hypr/matugen-colors.conf"
       ${pkgs.matugen}/bin/matugen image ${defaultWallpaper} --source-color-index 0 --continue-on-error -c "$HOME/.config/matugen/config.toml" 2>/dev/null || true
+      mv "$HOME/.cache/matugen-waybar.css" "$HOME/.config/waybar/style.css" 2>/dev/null || true
     '';
 
     home.sessionVariables = {
@@ -77,6 +77,7 @@ in {
       XDG_SESSION_TYPE = "wayland";
       GTK_USE_PORTAL = "1";
       NIXOS_XDG_OPEN_USE_PORTAL = "1";
+      NIXOS_OZONE_WL = "1";
     };
   };
 }

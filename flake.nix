@@ -25,7 +25,7 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hyprland.url = "git+https://github.com/hyprwm/Hyprland";
+    hyprland.url = "git+https://github.com/hyprwm/Hyprland?rev=0002f148c9a4fe421a9d33c0faa5528cdc411e62";
     hyprpaper.url = "github:hyprwm/hyprpaper";
     hyprland-contrib.url = "github:hyprwm/contrib";
     rust-overlay = {
