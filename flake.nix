@@ -60,6 +60,7 @@
         image = ./hyprland.png;
         base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
         polarity = "dark";
+        targets.chromium.enable = false;
       };
     };
   in {
@@ -77,6 +78,8 @@
             home-manager.useUserPackages = true;
             home-manager.users.${username} = {
               imports = [(import ./home/bojo.nix)];
+              my.wayland.weather.latitude = 61.32;
+              my.wayland.weather.longitude = -149.39;
               my.wayland.hyprland.useFunctionKeys = true;
               my.wayland.hyprland.monitors = [
                 "DP-1,1920x1080@240,0x0,1"
@@ -103,7 +106,8 @@
             home-manager.useUserPackages = true;
             home-manager.users.${username} = {
               imports = [(import ./home/bojo.nix)];
-              my.wayland.weather.location = "Palmer,Alaska";
+              my.wayland.weather.latitude = 61.60;
+              my.wayland.weather.longitude = -149.11;
               my.wayland.hyprland.monitors = [
                 "DP-1,1920x1080@60,0x0,1"
                 "DP-2,1920x1080@60,1920x0,1"

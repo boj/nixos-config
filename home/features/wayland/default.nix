@@ -62,10 +62,14 @@ in {
       [templates.hyprland-colors]
       input_path = "${./templates/hyprland-colors.conf}"
       output_path = "~/.config/hypr/matugen-colors.conf"
+
+      [templates.chromium-theme]
+      input_path = "${./templates/chromium-theme.json}"
+      output_path = "~/.config/chromium-matugen-theme/manifest.json"
     '';
 
     home.activation.matugenInit = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      mkdir -p "$HOME/.config/hypr" "$HOME/.config/waybar"
+      mkdir -p "$HOME/.config/hypr" "$HOME/.config/waybar" "$HOME/.config/chromium-matugen-theme"
       touch "$HOME/.config/hypr/matugen-colors.conf"
       ${pkgs.matugen}/bin/matugen image ${defaultWallpaper} --source-color-index 0 --continue-on-error -c "$HOME/.config/matugen/config.toml" 2>/dev/null || true
       mv "$HOME/.cache/matugen-waybar.css" "$HOME/.config/waybar/style.css" 2>/dev/null || true

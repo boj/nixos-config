@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "version": "1.0.0",
+  "name": "Matugen Dynamic Theme",
+  "theme": {
+    "colors": {
+      "frame": [{{colors.surface_dim.default.red}}, {{colors.surface_dim.default.green}}, {{colors.surface_dim.default.blue}}],
+      "frame_inactive": [{{colors.surface_dim.default.red}}, {{colors.surface_dim.default.green}}, {{colors.surface_dim.default.blue}}],
+      "frame_incognito": [{{colors.surface_dim.default.red}}, {{colors.surface_dim.default.green}}, {{colors.surface_dim.default.blue}}],
+      "frame_incognito_inactive": [{{colors.surface_dim.default.red}}, {{colors.surface_dim.default.green}}, {{colors.surface_dim.default.blue}}],
+      "toolbar": [{{colors.surface_container.default.red}}, {{colors.surface_container.default.green}}, {{colors.surface_container.default.blue}}],
+      "tab_text": [{{colors.on_surface.default.red}}, {{colors.on_surface.default.green}}, {{colors.on_surface.default.blue}}],
+      "tab_background_text": [{{colors.on_surface_variant.default.red}}, {{colors.on_surface_variant.default.green}}, {{colors.on_surface_variant.default.blue}}],
+      "bookmark_text": [{{colors.on_surface_variant.default.red}}, {{colors.on_surface_variant.default.green}}, {{colors.on_surface_variant.default.blue}}],
+      "ntp_background": [{{colors.surface.default.red}}, {{colors.surface.default.green}}, {{colors.surface.default.blue}}],
+      "ntp_text": [{{colors.on_surface.default.red}}, {{colors.on_surface.default.green}}, {{colors.on_surface.default.blue}}],
+      "ntp_link": [{{colors.primary.default.red}}, {{colors.primary.default.green}}, {{colors.primary.default.blue}}],
+      "omnibox_background": [{{colors.surface_container_high.default.red}}, {{colors.surface_container_high.default.green}}, {{colors.surface_container_high.default.blue}}],
+      "omnibox_text": [{{colors.on_surface.default.red}}, {{colors.on_surface.default.green}}, {{colors.on_surface.default.blue}}]
+    }
+  }
+}
