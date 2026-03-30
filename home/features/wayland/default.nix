@@ -16,7 +16,6 @@ in {
     ./wallpaper.nix
     ./gtk.nix
     ./qt.nix
-    ./ags.nix
     ./hyprland
   ];
 

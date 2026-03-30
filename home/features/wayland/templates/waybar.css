@@ -126,7 +126,7 @@ tooltip label {
   border-bottom-right-radius: 50px;
 }
 
-#pulseaudio-slider, #pulseaudio.percentage, #battery, #battery.percentage {
+#pulseaudio-slider, #pulseaudio.percentage, #network, #battery, #battery.percentage {
   background-color: @modulesbg;
 }
 
@@ -157,6 +157,23 @@ tooltip label {
 }
 
 #pulseaudio.percentage {
+  font-size: 12px;
+  margin: 0px 0px;
+  padding: 2px 5px;
+  color: @text;
+}
+
+#network {
+  padding: 10px 5px 1px 0px;
+  color: @text;
+  font-size: 16px;
+}
+
+#network.disconnected {
+  color: @red;
+}
+
+#network.percentage {
   font-size: 12px;
   margin: 0px 0px;
   padding: 2px 5px;

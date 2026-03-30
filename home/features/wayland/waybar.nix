@@ -140,7 +140,7 @@ in {
           reload_style_on_change = true;
           modules-left = ["custom/weather-temp" "custom/weather-icon" "hyprland/workspaces"];
           modules-center = ["clock#date" "clock#time"];
-          modules-right = ["pulseaudio/slider" "pulseaudio#percentage"]
+          modules-right = ["pulseaudio/slider" "pulseaudio#percentage" "network" "network#percentage"]
             ++ lib.optionals batteryEnabled ["battery" "battery#percentage"];
           "custom/weather-temp" = {
             exec = "${weather-script} temp";
@@ -201,6 +201,22 @@ in {
             min = 0;
             max = 100;
             orientation = "vertical";
+          };
+          "network" = {
+            format-wifi = "{icon}";
+            format-ethernet = "󰈀";
+            format-disconnected = "󰤭";
+            format-icons = ["󰤯" "󰤟" "󰤢" "󰤥" "󰤨"];
+            tooltip-format-wifi = "{essid} ({signalStrength}%)";
+            tooltip-format-ethernet = "{ifname}: {ipaddr}";
+            tooltip-format-disconnected = "Disconnected";
+            interval = 5;
+          };
+          "network#percentage" = {
+            format-wifi = "{signalStrength}%";
+            format-ethernet = "";
+            format-disconnected = "";
+            interval = 5;
           };
           "battery" = lib.mkIf batteryEnabled {
             interval = 10;

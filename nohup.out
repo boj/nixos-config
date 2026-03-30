@@ -1,6 +1,0 @@
-       219ms [INFO]  BumpPool with: 1 buffers. Size: 8100Kb
-       224ms [INFO]  BumpPool with: 1 buffers. Size: 8100Kb
-       275ms [WARN]  We failed to find wayland buffer with id: 24. This should be impossible.
-       275ms [WARN]  We failed to find wayland buffer with id: 25. This should be impossible.
-      9508ms [INFO]  Removed socket at "/run/user/1000/wayland-1-swww-daemon..sock"
-      9509ms [INFO]  Goodbye!
