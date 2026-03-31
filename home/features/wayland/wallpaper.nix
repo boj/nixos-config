@@ -15,10 +15,20 @@
       sleep 1
     done
 
-    # Pick a random page from NASA Image Library (galaxies & nebulae)
-    PAGE=$((RANDOM % 20 + 1))
-    SEARCH="https://images-api.nasa.gov/search?q=galaxy+nebula&media_type=image&page=$PAGE&page_size=100"
-    ITEMS=$(curl -fsSL "$SEARCH")
+    # Pick a random search term for variety
+    TERMS=("nebula" "galaxy" "hubble" "james+webb+space" "supernova" "star+cluster" "cosmic" "andromeda" "milky+way" "deep+field")
+    QUERY=''${TERMS[$((RANDOM % ''${#TERMS[@]}))]}
+
+    # Search NASA Image Library
+    TOTAL=$(curl -fsSL "https://images-api.nasa.gov/search?q=$QUERY&media_type=image&page_size=1" \
+      | jq '.collection.metadata.total_hits')
+    [ "$TOTAL" -gt 0 ] 2>/dev/null || exit 1
+
+    # Pick a random page (100 per page)
+    PAGES=$(( (TOTAL + 99) / 100 ))
+    [ "$PAGES" -gt 20 ] && PAGES=20
+    PAGE=$((RANDOM % PAGES + 1))
+    ITEMS=$(curl -fsSL "https://images-api.nasa.gov/search?q=$QUERY&media_type=image&page=$PAGE&page_size=100")
 
     # Pick a random item and get its NASA ID
     COUNT=$(echo "$ITEMS" | jq '.collection.items | length')
