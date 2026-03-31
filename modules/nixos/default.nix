@@ -8,6 +8,7 @@
     ./kernel.nix
     ./openrgb.nix
     ./plex.nix
+    ./power.nix
     ./rust.nix
     ./sound.nix
     ./ssh.nix

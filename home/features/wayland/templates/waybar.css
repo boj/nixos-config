@@ -72,17 +72,10 @@ tooltip label {
   padding: 2px;
   margin: 5px 6px;
   border-radius: 10px;
-}
-
-#workspaces button.persistent {
   background-color: @persistent;
 }
 
 #workspaces button.empty {
-  background-color: @empty;
-}
-
-#workspaces button.visible {
   background-color: @empty;
 }
 

@@ -11,6 +11,7 @@ let
 in {
   imports = [
     ./dunst.nix
+    ./kanshi.nix
     ./waybar.nix
     ./wofi.nix
     ./wallpaper.nix
@@ -38,6 +39,7 @@ in {
       libnotify
       matugen
       mpvpaper
+      satty
       slurp
       swww
       swayidle

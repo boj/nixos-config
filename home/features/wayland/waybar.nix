@@ -182,9 +182,7 @@ in {
               "9" = "9";
               "10" = "0";
             };
-            persistent-workspaces = {
-              "*" = 5;
-            };
+            persistent-workspaces = config.my.wayland.hyprland.waybarPersistentWorkspaces;
           };
           "clock#date" = {
             format = "{:%a %B %d}";

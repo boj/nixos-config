@@ -48,8 +48,13 @@
     cachix
     curl
     git
+    mosh
+    nh
     wget
   ];
+
+  # Allow mosh UDP traffic
+  networking.firewall.allowedUDPPortRanges = [{from = 60000; to = 61000;}];
 
   environment.localBinInPath = true;
 

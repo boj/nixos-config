@@ -13,6 +13,7 @@
   my.tailscale.enable = true;
   my.udev.enable = true;
   my.wifi.enable = true;
+  my.power.enable = true;
   my.wine.enable = false;
   my.xdg.enable = true;
   my.rust.enable = true;
@@ -25,8 +26,12 @@
   boot.kernelParams = ["resume=/dev/disk/by-uuid/919c6432-cc35-4991-9ef5-9b9a300dac2f"];
   networking.hostName = "worky";
   programs.dconf.enable = true;
-  services.logind.settings.Login.HandleLidSwitch = "hibernate";
+  services.logind.settings.Login.HandleLidSwitch = "suspend-then-hibernate";
   services.logind.settings.Login.HandlePowerKey = "hibernate";
+  systemd.sleep.settings.Sleep = {
+    HibernateDelaySec = "2h";
+    SuspendEstimationSec = "2h";
+  };
 
   # Restart networking and tailscale after hibernate/suspend
   powerManagement.resumeCommands = ''
