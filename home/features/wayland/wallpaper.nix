@@ -15,36 +15,16 @@
       sleep 1
     done
 
-    # Pick a random search term for variety
-    TERMS=("nebula" "galaxy" "hubble" "james+webb+space" "supernova" "star+cluster" "cosmic" "andromeda" "milky+way" "deep+field")
+    # Pick a random nature search term (no humans)
+    TERMS=("forest" "mountains" "ocean" "waterfall" "aurora" "canyon" "lake" "wilderness" "glacier" "rainforest" "meadow" "volcano" "desert+landscape" "autumn+forest" "tropical+island")
     QUERY=''${TERMS[$((RANDOM % ''${#TERMS[@]}))]}
 
-    # Search NASA Image Library
-    TOTAL=$(curl -fsSL "https://images-api.nasa.gov/search?q=$QUERY&media_type=image&page_size=1" \
-      | jq '.collection.metadata.total_hits')
-    [ "$TOTAL" -gt 0 ] 2>/dev/null || exit 1
+    # Fetch a random nature photo via Unsplash internal API (no key needed)
+    URL=$(curl -fsSL "https://unsplash.com/napi/photos/random?query=$QUERY,nature,landscape&orientation=landscape&count=1" \
+      | jq -r '.[0].urls.raw')
+    [ -n "$URL" ] && [ "$URL" != "null" ] || exit 1
 
-    # Pick a random page (100 per page)
-    PAGES=$(( (TOTAL + 99) / 100 ))
-    [ "$PAGES" -gt 20 ] && PAGES=20
-    PAGE=$((RANDOM % PAGES + 1))
-    ITEMS=$(curl -fsSL "https://images-api.nasa.gov/search?q=$QUERY&media_type=image&page=$PAGE&page_size=100")
-
-    # Pick a random item and get its NASA ID
-    COUNT=$(echo "$ITEMS" | jq '.collection.items | length')
-    [ "$COUNT" -gt 0 ] 2>/dev/null || exit 1
-    IDX=$((RANDOM % COUNT))
-    NASA_ID=$(echo "$ITEMS" | jq -r ".collection.items[$IDX].data[0].nasa_id")
-    [ -n "$NASA_ID" ] && [ "$NASA_ID" != "null" ] || exit 1
-
-    # Fetch the highest resolution image from the asset manifest
-    URL=$(curl -fsSL "https://images-api.nasa.gov/asset/$NASA_ID" \
-      | jq -r '.collection.items | map(select(.href | test("orig|large";"i"))) | first | .href // empty')
-    [ -n "$URL" ] || URL=$(curl -fsSL "https://images-api.nasa.gov/asset/$NASA_ID" \
-      | jq -r '.collection.items | map(select(.href | test("\\.(jpg|jpeg|png)$";"i"))) | last | .href // empty')
-    [ -n "$URL" ] || exit 1
-
-    if curl -fsSL -o "$TMP" "$URL"; then
+    if curl -fsSL -L -o "$TMP" "''${URL}&w=3840&q=85"; then
       mv "$TMP" "$IMG" \
         && swww img "$IMG" --transition-type fade --transition-duration 2 \
         && matugen image "$IMG" --source-color-index 0 --continue-on-error -c "$HOME/.config/matugen/config.toml" 2>/dev/null \
@@ -56,7 +36,7 @@
 in {
   config = lib.mkIf config.my.wayland.enable {
     systemd.user.services.fetch-wallpaper = {
-      Unit.Description = "Fetch random NASA galaxy/nebula wallpaper";
+      Unit.Description = "Fetch random nature wallpaper";
       Service = {
         Type = "oneshot";
         ExecStart = "${fetch-wallpaper}";
