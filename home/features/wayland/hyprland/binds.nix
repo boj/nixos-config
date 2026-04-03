@@ -83,7 +83,7 @@ in {
         [
           "$mod, RETURN, exec, ghostty"
           # "$mod, D, exec, wofi -f --show run --lines=5 --prompt=\"\""
-          "$mod, D, exec, wofi -f --show=drun"
+          "$mod, D, global, caelestia:launcher"
           "$mod SHIFT, D, exec, grimblast save area /tmp/satty-screenshot.png && satty --filename /tmp/satty-screenshot.png --copy-command wl-copy --early-exit --actions-on-enter save-to-clipboard --actions-on-enter exit"
           "$mod SHIFT, F, exec, grimblast save output /tmp/satty-screenshot.png && satty --filename /tmp/satty-screenshot.png --copy-command wl-copy --early-exit --actions-on-enter save-to-clipboard --actions-on-enter exit"
           "$mod SHIFT, G, exec, grimblast save active /tmp/satty-screenshot.png && satty --filename /tmp/satty-screenshot.png --copy-command wl-copy --early-exit --actions-on-enter save-to-clipboard --actions-on-enter exit"
@@ -126,7 +126,7 @@ in {
           "$mod, Next, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
           "$mod, M, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
           "$mod SHIFT, M, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-          "$mod, W, exec, systemctl --user start fetch-wallpaper.service"
+          "$mod, W, exec, caelestia wallpaper -r"
 
           "$mod CTRL, bracketright, movecurrentworkspacetomonitor, +1"
           "$mod CTRL, bracketleft, movecurrentworkspacetomonitor, -1"

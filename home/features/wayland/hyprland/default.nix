@@ -52,13 +52,6 @@ in {
       description = "Hyprland workspace configuration strings";
       example = [ "1,monitor:DP-1,default:true" ];
     };
-
-    waybarPersistentWorkspaces = lib.mkOption {
-      type = lib.types.attrs;
-      default = {"*" = 5;};
-      description = "Waybar persistent-workspaces mapping (monitor name to workspace list or count)";
-      example = { "DP-1" = [1 2 3]; "DP-2" = [4 5 6]; };
-    };
   };
 
   config = lib.mkIf cfg.enable {
