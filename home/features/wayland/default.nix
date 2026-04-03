@@ -12,6 +12,7 @@ in {
     ./kanshi.nix
     ./wofi.nix
     ./wallpaper.nix
+    ./wallpaper-picker
     ./gtk.nix
     ./qt.nix
     ./hyprland
