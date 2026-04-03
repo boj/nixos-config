@@ -13,12 +13,11 @@
     mkdir -p "$DIR"
     TMP="$DIR/.unsplash-tmp.jpg"
 
-    # Pick a random nature search term
-    TERMS=("forest" "mountains" "ocean" "waterfall" "aurora" "canyon" "lake" "wilderness" "glacier" "rainforest" "meadow" "volcano" "desert+landscape" "autumn+forest" "tropical+island")
-    QUERY=''${TERMS[$((RANDOM % ''${#TERMS[@]}))]}
+    # Ensure scheme is dynamic so colors are derived from the wallpaper
+    caelestia scheme set -n dynamic 2>/dev/null || true
 
-    # Fetch a random nature photo via Unsplash
-    URL=$(curl -fsSL "https://unsplash.com/napi/photos/random?query=$QUERY,nature,landscape&orientation=landscape&count=1" \
+    # Fetch a random linux wallpaper from Unsplash
+    URL=$(curl -fsSL "https://unsplash.com/napi/photos/random?query=linux+wallpaper&orientation=landscape&count=1" \
       | jq -r '.[0].urls.raw')
     [ -n "$URL" ] && [ "$URL" != "null" ] || exit 1
 
@@ -32,21 +31,11 @@
 in {
   config = lib.mkIf config.my.wayland.enable {
     systemd.user.services.fetch-wallpaper = {
-      Unit.Description = "Fetch random nature wallpaper";
+      Unit.Description = "Fetch random linux wallpaper";
       Service = {
         Type = "oneshot";
         ExecStart = "${fetch-wallpaper}";
       };
-    };
-
-    systemd.user.timers.fetch-wallpaper = {
-      Unit.Description = "Periodically rotate desktop wallpaper";
-      Timer = {
-        OnCalendar = "*:0/5";
-        OnStartupSec = "15s";
-        Persistent = true;
-      };
-      Install.WantedBy = ["timers.target"];
     };
   };
 }

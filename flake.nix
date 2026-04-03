@@ -77,6 +77,7 @@
                 inputs.caelestia-shell.homeManagerModules.default
               ];
               my.gpu = "amd";
+              programs.caelestia.settings.services.weatherLocation = "61.3215,-149.3977";
               my.wayland.hyprland.useFunctionKeys = true;
               my.wayland.hyprland.monitors = [
                 "DP-1,1920x1080@240,0x0,1"
@@ -107,6 +108,7 @@
                 inputs.caelestia-shell.homeManagerModules.default
               ];
               my.gpu = "nvidia";
+              programs.caelestia.settings.services.weatherLocation = "61.5994,-149.1127";
               my.wayland.hyprland.monitors = [
                 "desc:Dell Inc. DELL P2417H KH0NG77E1VVB,1920x1080@60,0x0,1"
                 "desc:Dell Inc. DELL P2417H KH0NG7873KDI,1920x1080@60,1920x0,1"

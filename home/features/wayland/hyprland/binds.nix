@@ -96,7 +96,7 @@ in {
           "$mod CTRL, E, exit,"
           "$mod, SPACE, togglesplit,"
           "$mod, F, fullscreen"
-          "$mod, V, togglefloating,"
+          "$mod, V, exec, hyprctl dispatch togglefloating && hyprctl dispatch resizeactive exact 50% 50% && hyprctl dispatch centerwindow"
           "$mod SHIFT, V, pin,"
           "$mod, P, pseudo,"
 

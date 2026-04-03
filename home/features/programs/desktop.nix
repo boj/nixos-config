@@ -26,8 +26,11 @@ in {
       # sound
       easyeffects
 
+      # music
+      spotify
+
       # video
-      # obs-studio
+      obs-studio
 
       # misc
       obsidian

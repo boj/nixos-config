@@ -47,7 +47,7 @@
     enable = true;
     package = if config.my.gpu == "amd" then pkgs.btop-rocm else pkgs.btop;
     settings = {
-      color_theme = "catppuccin_mocha";
+      color_theme = "caelestia";
       theme_background = false;
       vim_keys = true;
       shown_boxes = "cpu mem net proc gpu0";
