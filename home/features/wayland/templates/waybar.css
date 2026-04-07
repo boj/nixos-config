@@ -26,6 +26,10 @@ window#waybar {
 	border-radius: 5px;
 }
 
+#modules-center {
+	background: @modulesbg;
+}
+
 tooltip {
   background: {{colors.surface_container_high.default.hex}};
   border: 2px solid @teal;
@@ -55,16 +59,12 @@ tooltip label {
 }
 
 #workspaces {
-  margin: 100px 0px 0px 0px;
   background: @modulesbg;
   font-size: 12pt;
-  padding: 20px 0px;
+  padding: 20px 0px 80px 0px;
   border-top:3px solid @blue;
   border-top-left-radius: 50px;
   border-top-right-radius: 5px;
-  border-bottom: 3px solid @blue;
-  border-bottom-right-radius: 50px;
-  border-bottom-left-radius: 5px;
 }
 
 #workspaces button {
@@ -105,29 +105,42 @@ tooltip label {
   padding: 30px 5px 10px 5px;
   font-size: 14px;
   color: @rosewater;
-  border-top:3px solid @mauve;
-  border-top-left-radius: 50px;
-  border-top-right-radius: 5px;
 }
 
 #clock.time {
   padding: 10px 5px 30px 5px;
   font-size: 14px;
   color: @teal;
-  border-bottom: 3px solid @mauve;
+  border-bottom: 3px solid @modulesbg;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 50px;
 }
 
-#pulseaudio-slider, #pulseaudio.percentage, #custom-mic, #network, #battery, #battery.percentage {
+#pulseaudio-slider, #pulseaudio.percentage, #custom-mic, #network, #battery, #battery.percentage, #tray {
   background-color: @modulesbg;
+}
+
+#tray {
+  padding: 8px 4px;
+  margin: 0px 2px;
+  background-color: {{colors.surface_container_high.default.hex}};
+  border-radius: 8px;
+  border-top: 3px solid @peach;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 5px;
+}
+
+#tray > .needs-attention {
+  border: 1px solid @red;
+}
+
+#tray menu {
+  background: @modulesbg;
+  color: @text;
 }
 
 #pulseaudio-slider {
   padding: 15px 0px 5px 0px;
-  border-top: 3px solid @peach;
-  border-top-left-radius: 50px;
-  border-top-right-radius: 5px;
 }
 #pulseaudio-slider slider {
     min-height: 0px;
@@ -212,7 +225,7 @@ tooltip label {
   color: @text;
   border-bottom: 3px solid @peach;
   border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 50px;
+  border-bottom-right-radius: 5px;
 }
 
 #battery.percentage.warning:not(.charging):not(.plugged) {

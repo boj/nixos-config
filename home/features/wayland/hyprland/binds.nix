@@ -4,6 +4,22 @@
   pkgs,
   ...
 }: let
+  toggle-mute = pkgs.writeShellScript "toggle-mute" ''
+    export PATH="${lib.makeBinPath (with pkgs; [wireplumber coreutils gawk gnugrep])}"
+    SAVE="''${XDG_RUNTIME_DIR:-/tmp}/volume-before-mute"
+    STATUS=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
+    if echo "$STATUS" | grep -q MUTED; then
+      VOL=$(cat "$SAVE" 2>/dev/null || echo "0.50")
+      wpctl set-mute @DEFAULT_AUDIO_SINK@ 0
+      wpctl set-volume @DEFAULT_AUDIO_SINK@ "$VOL"
+    else
+      VOL=$(echo "$STATUS" | awk '{print $2}')
+      echo "$VOL" > "$SAVE"
+      wpctl set-volume @DEFAULT_AUDIO_SINK@ 0
+      wpctl set-mute @DEFAULT_AUDIO_SINK@ 1
+    fi
+  '';
+
   workspaces = builtins.concatLists (builtins.genList (
       x: let
         ws = let
@@ -124,9 +140,9 @@ in {
 
           "$mod, Prior, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
           "$mod, Next, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-          "$mod, M, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+          "$mod, M, exec, ${toggle-mute}"
           "$mod SHIFT, M, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-          "$mod, W, exec, systemctl --user start fetch-wallpaper.service"
+          "$mod, W, exec, toggle-wallpicker"
 
           "$mod CTRL, bracketright, movecurrentworkspacetomonitor, +1"
           "$mod CTRL, bracketleft, movecurrentworkspacetomonitor, -1"
@@ -143,7 +159,7 @@ in {
       ];
 
       bindl = [
-        ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+        ", XF86AudioMute, exec, ${toggle-mute}"
         ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
         ", XF86AudioPlay, exec, playerctl play-pause"
         ", XF86AudioPrev, exec, playerctl previous"

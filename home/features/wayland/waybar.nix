@@ -150,10 +150,14 @@ in {
           margin-bottom = 8;
           margin-left = 8;
           reload_style_on_change = true;
-          modules-left = ["custom/weather-temp" "custom/weather-icon" "hyprland/workspaces"];
-          modules-center = ["clock#date" "clock#time"];
-          modules-right = ["pulseaudio/slider" "pulseaudio#percentage" "custom/mic" "network" "network#percentage"]
+          modules-left = ["custom/weather-temp" "custom/weather-icon"];
+          modules-center = ["hyprland/workspaces" "clock#date" "clock#time"];
+          modules-right = ["tray" "pulseaudio/slider" "pulseaudio#percentage" "custom/mic" "network" "network#percentage"]
             ++ lib.optionals batteryEnabled ["battery" "battery#percentage"];
+          "tray" = {
+            icon-size = 16;
+            spacing = 8;
+          };
           "custom/weather-temp" = {
             exec = "${weather-script} temp";
             return-type = "json";
