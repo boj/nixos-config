@@ -43,7 +43,14 @@ in {
       type = lib.types.nullOr lib.types.int;
       default = null;
       description = "Idle timeout in seconds before locking screen (null to disable hypridle)";
-      example = 1200;
+      example = 1800;
+    };
+
+    dpmsTimeout = lib.mkOption {
+      type = lib.types.nullOr lib.types.int;
+      default = null;
+      description = "Idle timeout in seconds before turning off displays (null defaults to idleTimeout + 300)";
+      example = 3600;
     };
 
     workspaces = lib.mkOption {
@@ -51,6 +58,13 @@ in {
       default = [];
       description = "Hyprland workspace configuration strings";
       example = [ "1,monitor:DP-1,default:true" ];
+    };
+
+    waybarPersistentWorkspaces = lib.mkOption {
+      type = lib.types.attrs;
+      default = {"*" = 5;};
+      description = "Waybar persistent-workspaces mapping (monitor name to workspace list or count)";
+      example = { "DP-1" = [1 2 3]; "DP-2" = [4 5 6]; };
     };
   };
 

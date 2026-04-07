@@ -11,7 +11,13 @@
 
       workspace = config.my.wayland.hyprland.workspaces;
 
-      exec-once = config.my.wayland.hyprland.execOnce;
+      exec-once = [
+        "dunst"
+        "swww-daemon"
+        "waybar"
+      ] ++ config.my.wayland.hyprland.execOnce;
+
+      source = ["~/.config/hypr/matugen-colors.conf"];
 
       input = {
         kb_layout = "us";

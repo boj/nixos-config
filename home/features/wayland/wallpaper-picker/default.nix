@@ -5,8 +5,6 @@
   inputs,
   ...
 }: let
-  caelestia-cli = inputs.caelestia-shell.inputs.caelestia-cli.packages.${pkgs.stdenv.hostPlatform.system}.default;
-
   scriptDeps = with pkgs; [bash coreutils curl imagemagick file python3];
 
   get-ddg-links = pkgs.writeScript "get_ddg_links.py" (builtins.readFile ./get_ddg_links.py);
@@ -235,7 +233,7 @@
   '';
 
   wallpicker-service = pkgs.writeShellScript "wallpicker-service" ''
-    export PATH="${lib.makeBinPath (scriptDeps ++ (with pkgs; [quickshell mpvpaper hyprland jq]))}:${caelestia-cli}/bin:${ddg-search}/bin:${generate-thumbs}/bin:$PATH"
+    export PATH="${lib.makeBinPath (scriptDeps ++ (with pkgs; [quickshell mpvpaper hyprland jq swww matugen procps waybar]))}:${ddg-search}/bin:${generate-thumbs}/bin:$PATH"
     exec quickshell -p "${wallpicker-qml}"
   '';
 in {

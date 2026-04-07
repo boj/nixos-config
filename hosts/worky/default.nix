@@ -22,24 +22,17 @@
   # Host-specific
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.resumeDevice = "/dev/disk/by-uuid/919c6432-cc35-4991-9ef5-9b9a300dac2f";
-  boot.kernelParams = ["resume=/dev/disk/by-uuid/919c6432-cc35-4991-9ef5-9b9a300dac2f"];
   networking.hostName = "worky";
   programs.dconf.enable = true;
-  services.logind.settings.Login.HandleLidSwitch = "suspend-then-hibernate";
-  services.logind.settings.Login.HandlePowerKey = "hibernate";
-  systemd.sleep.settings.Sleep = {
-    HibernateDelaySec = "2h";
-    SuspendEstimationSec = "2h";
-  };
 
-  # Restart networking and tailscale after hibernate/suspend
-  powerManagement.resumeCommands = ''
-    systemctl restart NetworkManager
-    sleep 5
-    tailscale down
-    tailscale up
-  '';
+  # Never sleep — long-running tasks must not be interrupted
+  services.logind.settings.Login.HandleLidSwitch = "lock";
+  services.logind.settings.Login.HandleLidSwitchExternalPower = "lock";
+  services.logind.settings.Login.HandlePowerKey = "lock";
+  systemd.targets.sleep.enable = false;
+  systemd.targets.suspend.enable = false;
+  systemd.targets.hibernate.enable = false;
+  systemd.targets.hybrid-sleep.enable = false;
 
   system.stateVersion = "23.11";
 }

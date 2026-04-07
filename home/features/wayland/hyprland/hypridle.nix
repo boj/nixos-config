@@ -20,7 +20,7 @@ in {
       }
 
       listener {
-        timeout = ${toString (cfg.idleTimeout + 300)}
+        timeout = ${toString (if cfg.dpmsTimeout != null then cfg.dpmsTimeout else cfg.idleTimeout + 300)}
         on-timeout = hyprctl dispatch dpms off
         on-resume = hyprctl dispatch dpms on
       }
