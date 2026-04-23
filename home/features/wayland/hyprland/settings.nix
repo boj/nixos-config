@@ -13,7 +13,7 @@
 
       exec-once = [
         "dunst"
-        "swww-daemon"
+        "awww-daemon"
         "waybar"
       ] ++ config.my.wayland.hyprland.execOnce;
 

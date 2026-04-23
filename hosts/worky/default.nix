@@ -1,25 +1,14 @@
 {
-  imports = [./hardware-configuration.nix];
-
-  # Feature flags
-  my.ai.enable = true;
-  my.gpu = "nvidia";
-  my.greet.enable = true;
-  my.hyprland.enable = true;
-  my.kernel.enable = true;
-  my.sound.enable = true;
-  my.ssh.enable = true;
-  my.steam.enable = true;
-  my.tailscale.enable = true;
-  my.udev.enable = true;
-  my.wifi.enable = true;
-  my.power.enable = true;
-  my.wine.enable = false;
-  my.xdg.enable = true;
-  my.rust.enable = true;
-  my.virtualization.docker.enable = true;
+  imports = [
+    ./hardware-configuration.nix
+    ../../lib/defaultProfile.nix
+  ];
 
   # Host-specific
+  my.gpu = "nvidia";
+  my.wifi.enable = true;
+  my.power.enable = true;
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   networking.hostName = "worky";

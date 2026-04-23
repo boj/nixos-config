@@ -2,10 +2,13 @@
   config,
   lib,
   ...
-}: {
+}:
+let
+  cfg = config.my.power;
+in {
   options.my.power.enable = lib.mkEnableOption "power management (auto-cpufreq + powertop)";
 
-  config = lib.mkIf config.my.power.enable {
+  config = lib.mkIf cfg.enable {
     services.auto-cpufreq = {
       enable = true;
       settings = {

@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{pkgs, userFullName, userEmail, ...}: {
   home.packages = with pkgs; [
     git
     git-lfs
@@ -8,8 +8,8 @@
     enable = true;
     signing.format = null;
     settings = {
-      user.name = "Brian Jones";
-      user.email = "bojo@bojo.wtf";
+      user.name = userFullName;
+      user.email = userEmail;
       init.defaultBranch = "main";
     };
   };

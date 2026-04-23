@@ -85,7 +85,7 @@ Item {
                     export DEST_FILE="${escapeBash(destFile)}"
                     export FINAL_THUMB="${escapeBash(finalThumb)}"
                     (
-                        swww img "$DEST_FILE" --transition-type fade --transition-duration 2 && matugen image "$DEST_FILE" --source-color-index 0 --continue-on-error -c "$HOME/.config/matugen/config.toml" 2>/dev/null && mv "$HOME/.cache/matugen-waybar.css" "$HOME/.config/waybar/style.css" 2>/dev/null && hyprctl keyword source "$HOME/.config/hypr/matugen-colors.conf" 2>/dev/null
+                        awww img "$DEST_FILE" --transition-type fade --transition-duration 2 && matugen image "$DEST_FILE" --source-color-index 0 --continue-on-error -c "$HOME/.config/matugen/config.toml" 2>/dev/null && mv "$HOME/.cache/matugen-waybar.css" "$HOME/.config/waybar/style.css" 2>/dev/null && hyprctl keyword source "$HOME/.config/hypr/matugen-colors.conf" 2>/dev/null
                     ) >/dev/null 2>&1 & disown
                 `;
                 Quickshell.execDetached(["bash", "-c", applyScript]);
@@ -115,7 +115,7 @@ Item {
                             cp "$TEMP_THUMB" "$FINAL_THUMB"
                             magick "$DEST_FILE" -resize x420 -quality 70 "$FINAL_THUMB"
 
-                            swww img "$DEST_FILE" --transition-type fade --transition-duration 2 && matugen image "$DEST_FILE" --source-color-index 0 --continue-on-error -c "$HOME/.config/matugen/config.toml" 2>/dev/null && mv "$HOME/.cache/matugen-waybar.css" "$HOME/.config/waybar/style.css" 2>/dev/null && hyprctl keyword source "$HOME/.config/hypr/matugen-colors.conf" 2>/dev/null
+                            awww img "$DEST_FILE" --transition-type fade --transition-duration 2 && matugen image "$DEST_FILE" --source-color-index 0 --continue-on-error -c "$HOME/.config/matugen/config.toml" 2>/dev/null && mv "$HOME/.cache/matugen-waybar.css" "$HOME/.config/waybar/style.css" 2>/dev/null && hyprctl keyword source "$HOME/.config/hypr/matugen-colors.conf" 2>/dev/null
                         fi
                     ) >/dev/null 2>&1 & disown
                 `;
@@ -140,7 +140,7 @@ Item {
             const imageScript = `
                 export WALL_FILE="${escOriginal}"
                 (
-                    swww img "$WALL_FILE" --transition-type fade --transition-duration 2 && matugen image "$WALL_FILE" --source-color-index 0 --continue-on-error -c "$HOME/.config/matugen/config.toml" 2>/dev/null && mv "$HOME/.cache/matugen-waybar.css" "$HOME/.config/waybar/style.css" 2>/dev/null && hyprctl keyword source "$HOME/.config/hypr/matugen-colors.conf" 2>/dev/null
+                    awww img "$WALL_FILE" --transition-type fade --transition-duration 2 && matugen image "$WALL_FILE" --source-color-index 0 --continue-on-error -c "$HOME/.config/matugen/config.toml" 2>/dev/null && mv "$HOME/.cache/matugen-waybar.css" "$HOME/.config/waybar/style.css" 2>/dev/null && hyprctl keyword source "$HOME/.config/hypr/matugen-colors.conf" 2>/dev/null
                 ) >/dev/null 2>&1 & disown
             `;
             Quickshell.execDetached(["bash", "-c", imageScript]);

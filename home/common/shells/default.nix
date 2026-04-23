@@ -45,7 +45,10 @@
 
   programs.btop = {
     enable = true;
-    package = if config.my.gpu == "amd" then pkgs.btop-rocm else pkgs.btop;
+    package =
+      if config.my.gpu == "nvidia" then pkgs.btop.override { cudaSupport = true; }
+      else if config.my.gpu == "amd" then pkgs.btop-rocm
+      else pkgs.btop;
     settings = {
       color_theme = "catppuccin_mocha";
       theme_background = false;

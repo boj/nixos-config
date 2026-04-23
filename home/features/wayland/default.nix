@@ -5,8 +5,7 @@
   inputs,
   defaultWallpaper,
   ...
-}:
-let
+}: let
   cfg = config.my.wayland;
 in {
   imports = [
@@ -41,7 +40,7 @@ in {
       mpvpaper
       satty
       slurp
-      swww
+      awww
       swayidle
       waybar
       waypaper

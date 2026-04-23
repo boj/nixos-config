@@ -233,7 +233,7 @@
   '';
 
   wallpicker-service = pkgs.writeShellScript "wallpicker-service" ''
-    export PATH="${lib.makeBinPath (scriptDeps ++ (with pkgs; [quickshell mpvpaper hyprland jq swww matugen procps waybar]))}:${ddg-search}/bin:${generate-thumbs}/bin:$PATH"
+    export PATH="${lib.makeBinPath (scriptDeps ++ (with pkgs; [quickshell mpvpaper hyprland jq awww matugen procps waybar]))}:${ddg-search}/bin:${generate-thumbs}/bin:$PATH"
     exec quickshell -p "${wallpicker-qml}"
   '';
 in {

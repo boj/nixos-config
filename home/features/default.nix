@@ -2,6 +2,7 @@
   imports = [
     ./development
     ./programs/desktop.nix
+    ./programs/gaming.nix
     ./programs/streamdeck.nix
     ./programs/work.nix
     ./services/easyeffects.nix
