@@ -3,7 +3,6 @@
     ./common.nix
     ./gpu.nix
     ./ai.nix
-    ./greet.nix
     ./hyprland.nix
     ./kernel.nix
     ./openrgb.nix

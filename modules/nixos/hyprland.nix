@@ -1,4 +1,4 @@
-{ config, lib, inputs, ... }:
+{ config, lib, inputs, username, ... }:
 let cfg = config.my.hyprland; in {
   imports = [inputs.hyprland.nixosModules.default];
   options.my.hyprland.enable = lib.mkEnableOption "Hyprland";
@@ -7,5 +7,6 @@ let cfg = config.my.hyprland; in {
       enable = true;
       withUWSM = true;
     };
+    services.getty.autologinUser = username;
   };
 }
