@@ -84,7 +84,7 @@
           "windowsOut, 1, 3, smoothOut, slide"
           "fadeIn, 1, 4, easeOut"
           "fadeOut, 1, 3, smoothOut"
-          "workspaces, 1, 5, easeOut, slide"
+          "workspaces, 1, 5, easeOut, slidevert"
           "borderangle, 1, 60, linear, loop"
         ];
       };
