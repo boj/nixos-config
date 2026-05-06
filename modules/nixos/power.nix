@@ -24,5 +24,12 @@ in {
     };
 
     powerManagement.powertop.enable = true;
+
+    # Disable USB autosuspend (powertop enables it by default), so USB
+    # peripherals don't sleep and drop input/become unresponsive.
+    services.udev.extraRules = ''
+      ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="on"
+      ACTION=="add", SUBSYSTEM=="usb", TEST=="power/autosuspend", ATTR{power/autosuspend}="-1"
+    '';
   };
 }
