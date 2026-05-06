@@ -13,6 +13,7 @@ in {
       blender
       godot_4
       lutris
+      mangohud
       unityhub
     ];
   };
