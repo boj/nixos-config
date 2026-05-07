@@ -17,7 +17,10 @@ in {
       pavucontrol
 
       # browse
-      chromium
+      (chromium.override {
+        enableWideVine = true;
+        proprietaryCodecs = true;
+      })
 
       # comms
       (discord.override {nss = pkgs.nss_latest;})
