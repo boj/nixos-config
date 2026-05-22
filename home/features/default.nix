@@ -5,6 +5,7 @@
     ./programs/gaming.nix
     ./programs/streamdeck.nix
     ./programs/work.nix
+    ./services/cloudflare-ddns.nix
     ./services/easyeffects.nix
     ./terminals/ghostty.nix
     ./terminals/kitty.nix
