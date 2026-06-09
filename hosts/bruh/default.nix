@@ -8,8 +8,8 @@
   my.gpu = "amd";
   my.steam.enable = true;
 
-  # Firewall — open syslog port for SIEM-Daimon
-  networking.firewall.allowedUDPPorts = [5514];
+  # Firewall — open syslog port for SIEM-Daimon, Enshrouded game server
+  networking.firewall.allowedUDPPorts = [5514 15637];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;

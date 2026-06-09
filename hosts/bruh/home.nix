@@ -1,6 +1,11 @@
 {
   my.gpu = "amd";
   my.programs.gaming.enable = true;
+  my.services.cloudflare-ddns = {
+    enable = true;
+    record = "enshrouded.brojo.io";
+    zone = "brojo.io";
+  };
   my.wayland.weather.latitude = 61.32;
   my.wayland.weather.longitude = -149.39;
   my.wayland.hyprland.useFunctionKeys = true;
