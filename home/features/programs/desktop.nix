@@ -44,8 +44,22 @@ in {
     ];
 
     home.sessionVariables = {
-      BROWSER = "firefox";
+      BROWSER = "chromium";
       QT_QPA_PLATFORM = "xcb"; # obs studio
+    };
+
+    xdg.mimeApps = {
+      enable = true;
+      defaultApplications = let
+        chromium = ["chromium-browser.desktop"];
+      in {
+        "text/html" = chromium;
+        "x-scheme-handler/http" = chromium;
+        "x-scheme-handler/https" = chromium;
+        "x-scheme-handler/about" = chromium;
+        "x-scheme-handler/unknown" = chromium;
+        "application/xhtml+xml" = chromium;
+      };
     };
   };
 }
