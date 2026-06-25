@@ -23,7 +23,7 @@ in {
       })
 
       # comms
-      (discord.override {nss = pkgs.nss_latest;})
+      vesktop
       signal-desktop
 
       # sound

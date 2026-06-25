@@ -9,7 +9,10 @@
   waybar-set-workspaces = pkgs.writeShellScript "waybar-set-workspaces" ''
     export PATH="${lib.makeBinPath (with pkgs; [coreutils jq procps findutils])}"
     WORKSPACES="$1"
-    CONFIG="$HOME/.config/waybar/config.jsonc"
+    # Kanshi only runs under Hyprland (systemdTarget=hyprland-session.target),
+    # so always operate on the Hyprland config file.
+    CONFIG="$HOME/.config/waybar/config-hyprland.jsonc"
+    [ ! -e "$CONFIG" ] && CONFIG="$HOME/.config/waybar/config.jsonc"
     [ ! -e "$CONFIG" ] && CONFIG="$HOME/.config/waybar/config"
     [ ! -e "$CONFIG" ] && exit 1
 
@@ -45,10 +48,10 @@
   '';
 
   restart-waybar = pkgs.writeShellScript "restart-waybar" ''
-    export PATH="${lib.makeBinPath (with pkgs; [procps waybar coreutils])}"
+    export PATH="${lib.makeBinPath (with pkgs; [procps coreutils])}"
     pkill waybar || true
     sleep 1
-    waybar &
+    ${lib.getExe config.my.wayland.waybarSessionPackage} &
     disown
   '';
 in {

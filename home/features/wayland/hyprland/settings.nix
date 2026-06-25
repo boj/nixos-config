@@ -14,7 +14,7 @@
       exec-once = [
         "dunst"
         "awww-daemon"
-        "waybar"
+        "${lib.getExe config.my.wayland.waybarSessionPackage}"
       ] ++ config.my.wayland.hyprland.execOnce;
 
       source = ["~/.config/hypr/matugen-colors.conf"];

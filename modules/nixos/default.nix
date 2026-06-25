@@ -5,6 +5,7 @@
     ./ai.nix
     ./greet.nix
     ./hyprland.nix
+    ./niri.nix
     ./kernel.nix
     ./openrgb.nix
     ./plex.nix

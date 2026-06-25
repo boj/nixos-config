@@ -135,8 +135,8 @@ in {
           "$mod SHIFT, E, lockactivegroup, toggle"
           "$mod, TAB, changegroupactive, f"
           "$mod SHIFT, TAB, changegroupactive, b"
-          "$mod CTRL, L, moveoutofgroup, r"
-          "$mod CTRL, H, moveoutofgroup, l"
+          "$mod CTRL SHIFT, L, moveoutofgroup, r"
+          "$mod CTRL SHIFT, H, moveoutofgroup, l"
 
           "$mod, Prior, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
           "$mod, Next, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"

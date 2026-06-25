@@ -9,6 +9,11 @@
         "match:class ^(com\\.gabm\\.satty)$, float on"
         "match:class ^(com\\.gabm\\.satty)$, size (monitor_w*0.75) (monitor_h*0.75)"
         "match:class ^(com\\.gabm\\.satty)$, center on"
+        # Open Chromium and Vesktop maximized so they fill the screen on
+        # launch while still respecting gaps_out (i.e. padded edges,
+        # not true fullscreen).
+        "match:class ^([Cc]hromium(-browser)?)$, maximize 1"
+        "match:class ^([Vv]esktop|dev\\.vencord\\.Vesktop)$, maximize 1"
       ];
       workspace = [
         "w[tv1], gapsout:10, gapsin:10"

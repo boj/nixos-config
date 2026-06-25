@@ -7,6 +7,7 @@ let cfg = config.my.xdg; in {
       xdgOpenUsePortal = true;
       extraPortals = with pkgs; [
         xdg-desktop-portal-gtk
+        xdg-desktop-portal-gnome
         kdePackages.xdg-desktop-portal-kde
       ];
       wlr.enable = true;

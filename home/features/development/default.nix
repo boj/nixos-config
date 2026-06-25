@@ -3,8 +3,7 @@
   lib,
   pkgs,
   ...
-}:
-let
+}: let
   cfg = config.my.development;
 in {
   imports = [
@@ -16,7 +15,6 @@ in {
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       # support
-      flyctl
       gcc
       gh
 

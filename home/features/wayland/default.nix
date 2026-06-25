@@ -18,6 +18,7 @@ in {
     ./gtk.nix
     ./qt.nix
     ./hyprland
+    ./niri
   ];
 
   options.my.wayland.enable = lib.mkEnableOption "Wayland desktop environment";

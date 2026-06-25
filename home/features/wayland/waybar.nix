@@ -6,6 +6,27 @@
 }: let
   batteryEnabled = config.my.wayland.battery.enable;
   weatherCfg = config.my.wayland.weather;
+
+  # Picks the right waybar config per session. Used as the waybar autostart
+  # in both compositors so each session gets its own workspaces module
+  # (hyprland/workspaces vs niri/workspaces). Defined at top-level so other
+  # modules (kanshi, hyprland, niri) can reference it by absolute path,
+  # avoiding PATH-lookup failures when the compositor is started by greetd
+  # before the user profile is on PATH.
+  waybar-session = pkgs.writeShellScriptBin "waybar-session" ''
+    CFG_DIR="$HOME/.config/waybar"
+    STYLE="$CFG_DIR/style.css"
+    case "''${XDG_CURRENT_DESKTOP,,}" in
+      *niri*)     CFG="$CFG_DIR/config-niri.jsonc" ;;
+      *hyprland*) CFG="$CFG_DIR/config-hyprland.jsonc" ;;
+      *)          CFG="$CFG_DIR/config-hyprland.jsonc" ;;
+    esac
+    if [ -f "$STYLE" ]; then
+      exec ${pkgs.waybar}/bin/waybar -c "$CFG" -s "$STYLE"
+    else
+      exec ${pkgs.waybar}/bin/waybar -c "$CFG"
+    fi
+  '';
 in let
   weather-script = pkgs.writeShellScript "waybar-weather" ''
     export PATH="${lib.makeBinPath (with pkgs; [curl coreutils jq])}"
@@ -139,129 +160,163 @@ in {
     description = "Longitude for weather widget (Open-Meteo)";
   };
 
-  config = lib.mkIf config.my.wayland.enable {
+  options.my.wayland.waybarSessionPackage = lib.mkOption {
+    type = lib.types.package;
+    readOnly = true;
+    default = waybar-session;
+    description = ''
+      Package providing the `waybar-session` wrapper that selects the
+      correct waybar config for the running compositor. Exposed so that
+      other modules can reference its absolute path (via `lib.getExe`)
+      instead of relying on PATH lookup.
+    '';
+  };
+
+  config = lib.mkIf config.my.wayland.enable (let
+    workspaceIcons = {
+      "1" = "1"; "2" = "2"; "3" = "3"; "4" = "4"; "5" = "5";
+      "6" = "6"; "7" = "7"; "8" = "8"; "9" = "9"; "10" = "0";
+    };
+
+    hyprlandWorkspaces = {
+      on-click = "activate";
+      format = "{icon}";
+      format-icons = workspaceIcons;
+      persistent-workspaces = config.my.wayland.hyprland.waybarPersistentWorkspaces;
+    };
+
+    # niri/workspaces uses workspace names; we configured named workspaces
+    # "1".."9" in niri/settings.nix so the same icon map applies.
+    niriWorkspaces = {
+      on-click = "activate";
+      format = "{icon}";
+      format-icons = workspaceIcons;
+      all-outputs = false;
+    };
+
+    mkBar = workspacesModule: {
+      layer = "top";
+      position = "left";
+      margin-top = 8;
+      margin-bottom = 8;
+      margin-left = 8;
+      reload_style_on_change = true;
+      modules-left = ["custom/weather-temp" "custom/weather-icon"];
+      modules-center = [workspacesModule.name "clock#date" "clock#time"];
+      modules-right = ["tray" "pulseaudio/slider" "pulseaudio#percentage" "custom/mic" "network" "network#percentage"]
+        ++ lib.optionals batteryEnabled ["battery" "battery#percentage"];
+      "tray" = {
+        icon-size = 16;
+        spacing = 8;
+      };
+      "custom/weather-temp" = {
+        exec = "${weather-script} temp";
+        return-type = "json";
+        format = "{}";
+        rotate = 270;
+        interval = 600;
+      };
+      "custom/weather-icon" = {
+        exec = "${weather-script} icon";
+        return-type = "json";
+        format = "{}";
+        interval = 600;
+      };
+      ${workspacesModule.name} = workspacesModule.config;
+      "clock#date" = {
+        format = "{:%a %B %d}";
+        tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+        rotate = 270;
+      };
+      "clock#time" = {
+        format = "{:%I:%M}";
+      };
+      "pulseaudio" = {
+        format = "{icon}";
+        format-bluetooth = "{icon}";
+        format-muted = "";
+        format-icons = {
+          headphones = "";
+          default = [""];
+        };
+        scroll-step = 1;
+        on-click = "pavucontrol";
+      };
+      "pulseaudio#percentage" = {
+        on-click = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
+        format = "{volume}%";
+      };
+      "custom/mic" = {
+        exec = "${mic-script}";
+        return-type = "json";
+        interval = 2;
+        on-click = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
+      };
+      "pulseaudio/slider" = {
+        min = 0;
+        max = 100;
+        orientation = "vertical";
+      };
+      "network" = {
+        format-wifi = "{icon}";
+        format-ethernet = "󰈀";
+        format-disconnected = "󰤭";
+        format-icons = ["󰤯" "󰤟" "󰤢" "󰤥" "󰤨"];
+        tooltip-format-wifi = "{essid} ({signalStrength}%)";
+        tooltip-format-ethernet = "{ifname}: {ipaddr}";
+        tooltip-format-disconnected = "Disconnected";
+        interval = 5;
+      };
+      "network#percentage" = {
+        format-wifi = "{signalStrength}%";
+        format-ethernet = "";
+        format-disconnected = "";
+        interval = 5;
+      };
+    } // lib.optionalAttrs batteryEnabled {
+      "battery" = {
+        interval = 10;
+        states = {
+          warning = 30;
+          critical = 15;
+        };
+        format = "{icon}";
+        format-charging = "󰂄";
+        format-plugged = "󰚥";
+        format-icons = ["󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
+      };
+      "battery#percentage" = {
+        interval = 10;
+        states = {
+          warning = 30;
+          critical = 15;
+        };
+        format = "{capacity}%";
+        format-charging = "{capacity}%";
+        format-plugged = "{capacity}%";
+      };
+    };
+
+    # Emit a single bar object at the top level (waybar's expected schema).
+    # Do NOT wrap in `{ mainBar = ...; }`: that's a home-manager convention,
+    # and writing it raw makes waybar treat `mainBar` as an unknown key and
+    # fall back to an empty default bar.
+    barHyprland = mkBar { name = "hyprland/workspaces"; config = hyprlandWorkspaces; };
+    barNiri     = mkBar { name = "niri/workspaces";     config = niriWorkspaces;     };
+
+  in {
+    # Install waybar + the session wrapper. We bypass programs.waybar.settings
+    # so we can emit two config files (one per compositor).
     programs.waybar = {
       enable = true;
-      settings = {
-        mainBar = {
-          layer = "top";
-          position = "left";
-          margin-top = 8;
-          margin-bottom = 8;
-          margin-left = 8;
-          reload_style_on_change = true;
-          modules-left = ["custom/weather-temp" "custom/weather-icon"];
-          modules-center = ["hyprland/workspaces" "clock#date" "clock#time"];
-          modules-right = ["tray" "pulseaudio/slider" "pulseaudio#percentage" "custom/mic" "network" "network#percentage"]
-            ++ lib.optionals batteryEnabled ["battery" "battery#percentage"];
-          "tray" = {
-            icon-size = 16;
-            spacing = 8;
-          };
-          "custom/weather-temp" = {
-            exec = "${weather-script} temp";
-            return-type = "json";
-            format = "{}";
-            rotate = 270;
-            interval = 600;
-          };
-          "custom/weather-icon" = {
-            exec = "${weather-script} icon";
-            return-type = "json";
-            format = "{}";
-            interval = 600;
-          };
-          "hyprland/workspaces" = {
-            on-click = "activate";
-            format = "{icon}";
-            format-icons = {
-              "1" = "1";
-              "2" = "2";
-              "3" = "3";
-              "4" = "4";
-              "5" = "5";
-              "6" = "6";
-              "7" = "7";
-              "8" = "8";
-              "9" = "9";
-              "10" = "0";
-            };
-            persistent-workspaces = config.my.wayland.hyprland.waybarPersistentWorkspaces;
-          };
-          "clock#date" = {
-            format = "{:%a %B %d}";
-            tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
-            rotate = 270;
-          };
-          "clock#time" = {
-            format = "{:%I:%M}";
-          };
-          "pulseaudio" = {
-            format = "{icon}";
-            format-bluetooth = "{icon}";
-            format-muted = "";
-            format-icons = {
-              headphones = "";
-              default = [""];
-            };
-            scroll-step = 1;
-            on-click = "pavucontrol";
-          };
-          "pulseaudio#percentage" = {
-            on-click = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
-            format = "{volume}%";
-          };
-          "custom/mic" = {
-            exec = "${mic-script}";
-            return-type = "json";
-            interval = 2;
-            on-click = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
-          };
-          "pulseaudio/slider" = {
-            min = 0;
-            max = 100;
-            orientation = "vertical";
-          };
-          "network" = {
-            format-wifi = "{icon}";
-            format-ethernet = "󰈀";
-            format-disconnected = "󰤭";
-            format-icons = ["󰤯" "󰤟" "󰤢" "󰤥" "󰤨"];
-            tooltip-format-wifi = "{essid} ({signalStrength}%)";
-            tooltip-format-ethernet = "{ifname}: {ipaddr}";
-            tooltip-format-disconnected = "Disconnected";
-            interval = 5;
-          };
-          "network#percentage" = {
-            format-wifi = "{signalStrength}%";
-            format-ethernet = "";
-            format-disconnected = "";
-            interval = 5;
-          };
-          "battery" = lib.mkIf batteryEnabled {
-            interval = 10;
-            states = {
-              warning = 30;
-              critical = 15;
-            };
-            format = "{icon}";
-            format-charging = "󰂄";
-            format-plugged = "󰚥";
-            format-icons = ["󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
-          };
-          "battery#percentage" = lib.mkIf batteryEnabled {
-            interval = 10;
-            states = {
-              warning = 30;
-              critical = 15;
-            };
-            format = "{capacity}%";
-            format-charging = "{capacity}%";
-            format-plugged = "{capacity}%";
-          };
-        };
-      };
-      # CSS managed by matugen (templates/waybar.css)
+      systemd.enable = false;
     };
-  };
+
+    home.packages = [ waybar-session ];
+
+    xdg.configFile."waybar/config-hyprland.jsonc".text =
+      builtins.toJSON barHyprland;
+    xdg.configFile."waybar/config-niri.jsonc".text =
+      builtins.toJSON barNiri;
+  });
 }

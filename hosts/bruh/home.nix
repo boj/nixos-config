@@ -15,6 +15,6 @@
   ];
   my.wayland.hyprland.execOnce = [
     "[workspace 1 silent] chromium"
-    "[workspace 6 silent] discord"
+    "[workspace 6 silent] vesktop"
   ];
 }

@@ -2,6 +2,7 @@
   my.ai.enable = true;
   my.greet.enable = true;
   my.hyprland.enable = true;
+  my.niri.enable = true;
   my.kernel.enable = true;
   my.sound.enable = true;
   my.ssh.enable = true;

@@ -16,5 +16,13 @@
       "toml"
       "zig"
     ];
+    userSettings = {
+      assistant = {
+        default_model = {
+          provider = "copilot_chat";
+          model = "claude-4-7-opus-latest";
+        };
+      };
+    };
   };
 }

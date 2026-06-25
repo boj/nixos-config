@@ -1,4 +1,8 @@
-{pkgs, config, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   imports = [
     ./fastfetch.nix
     ./fish.nix
@@ -26,6 +30,7 @@
     socat
     usbutils
     xdg-utils
+    yazi
 
     # cli
     bat
@@ -46,8 +51,10 @@
   programs.btop = {
     enable = true;
     package =
-      if config.my.gpu == "nvidia" then pkgs.btop.override { cudaSupport = true; }
-      else if config.my.gpu == "amd" then pkgs.btop-rocm
+      if config.my.gpu == "nvidia"
+      then pkgs.btop.override {cudaSupport = true;}
+      else if config.my.gpu == "amd"
+      then pkgs.btop-rocm
       else pkgs.btop;
     settings = {
       color_theme = "catppuccin_mocha";
