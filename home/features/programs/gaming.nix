@@ -14,7 +14,7 @@ in {
       godot_4
       lutris
       mangohud
-      unityhub
+      # unityhub
     ];
   };
 }

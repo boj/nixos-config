@@ -4,6 +4,7 @@
     enable = true;
     record = "enshrouded.brojo.io";
     zone = "brojo.io";
+    interval = "*:0/15";
   };
   my.wayland.weather.latitude = 61.32;
   my.wayland.weather.longitude = -149.39;

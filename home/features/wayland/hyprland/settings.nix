@@ -65,7 +65,6 @@
         };
         shadow = {
           enabled = true;
-          ignore_window = true;
           offset = "0 2";
           range = 10;
           render_power = 2;
@@ -91,7 +90,6 @@
 
 
       dwindle = {
-        pseudotile = true;
         preserve_split = true;
         force_split = 2;
       };
