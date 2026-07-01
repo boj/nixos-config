@@ -14,6 +14,7 @@ in {
     ./waybar.nix
     ./wofi.nix
     ./walker.nix
+    ./slate
     ./wallpaper.nix
     ./wallpaper-picker
     ./gtk.nix
@@ -25,6 +26,9 @@ in {
   options.my.wayland.enable = lib.mkEnableOption "Wayland desktop environment";
 
   config = lib.mkIf cfg.enable {
+    my.wayland.walker.enable = true;
+    my.wayland.walker.replaceWofi = true;
+
     stylix.targets.waybar.enable = false;
     stylix.targets.hyprland.enable = false;
     stylix.targets.hyprlock.enable = false;
@@ -68,6 +72,12 @@ in {
       [templates.chromium-theme]
       input_path = "${./templates/chromium-theme.json}"
       output_path = "~/.config/chromium-matugen-theme/manifest.json"
+    ''
+    + lib.optionalString config.my.wayland.slate.enable ''
+
+      [templates.slate-palette]
+      input_path = "${./slate/matugen/palette.qml.tera}"
+      output_path = "~/.config/quickshell/slate/Colors.qml"
     '';
 
     home.activation.matugenInit = lib.hm.dag.entryAfter ["writeBoundary"] ''

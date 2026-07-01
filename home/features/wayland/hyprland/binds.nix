@@ -35,7 +35,7 @@
     10);
 
   workspace-overview = pkgs.writeShellScript "workspace-overview" ''
-    export PATH="${lib.makeBinPath (with pkgs; [coreutils jq hyprland procps gitMinimal gnused wofi])}"
+    export PATH="${lib.makeBinPath (with pkgs; [coreutils jq hyprland procps gitMinimal gnused wofi walker])}"
 
     # Walk process tree to find the deepest descendant (the shell or its child)
     find_leaf() {
@@ -81,7 +81,7 @@
       done
     }
 
-    selected=$(build_entries | wofi --dmenu --prompt "Workspaces")
+    selected=$(build_entries | ${lib.escapeShellArgs (config.my.wayland.launcher.dmenu "Workspaces")})
     [ -z "$selected" ] && exit 0
 
     ws_num=$(echo "$selected" | sed 's/WS \([0-9]*\) .*/\1/')
@@ -99,7 +99,7 @@ in {
         [
           "$mod, RETURN, exec, ghostty"
           # "$mod, D, exec, wofi -f --show run --lines=5 --prompt=\"\""
-          "$mod, D, exec, wofi -f --show=drun"
+          "$mod, D, exec, ${lib.escapeShellArgs config.my.wayland.launcher.drun}"
           "$mod SHIFT, D, exec, grimblast save area /tmp/satty-screenshot.png && satty --filename /tmp/satty-screenshot.png --copy-command wl-copy --early-exit --actions-on-enter save-to-clipboard --actions-on-enter exit"
           "$mod SHIFT, F, exec, grimblast save output /tmp/satty-screenshot.png && satty --filename /tmp/satty-screenshot.png --copy-command wl-copy --early-exit --actions-on-enter save-to-clipboard --actions-on-enter exit"
           "$mod SHIFT, G, exec, grimblast save active /tmp/satty-screenshot.png && satty --filename /tmp/satty-screenshot.png --copy-command wl-copy --early-exit --actions-on-enter save-to-clipboard --actions-on-enter exit"

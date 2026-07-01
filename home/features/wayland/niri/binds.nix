@@ -58,7 +58,7 @@ let
   baseBinds = {
     # Launchers
     "Mod+Return".action.spawn = "ghostty";
-    "Mod+D".action.spawn = ["wofi" "-f" "--show=drun"];
+    "Mod+D".action.spawn = config.my.wayland.launcher.drun;
 
     # Screenshots (mirroring hyprland $mod SHIFT D/F/G)
     "Mod+Shift+D".action.spawn = ["${satty-area}"];

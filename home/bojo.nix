@@ -17,4 +17,5 @@
   my.wayland.enable = true;
   my.wayland.hyprland.enable = true;
   my.wayland.niri.enable = true;
+  my.wayland.slate.enable = true;
 }

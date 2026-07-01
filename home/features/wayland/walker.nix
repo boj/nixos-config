@@ -12,98 +12,84 @@ in {
       type = lib.types.bool;
       default = false;
       description = ''
-        When true, `my.wayland.launcher` resolves to `walker`, so keybinds
-        can call `''${config.my.wayland.launcher} --show=drun` in a
-        launcher-agnostic way. Both walker and wofi are always installed
-        when their respective modules are enabled.
+        When true, `my.wayland.launcher.*` resolves to walker commands so
+        keybinds route through walker instead of wofi. Both binaries remain
+        installed so ad-hoc invocations of either keep working.
       '';
     };
   };
 
-  # Expose a single "launcher" command so binds don't have to hardcode walker/wofi.
-  options.my.wayland.launcher = lib.mkOption {
-    type = lib.types.str;
-    default = "wofi";
-    description = "Launcher binary to invoke from keybinds.";
-    internal = true;
+  # Launcher abstraction used by hyprland/niri keybinds. Kept internal so
+  # only the launcher modules touch it.
+  options.my.wayland.launcher = {
+    drun = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = ["wofi" "-f" "--show=drun"];
+      description = "argv to open the application launcher.";
+      internal = true;
+    };
+    dmenu = lib.mkOption {
+      type = lib.types.functionTo (lib.types.listOf lib.types.str);
+      default = prompt: ["wofi" "--dmenu" "--prompt" prompt];
+      defaultText = lib.literalExpression ''prompt: ["wofi" "--dmenu" "--prompt" prompt]'';
+      description = "Function returning argv for a dmenu-style picker with the given prompt.";
+      internal = true;
+    };
   };
 
   config = lib.mkIf (config.my.wayland.enable && cfg.enable) (lib.mkMerge [
     {
-      home.packages = with pkgs; [walker];
+      home.packages = with pkgs; [walker elephant];
 
-      # walker reads TOML from XDG_CONFIG_HOME/walker/config.toml. Keep it minimal;
-      # defaults are sensible. Add a modules list to enable calc, clipboard, runner.
-      xdg.configFile."walker/config.toml".text = ''
-        app_launch_prefix = ""
-        terminal_title_flag = ""
-        locale = ""
-        close_when_open = true
-        theme = "default"
-        monitor = ""
-        hotreload_theme = false
+      # Walker 2.x is a thin frontend; it talks to the `elephant` data
+      # provider daemon over a Unix socket. Without elephant running,
+      # walker exits after a few seconds with "Please install elephant."
+      # Elephant must run in the graphical user session so it inherits
+      # WAYLAND_DISPLAY, DBUS_SESSION_BUS_ADDRESS, etc. (see upstream
+      # README: system-level services will not work).
+      systemd.user.services.elephant = {
+        Unit = {
+          Description = "Elephant data provider daemon (walker backend)";
+          PartOf = ["graphical-session.target"];
+          After = ["graphical-session.target"];
+        };
+        Service = {
+          ExecStart = "${pkgs.elephant}/bin/elephant";
+          Restart = "on-failure";
+          RestartSec = 2;
+        };
+        Install.WantedBy = ["graphical-session.target"];
+      };
 
-        [keys]
-        accept_typeahead = ["tab"]
-        trigger_labels = "lalt"
-        next = ["down"]
-        prev = ["up"]
-        close = ["esc"]
+      # Walker 2.x is a GApplication service: `walker` is a client that
+      # activates the running instance. Without the service, invocations
+      # exit silently. Run it as a user service, activated on graphical
+      # session start, after elephant is up.
+      systemd.user.services.walker = {
+        Unit = {
+          Description = "Walker application launcher (service mode)";
+          PartOf = ["graphical-session.target"];
+          After = ["graphical-session.target" "elephant.service"];
+          Requires = ["elephant.service"];
+        };
+        Service = {
+          ExecStart = "${pkgs.walker}/bin/walker --gapplication-service";
+          Restart = "on-failure";
+          RestartSec = 2;
+        };
+        Install.WantedBy = ["graphical-session.target"];
+      };
 
-        [list]
-        max_entries = 50
-        show_initial_entries = true
-        single_click = true
-
-        [search]
-        placeholder = "Search"
-        delay = 0
-
-        [builtins.applications]
-        weight = 5
-        placeholder = "Applications"
-        prioritize_new = true
-        hide_actions_with_empty_query = true
-
-        [builtins.calc]
-        weight = 5
-        placeholder = "Calculator"
-        min_chars = 3
-
-        [builtins.clipboard]
-        weight = 5
-        placeholder = "Clipboard"
-        max_entries = 100
-        avoid_line_breaks = true
-
-        [builtins.commands]
-        weight = 5
-        placeholder = "Commands"
-
-        [builtins.runner]
-        weight = 5
-        placeholder = "Runner"
-        use_history = true
-
-        [builtins.symbols]
-        weight = 5
-        placeholder = "Symbols"
-        after_copy = "close"
-
-        [builtins.ssh]
-        weight = 5
-        placeholder = "SSH"
-
-        [builtins.finder]
-        weight = 5
-        placeholder = "Finder"
-        use_fd = true
-        fd_flags = "--ignore-file ~/.config/walker/fdignore --type f"
-      '';
+      # Walker 2.x has a completely different config schema than 0.x.
+      # Stick with defaults for now; add customization once we have a
+      # reference for the 2.x schema.
     }
 
     (lib.mkIf cfg.replaceWofi {
-      my.wayland.launcher = lib.mkForce "walker";
+      my.wayland.launcher = {
+        drun = lib.mkForce ["walker"];
+        dmenu = lib.mkForce (prompt: ["walker" "--dmenu" "--placeholder" prompt]);
+      };
     })
   ]);
 }
