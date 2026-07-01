@@ -3,10 +3,12 @@
     ./common.nix
     ./gpu.nix
     ./ai.nix
+    ./attic.nix
     ./greet.nix
     ./hyprland.nix
     ./niri.nix
     ./kernel.nix
+    ./nix-index.nix
     ./openrgb.nix
     ./plex.nix
     ./power.nix

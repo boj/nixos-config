@@ -14,8 +14,13 @@ in {
       gemini-cli
       github-copilot-cli
       claude-code
-      (if gpu == "amd" then llama-cpp-rocm else llama-cpp)
+      (
+        if gpu == "amd"
+        then llama-cpp-rocm
+        else llama-cpp
+      )
       ollama
+      opencode
     ];
   };
 }

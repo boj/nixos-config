@@ -1,24 +1,14 @@
 {
   pkgs,
   lib,
+  config,
   username,
   ...
 }: {
   nixpkgs.config.allowUnfree = lib.mkDefault true;
-  nixpkgs.config.permittedInsecurePackages = [
-    "libsoup-2.74.3"
-  ];
-
-  # TODO: remove once upower self-test is fixed upstream in nixpkgs
-  nixpkgs.overlays = [
-    (final: prev: {
-      upower = prev.upower.overrideAttrs (old: {
-        doCheck = false;
-      });
-    })
-  ];
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings.auto-optimise-store = true;
   nix.settings.substituters = [
     "https://cache.nixos.org"
     "https://hyprland.cachix.org"
@@ -50,8 +40,20 @@
     git
     mosh
     nh
+    nvd
     wget
   ];
+
+  # Print a package diff between the running system and the one being activated.
+  # Runs on every switch/boot/test — nh, nixos-rebuild, deploy-rs all trigger it.
+  system.activationScripts.report-changes = ''
+    if [[ -e /run/current-system ]] && [[ "$(readlink /run/current-system)" != "$systemConfig" ]]; then
+      echo
+      echo "--- system diff ---"
+      ${pkgs.nvd}/bin/nvd --nix-bin-dir=${config.nix.package}/bin diff /run/current-system "$systemConfig" || true
+      echo
+    fi
+  '';
 
   # Allow mosh UDP traffic
   networking.firewall.allowedUDPPortRanges = [{from = 60000; to = 61000;}];

@@ -61,7 +61,7 @@ in {
     };
 
     waybarPersistentWorkspaces = lib.mkOption {
-      type = lib.types.attrs;
+      type = lib.types.attrsOf (lib.types.either lib.types.int (lib.types.listOf lib.types.int));
       default = {"*" = 5;};
       description = "Waybar persistent-workspaces mapping (monitor name to workspace list or count)";
       example = { "DP-1" = [1 2 3]; "DP-2" = [4 5 6]; };

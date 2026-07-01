@@ -5,7 +5,6 @@
   ];
 
   # Host-specific
-  my.gpu = "nvidia";
   my.wifi.enable = true;
   my.power.enable = true;
 

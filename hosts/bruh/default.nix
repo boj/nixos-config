@@ -5,8 +5,8 @@
   ];
 
   # Host-specific
-  my.gpu = "amd";
   my.steam.enable = true;
+  my.attic.server.enable = true;
 
   # Firewall — open syslog port for SIEM-Daimon, Enshrouded game server
   networking.firewall.allowedUDPPorts = [5514 15637];

@@ -17,8 +17,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?rev=0002f148c9a4fe421a9d33c0faa5528cdc411e62";
-    hyprpaper.url = "github:hyprwm/hyprpaper";
-    hyprland-contrib.url = "github:hyprwm/contrib";
+    hyprpaper = {
+      url = "github:hyprwm/hyprpaper";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    hyprland-contrib = {
+      url = "github:hyprwm/contrib";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     niri = {
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -30,6 +36,14 @@
 
     stylix = {
       url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    attic = {
+      url = "github:zhaofengli/attic";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     zjstatus = {
@@ -56,8 +70,8 @@
     mkHost = import ./lib/mkHost.nix {inherit inputs system username userFullName userEmail sshKeys defaultWallpaper;};
   in {
     nixosConfigurations = {
-      "bruh" = mkHost {name = "bruh";};
-      "worky" = mkHost {name = "worky";};
+      "bruh" = mkHost {name = "bruh"; gpu = "amd";};
+      "worky" = mkHost {name = "worky"; gpu = "nvidia";};
       "wsl" = mkHost {
         name = "wsl";
         homeModule = ./home/wsl.nix;

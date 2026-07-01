@@ -8,12 +8,15 @@
   defaultWallpaper,
 }: {
   name,
+  gpu ? "none",
   homeModule ? ../home/bojo.nix,
   extraModules ? [],
   stylix ? true,
 }:
 let
   specialArgs = {inherit inputs username sshKeys;};
+
+  gpuModule = {my.gpu = gpu;};
 
   stylixModules =
     if stylix
@@ -33,7 +36,7 @@ let
 
   hostHomePath = ../hosts/${name}/home.nix;
   homeModules =
-    [homeModule]
+    [homeModule gpuModule]
     ++ (
       if builtins.pathExists hostHomePath
       then [hostHomePath]
@@ -46,6 +49,7 @@ in
       [
         ../modules/nixos
         ../hosts/${name}
+        gpuModule
         inputs.home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;

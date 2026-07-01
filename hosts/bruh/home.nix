@@ -1,5 +1,4 @@
 {
-  my.gpu = "amd";
   my.programs.gaming.enable = true;
   my.services.cloudflare-ddns = {
     enable = true;

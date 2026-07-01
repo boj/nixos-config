@@ -13,6 +13,7 @@ in {
     ./kanshi.nix
     ./waybar.nix
     ./wofi.nix
+    ./walker.nix
     ./wallpaper.nix
     ./wallpaper-picker
     ./gtk.nix

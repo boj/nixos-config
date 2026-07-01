@@ -1,5 +1,4 @@
 {
-  my.gpu = "nvidia";
   my.wayland.weather.latitude = 61.60;
   my.wayland.weather.longitude = -149.11;
   my.wayland.battery.enable = true;
