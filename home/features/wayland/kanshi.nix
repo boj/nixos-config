@@ -48,11 +48,18 @@
   '';
 
   restart-waybar = pkgs.writeShellScript "restart-waybar" ''
-    export PATH="${lib.makeBinPath (with pkgs; [procps coreutils])}"
-    pkill waybar || true
-    sleep 1
-    ${lib.getExe config.my.wayland.waybarSessionPackage} &
-    disown
+    export PATH="${lib.makeBinPath (with pkgs; [systemd procps coreutils])}"
+    # Slate is a systemd user unit — bounce it so it re-reads outputs
+    # after a kanshi profile switch. Fall back to killing waybar for
+    # environments where slate isn't active.
+    if systemctl --user list-unit-files slate.service >/dev/null 2>&1; then
+      systemctl --user restart slate.service || true
+    else
+      pkill waybar || true
+      sleep 1
+      ${lib.getExe config.my.wayland.waybarSessionPackage} &
+      disown
+    fi
   '';
 in {
   options.my.wayland.kanshi = {

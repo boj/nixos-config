@@ -11,7 +11,7 @@ in {
   imports = [
     ./dunst.nix
     ./kanshi.nix
-    ./waybar.nix
+    # ./waybar.nix
     ./wofi.nix
     ./walker.nix
     ./slate
@@ -24,6 +24,24 @@ in {
   ];
 
   options.my.wayland.enable = lib.mkEnableOption "Wayland desktop environment";
+
+  # Bar-agnostic options that used to live in the now-disabled waybar.nix.
+  # Kept here (in the always-imported wayland module) so hosts and bar
+  # implementations (slate, future replacements) can reference them without
+  # depending on waybar.nix being enabled.
+  options.my.wayland.battery.enable = lib.mkEnableOption "battery indicator in the session bar";
+
+  options.my.wayland.weather.latitude = lib.mkOption {
+    type = lib.types.float;
+    default = 61.60;
+    description = "Latitude for weather widget (Open-Meteo)";
+  };
+
+  options.my.wayland.weather.longitude = lib.mkOption {
+    type = lib.types.float;
+    default = -149.11;
+    description = "Longitude for weather widget (Open-Meteo)";
+  };
 
   config = lib.mkIf cfg.enable {
     my.wayland.walker.enable = true;
@@ -55,30 +73,31 @@ in {
       ydotool
     ];
 
-    xdg.configFile."matugen/config.toml".text = ''
-      [config]
-      variant = "dark"
-      palette = "scheme-tonal-spot"
-      contrast = 0.0
+    xdg.configFile."matugen/config.toml".text =
+      ''
+        [config]
+        variant = "dark"
+        palette = "scheme-tonal-spot"
+        contrast = 0.0
 
-      [templates.waybar]
-      input_path = "${./templates/waybar.css}"
-      output_path = "~/.cache/matugen-waybar.css"
+        [templates.waybar]
+        input_path = "${./templates/waybar.css}"
+        output_path = "~/.cache/matugen-waybar.css"
 
-      [templates.hyprland-colors]
-      input_path = "${./templates/hyprland-colors.conf}"
-      output_path = "~/.config/hypr/matugen-colors.conf"
+        [templates.hyprland-colors]
+        input_path = "${./templates/hyprland-colors.conf}"
+        output_path = "~/.config/hypr/matugen-colors.conf"
 
-      [templates.chromium-theme]
-      input_path = "${./templates/chromium-theme.json}"
-      output_path = "~/.config/chromium-matugen-theme/manifest.json"
-    ''
-    + lib.optionalString config.my.wayland.slate.enable ''
+        [templates.chromium-theme]
+        input_path = "${./templates/chromium-theme.json}"
+        output_path = "~/.config/chromium-matugen-theme/manifest.json"
+      ''
+      + lib.optionalString config.my.wayland.slate.enable ''
 
-      [templates.slate-palette]
-      input_path = "${./slate/matugen/palette.qml.tera}"
-      output_path = "~/.config/quickshell/slate/Colors.qml"
-    '';
+        [templates.slate-palette]
+        input_path = "${./slate/matugen/palette.qml.tera}"
+        output_path = "~/.config/quickshell/slate/Colors.qml"
+      '';
 
     home.activation.matugenInit = lib.hm.dag.entryAfter ["writeBoundary"] ''
       mkdir -p "$HOME/.config/hypr" "$HOME/.config/waybar" "$HOME/.config/chromium-matugen-theme"

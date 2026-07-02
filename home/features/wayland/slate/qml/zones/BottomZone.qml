@@ -10,6 +10,13 @@ Column {
     id: root
     spacing: 14
 
+    // The Bar's PanelWindow, plumbed down so widgets that spawn popups
+    // (currently just Tray) can anchor them to the correct Quickshell
+    // window. QtQuick's `Window.window` attached property returns the
+    // raw QQuickWindow which QsMenuAnchor doesn't accept as a valid
+    // popup parent on layer-shell surfaces.
+    property var panelWindow: null
+
     Battery {
         anchors.horizontalCenter: parent.horizontalCenter
     }
@@ -20,5 +27,6 @@ Column {
 
     Tray {
         anchors.horizontalCenter: parent.horizontalCenter
+        panelWindow: root.panelWindow
     }
 }

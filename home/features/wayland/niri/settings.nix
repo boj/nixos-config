@@ -86,12 +86,13 @@ let
     command = ["sh" "-c" stripped];
   };
 
-  # Niri's exec-once analogue. Always include the same baseline as hyprland
-  # (waybar, dunst, awww-daemon) so the bar/notifications/wallpaper come up.
+  # Niri's exec-once analogue. The status bar (slate) is intentionally
+  # excluded here — it runs as a systemd user unit (`slate.service`)
+  # bound to graphical-session.target so `nixos-rebuild switch` can
+  # restart it via sd-switch when its QML changes.
   baselineSpawns = [
     {command = ["dunst"];}
     {command = ["awww-daemon"];}
-    {command = [(lib.getExe config.my.wayland.waybarSessionPackage)];}
   ];
   hyprlandExecOnceSpawns = map parseSpawn hypr.execOnce;
   extraSpawns = map (s: {command = ["sh" "-c" s];}) cfg.execOnce;

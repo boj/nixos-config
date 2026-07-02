@@ -7,9 +7,10 @@
   # Host-specific
   my.steam.enable = true;
   my.attic.server.enable = true;
+  my.enshrouded.enable = true;
 
-  # Firewall — open syslog port for SIEM-Daimon, Enshrouded game server
-  networking.firewall.allowedUDPPorts = [5514 15637];
+  # Firewall — open syslog port for SIEM-Daimon
+  networking.firewall.allowedUDPPorts = [5514];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;

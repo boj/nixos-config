@@ -54,6 +54,21 @@
     }
   '';
 in {
+  # Declared here (rather than in the disabled waybar.nix) so kanshi,
+  # hyprland, and niri can reference an absolute session-bar path regardless
+  # of which bar implementation is active. Kept read-only + defaulted to
+  # slate-session; other bar modules can `mkForce` a different package.
+  options.my.wayland.waybarSessionPackage = lib.mkOption {
+    type = lib.types.package;
+    default = slate-session;
+    defaultText = lib.literalExpression "slate-session";
+    description = ''
+      Package providing the compositor session bar wrapper. Exposed so
+      other modules can reference its absolute path (via `lib.getExe`)
+      instead of relying on PATH lookup at compositor startup.
+    '';
+  };
+
   options.my.wayland.slate = {
     enable = lib.mkEnableOption "Slate — vertical Quickshell bar (replaces waybar)";
 
@@ -94,12 +109,6 @@ in {
       slate-session
     ];
 
-    # Hijack the compositor-level "session bar" autostart. hyprland and niri
-    # both invoke lib.getExe config.my.wayland.waybarSessionPackage; by
-    # mkForce-ing this to slate-session, waybar never launches even though
-    # its module still evaluates.
-    my.wayland.waybarSessionPackage = lib.mkForce slate-session;
-
     # QML tree lives at ~/.config/quickshell/slate/ (matches `qs -c slate`).
     # Every file is nix-managed EXCEPT Colors.qml, which is owned by matugen
     # and seeded on first activation (see slatePaletteBootstrap below and the
@@ -126,6 +135,46 @@ in {
       "quickshell/slate/widgets/Volume.qml".source = ./qml/widgets/Volume.qml;
       "quickshell/slate/widgets/Tray.qml".source = ./qml/widgets/Tray.qml;
       # Colors.qml intentionally omitted — matugen owns it.
+    };
+
+    # Systemd user unit that owns the Slate lifecycle. Started as part of
+    # graphical-session.target (both hyprland and niri home-manager modules
+    # wire their own *-session.target into it), and restarted by sd-switch
+    # on every `nixos-rebuild switch` where any QML input changes — the
+    # X-Restart-Triggers hash below folds every managed file into the
+    # unit's stored hash so home-manager notices.
+    systemd.user.services.slate = {
+      Unit = {
+        Description = "Slate — Quickshell status bar";
+        Documentation = ["https://quickshell.outfoxxed.me/"];
+        PartOf = ["graphical-session.target"];
+        After = ["graphical-session.target"];
+        X-Restart-Triggers = [
+          (builtins.hashString "sha256" (builtins.concatStringsSep ":" [
+            (builtins.hashFile "sha256" ./qml/shell.qml)
+            (builtins.hashFile "sha256" ./qml/Bar.qml)
+            (builtins.hashFile "sha256" ./qml/Dimensions.qml)
+            (builtins.hashFile "sha256" ./qml/Workspaces.qml)
+            configQml
+            (builtins.hashFile "sha256" ./qml/zones/TopZone.qml)
+            (builtins.hashFile "sha256" ./qml/zones/MiddleZone.qml)
+            (builtins.hashFile "sha256" ./qml/zones/BottomZone.qml)
+            (builtins.hashFile "sha256" ./qml/widgets/Clock.qml)
+            (builtins.hashFile "sha256" ./qml/widgets/WorkspaceStrip.qml)
+            (builtins.hashFile "sha256" ./qml/widgets/Battery.qml)
+            (builtins.hashFile "sha256" ./qml/widgets/Volume.qml)
+            (builtins.hashFile "sha256" ./qml/widgets/Tray.qml)
+          ]))
+        ];
+      };
+      Service = {
+        Type = "simple";
+        ExecStart = "${lib.getExe slate-session}";
+        Restart = "on-failure";
+        RestartSec = 2;
+        Slice = "session.slice";
+      };
+      Install.WantedBy = ["graphical-session.target"];
     };
 
     # Seed Colors.qml with sensible defaults on activation. Runs before

@@ -11,10 +11,13 @@
 
       workspace = config.my.wayland.hyprland.workspaces;
 
+      # NOTE: the status bar (slate/waybar) is NOT started here anymore —
+      # it runs as a systemd user unit (`slate.service`) bound to
+      # graphical-session.target so `nixos-rebuild switch` can restart it
+      # via sd-switch when its QML changes.
       exec-once = [
         "dunst"
         "awww-daemon"
-        "${lib.getExe config.my.wayland.waybarSessionPackage}"
       ] ++ config.my.wayland.hyprland.execOnce;
 
       source = ["~/.config/hypr/matugen-colors.conf"];

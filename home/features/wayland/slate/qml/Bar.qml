@@ -78,6 +78,7 @@ PanelWindow {
         }
 
         BottomZone {
+            panelWindow: root
             Layout.fillWidth: true
         }
     }

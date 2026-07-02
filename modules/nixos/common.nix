@@ -7,6 +7,15 @@
 }: {
   nixpkgs.config.allowUnfree = lib.mkDefault true;
 
+  # pnpm 10.29.2 is flagged insecure but is only used as a build-time
+  # dependency for vesktop (not shipped in the runtime closure). The listed
+  # CVEs are all in pnpm's registry-fetching path, which isn't exercised
+  # during Nix's offline-fetched build. Revisit when nixpkgs bumps vesktop
+  # to a newer pnpm.
+  nixpkgs.config.permittedInsecurePackages = [
+    "pnpm-10.29.2"
+  ];
+
   nix.settings.experimental-features = ["nix-command" "flakes"];
   nix.settings.auto-optimise-store = true;
   nix.settings.substituters = [
