@@ -133,6 +133,7 @@ in {
       "quickshell/slate/widgets/WorkspaceStrip.qml".source = ./qml/widgets/WorkspaceStrip.qml;
       "quickshell/slate/widgets/Battery.qml".source = ./qml/widgets/Battery.qml;
       "quickshell/slate/widgets/Volume.qml".source = ./qml/widgets/Volume.qml;
+      "quickshell/slate/widgets/Microphone.qml".source = ./qml/widgets/Microphone.qml;
       "quickshell/slate/widgets/Tray.qml".source = ./qml/widgets/Tray.qml;
       # Colors.qml intentionally omitted — matugen owns it.
     };
@@ -163,6 +164,7 @@ in {
             (builtins.hashFile "sha256" ./qml/widgets/WorkspaceStrip.qml)
             (builtins.hashFile "sha256" ./qml/widgets/Battery.qml)
             (builtins.hashFile "sha256" ./qml/widgets/Volume.qml)
+            (builtins.hashFile "sha256" ./qml/widgets/Microphone.qml)
             (builtins.hashFile "sha256" ./qml/widgets/Tray.qml)
           ]))
         ];
