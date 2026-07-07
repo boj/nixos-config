@@ -25,6 +25,11 @@ in {
 
     powerManagement.powertop.enable = true;
 
+    # UPower provides battery/AC status over D-Bus. Needed by the Slate
+    # bar's Battery widget (Quickshell.Services.UPower) and generally
+    # useful on any host with a battery.
+    services.upower.enable = true;
+
     # Disable USB autosuspend (powertop enables it by default), so USB
     # peripherals don't sleep and drop input/become unresponsive.
     services.udev.extraRules = ''

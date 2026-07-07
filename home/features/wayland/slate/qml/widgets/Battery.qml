@@ -10,7 +10,9 @@ Item {
 
     readonly property var dev: UPower.displayDevice
     readonly property bool available: dev !== null && dev.ready
-    readonly property real level: available ? dev.percentage : 0
+    // Quickshell's UPowerDevice.percentage is a 0.0–1.0 fraction; scale
+    // to a 0–100 percent for display and threshold comparisons.
+    readonly property real level: available ? dev.percentage * 100 : 0
     readonly property bool charging:
         available && dev.state === UPowerDeviceState.Charging
 
