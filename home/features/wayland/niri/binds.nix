@@ -120,7 +120,7 @@ let
     "Mod+Shift+M".action.spawn = ["wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"];
 
     # Wallpaper picker
-    "Mod+W".action.spawn = "toggle-wallpicker";
+    "Mod+W".action.spawn = "skwd-wall-toggle";
 
     # XF86 media keys
     "XF86AudioRaiseVolume" = {

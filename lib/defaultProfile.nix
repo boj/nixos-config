@@ -12,5 +12,6 @@
   my.udev.enable = true;
   my.xdg.enable = true;
   my.rust.enable = true;
+  my.skwd-wall.enable = true;
   my.virtualization.docker.enable = true;
 }

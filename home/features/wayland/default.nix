@@ -16,7 +16,6 @@ in {
     ./walker.nix
     ./slate
     ./wallpaper.nix
-    ./wallpaper-picker
     ./gtk.nix
     ./qt.nix
     ./hyprland

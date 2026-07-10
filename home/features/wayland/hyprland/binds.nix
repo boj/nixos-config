@@ -142,7 +142,7 @@ in {
           "$mod, Next, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
           "$mod, M, exec, ${toggle-mute}"
           "$mod SHIFT, M, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-          "$mod, W, exec, toggle-wallpicker"
+          "$mod, W, exec, skwd-wall-toggle"
 
           "$mod CTRL, bracketright, movecurrentworkspacetomonitor, +1"
           "$mod CTRL, bracketleft, movecurrentworkspacetomonitor, -1"

@@ -14,6 +14,7 @@
     ./plex.nix
     ./power.nix
     ./rust.nix
+    ./skwd-wall.nix
     ./sound.nix
     ./ssh.nix
     ./steam.nix
