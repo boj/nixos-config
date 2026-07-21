@@ -33,6 +33,7 @@ in {
       spotify
 
       # video
+      davinci-resolve
       obs-studio
 
       # misc
