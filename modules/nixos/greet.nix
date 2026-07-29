@@ -9,9 +9,9 @@ in {
       enable = true;
       settings = {
         default_session = {
-          # No --cmd: tuigreet shows the wayland-sessions picker so the user
-          # can switch between Hyprland and Niri. --remember-user-session
-          # makes the last choice sticky.
+          # No --cmd: tuigreet shows the wayland-sessions picker so the
+          # user can pick a session. --remember-user-session makes the last
+          # choice sticky.
           command = "${tuigreet} --greeting 'Welcome to NixOS!' --asterisks --remember --remember-user-session --time";
           user = "greeter";
         };

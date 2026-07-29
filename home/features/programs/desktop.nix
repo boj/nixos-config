@@ -30,7 +30,7 @@ in {
       easyeffects
 
       # music
-      spotify
+      # spotify
 
       # video
       davinci-resolve

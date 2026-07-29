@@ -4,10 +4,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Hyprland
 
-// Compositor-agnostic workspace state. Wraps Quickshell's Hyprland IPC
-// today; niri support (via Quickshell.Io.Process + `niri msg --json
-// event-stream`) lands in a follow-up. Under niri, `workspaces` is empty
-// and the middle zone renders nothing.
+// Compositor-agnostic workspace state. Wraps Quickshell's Hyprland IPC.
 //
 // Exposed shape per workspace:
 //   { monitor: string, id: int, focused: bool, populated: bool }
@@ -17,8 +14,7 @@ import Quickshell.Hyprland
 Singleton {
     id: root
 
-    readonly property string kind:
-        Hyprland.monitors.values.length > 0 ? "hyprland" : "niri"
+    readonly property string kind: "hyprland"
 
     readonly property var workspaces: {
         if (kind !== "hyprland") return [];
@@ -37,6 +33,5 @@ Singleton {
         if (kind === "hyprland") {
             Hyprland.dispatch(`workspace ${workspaceId}`);
         }
-        // niri: TODO — Process { command: ["niri", "msg", "action", "focus-workspace", id] }
     }
 }

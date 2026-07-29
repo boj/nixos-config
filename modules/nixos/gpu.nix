@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }: let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   cfg = config.my.gpu;
 in {
   options.my.gpu = lib.mkOption {
@@ -8,6 +13,20 @@ in {
   };
 
   config = lib.mkMerge [
+    (lib.mkIf (cfg != "none") {
+      hardware.graphics.enable = true;
+      # OpenCL support (needed by DaVinci Resolve).
+      # ocl-icd provides libOpenCL.so (the ICD loader) and its headers;
+      # mesa.opencl provides Mesa's Rusticl/Clover ICD as a fallback.
+      hardware.graphics.extraPackages = with pkgs; [
+        ocl-icd
+        mesa.opencl
+      ];
+      environment.systemPackages = with pkgs; [
+        ocl-icd
+        clinfo
+      ];
+    })
     (lib.mkIf (cfg == "nvidia") {
       services.xserver.videoDrivers = ["nvidia"];
       hardware.nvidia = {
@@ -35,7 +54,8 @@ in {
       ];
     })
     (lib.mkIf (cfg == "amd") {
-      hardware.graphics.enable = true;
+      # ROCm OpenCL runtime — DaVinci Resolve requires this on AMD GPUs.
+      hardware.graphics.extraPackages = [pkgs.rocmPackages.clr.icd];
     })
   ];
 }

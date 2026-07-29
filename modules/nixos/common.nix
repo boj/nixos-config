@@ -43,6 +43,14 @@
     options = lib.mkDefault "--delete-older-than 7d";
   };
 
+  # `auto-optimise-store` only hardlinks paths as they are added. This
+  # timer sweeps the whole store periodically to catch anything that
+  # slipped through (older paths, paths imported via `nix copy`, etc.).
+  nix.optimise = {
+    automatic = lib.mkDefault true;
+    dates = lib.mkDefault ["weekly"];
+  };
+
   environment.systemPackages = with pkgs; [
     cachix
     curl

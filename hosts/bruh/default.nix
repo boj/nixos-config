@@ -6,7 +6,7 @@
 
   # Host-specific
   my.steam.enable = true;
-  my.attic.server.enable = true;
+  my.attic.server.enable = false;
   my.enshrouded.enable = true;
 
   # Firewall — open syslog port for SIEM-Daimon

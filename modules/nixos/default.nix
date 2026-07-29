@@ -7,7 +7,6 @@
     ./enshrouded.nix
     ./greet.nix
     ./hyprland.nix
-    ./niri.nix
     ./kernel.nix
     ./nix-index.nix
     ./openrgb.nix
@@ -16,6 +15,7 @@
     ./rust.nix
     ./skwd-wall.nix
     ./sound.nix
+    ./ssd.nix
     ./ssh.nix
     ./steam.nix
     ./tailscale.nix

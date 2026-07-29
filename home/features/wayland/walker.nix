@@ -19,7 +19,7 @@ in {
     };
   };
 
-  # Launcher abstraction used by hyprland/niri keybinds. Kept internal so
+  # Launcher abstraction used by hyprland keybinds. Kept internal so
   # only the launcher modules touch it.
   options.my.wayland.launcher = {
     drun = lib.mkOption {

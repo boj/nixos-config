@@ -8,16 +8,14 @@
   weatherCfg = config.my.wayland.weather;
 
   # Picks the right waybar config per session. Used as the waybar autostart
-  # in both compositors so each session gets its own workspaces module
-  # (hyprland/workspaces vs niri/workspaces). Defined at top-level so other
-  # modules (kanshi, hyprland, niri) can reference it by absolute path,
-  # avoiding PATH-lookup failures when the compositor is started by greetd
-  # before the user profile is on PATH.
+  # in hyprland so the session gets its own workspaces module. Defined at
+  # top-level so other modules (kanshi, hyprland) can reference it by
+  # absolute path, avoiding PATH-lookup failures when the compositor is
+  # started by greetd before the user profile is on PATH.
   waybar-session = pkgs.writeShellScriptBin "waybar-session" ''
     CFG_DIR="$HOME/.config/waybar"
     STYLE="$CFG_DIR/style.css"
     case "''${XDG_CURRENT_DESKTOP,,}" in
-      *niri*)     CFG="$CFG_DIR/config-niri.jsonc" ;;
       *hyprland*) CFG="$CFG_DIR/config-hyprland.jsonc" ;;
       *)          CFG="$CFG_DIR/config-hyprland.jsonc" ;;
     esac
@@ -185,15 +183,6 @@ in {
       persistent-workspaces = config.my.wayland.hyprland.waybarPersistentWorkspaces;
     };
 
-    # niri/workspaces uses workspace names; we configured named workspaces
-    # "1".."9" in niri/settings.nix so the same icon map applies.
-    niriWorkspaces = {
-      on-click = "activate";
-      format = "{icon}";
-      format-icons = workspaceIcons;
-      all-outputs = false;
-    };
-
     mkBar = workspacesModule: {
       layer = "top";
       position = "left";
@@ -302,7 +291,6 @@ in {
     # and writing it raw makes waybar treat `mainBar` as an unknown key and
     # fall back to an empty default bar.
     barHyprland = mkBar { name = "hyprland/workspaces"; config = hyprlandWorkspaces; };
-    barNiri     = mkBar { name = "niri/workspaces";     config = niriWorkspaces;     };
 
   in {
     # Install waybar + the session wrapper. We bypass programs.waybar.settings
@@ -316,7 +304,5 @@ in {
 
     xdg.configFile."waybar/config-hyprland.jsonc".text =
       builtins.toJSON barHyprland;
-    xdg.configFile."waybar/config-niri.jsonc".text =
-      builtins.toJSON barNiri;
   });
 }

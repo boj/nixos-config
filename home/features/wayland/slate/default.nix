@@ -7,8 +7,8 @@
   cfg = config.my.wayland.slate;
 
   # slate-session mirrors the shape of waybar-session so it can be dropped
-  # into `my.wayland.waybarSessionPackage` without changing hyprland/niri
-  # autostart wiring. Both compositors already `lib.getExe` this package.
+  # into `my.wayland.waybarSessionPackage` without changing hyprland
+  # autostart wiring. Hyprland already `lib.getExe` this package.
   # QT_QPA_PLATFORM is forced to wayland so manual invocations from an
   # xcb-hostile shell env don't accidentally spawn a floating X11 window.
   slate-session = pkgs.writeShellScriptBin "slate-session" ''
@@ -54,9 +54,9 @@
     }
   '';
 in {
-  # Declared here (rather than in the disabled waybar.nix) so kanshi,
-  # hyprland, and niri can reference an absolute session-bar path regardless
-  # of which bar implementation is active. Kept read-only + defaulted to
+  # Declared here (rather than in the disabled waybar.nix) so kanshi and
+  # hyprland can reference an absolute session-bar path regardless of
+  # which bar implementation is active. Kept read-only + defaulted to
   # slate-session; other bar modules can `mkForce` a different package.
   options.my.wayland.waybarSessionPackage = lib.mkOption {
     type = lib.types.package;
@@ -139,9 +139,8 @@ in {
     };
 
     # Systemd user unit that owns the Slate lifecycle. Started as part of
-    # graphical-session.target (both hyprland and niri home-manager modules
-    # wire their own *-session.target into it), and restarted by sd-switch
-    # on every `nixos-rebuild switch` where any QML input changes — the
+    # graphical-session.target (the hyprland home-manager module wires
+    # its own *-session.target into it), and restarted by sd-switch on every `nixos-rebuild switch` where any QML input changes — the
     # X-Restart-Triggers hash below folds every managed file into the
     # unit's stored hash so home-manager notices.
     systemd.user.services.slate = {
