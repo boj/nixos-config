@@ -5,7 +5,7 @@
   my.wayland.hyprland.monitors = [
     "desc:Dell Inc. DELL P2417H KH0NG77E1VVB,1920x1080@60,0x0,1"
     "desc:Dell Inc. DELL P2417H KH0NG7873KDI,1920x1080@60,1920x0,1"
-    "eDP-1,3840x2160@120,0x1080,2"
+    "eDP-1,1920x1200@60,0x1080,1"
   ];
   my.wayland.hyprland.workspaces = [
     "1, monitor:desc:Dell Inc. DELL P2417H KH0NG77E1VVB, default:true"
@@ -19,8 +19,8 @@
     "9, monitor:eDP-1"
   ];
   my.wayland.hyprland.waybarPersistentWorkspaces = {
-    "DP-8" = [1 2 3];
-    "DP-7" = [4 5 6];
+    "DP-5" = [1 2 3];
+    "DP-4" = [4 5 6];
     "eDP-1" = [7 8 9];
   };
   my.wayland.kanshi = {
