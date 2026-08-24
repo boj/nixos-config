@@ -16,7 +16,7 @@
   # Hybrid Intel UHD 770 + NVIDIA RTX A4500 Laptop GPU.
   # PRIME offload keeps the desktop on Intel and lets specific apps run on
   # NVIDIA. The DaVinci Resolve wrapper that consumes this lives in
-  # home/features/programs/desktop.nix (gated on my.gpu == "nvidia").
+  # home/features/programs/desktop.nix (PRIME env vars added when my.gpu == "nvidia").
   hardware.nvidia.prime = {
     offload = {
       enable = true;

@@ -15,10 +15,10 @@
     gtk = {
       enable = true;
       gtk4.theme = null;
-      theme = {
-        package = pkgs.flat-remix-gtk;
-        name = "Flat-Remix-GKT-Grey-Darkest";
-      };
+      # theme = {
+      #   package = pkgs.flat-remix-gtk;
+      #   name = "Flat-Remix-GKT-Grey-Darkest";
+      # };
 
       iconTheme = {
         package = pkgs.adwaita-icon-theme;

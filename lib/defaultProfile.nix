@@ -1,6 +1,5 @@
 {
   my.ai.enable = true;
-  my.attic.client.enable = true;
   my.greet.enable = true;
   my.hyprland.enable = true;
   my.kernel.enable = true;

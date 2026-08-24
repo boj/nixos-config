@@ -34,10 +34,6 @@
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    attic = {
-      url = "github:zhaofengli/attic";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -70,8 +66,14 @@
     mkHost = import ./lib/mkHost.nix {inherit inputs system username userFullName userEmail sshKeys defaultWallpaper;};
   in {
     nixosConfigurations = {
-      "bruh" = mkHost {name = "bruh"; gpu = "amd";};
-      "worky" = mkHost {name = "worky"; gpu = "nvidia";};
+      "bruh" = mkHost {
+        name = "bruh";
+        gpu = "amd";
+      };
+      "worky" = mkHost {
+        name = "worky";
+        gpu = "nvidia";
+      };
       "wsl" = mkHost {
         name = "wsl";
         homeModule = ./home/wsl.nix;

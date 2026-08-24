@@ -3,7 +3,6 @@
     ./common.nix
     ./gpu.nix
     ./ai.nix
-    ./attic.nix
     ./enshrouded.nix
     ./greet.nix
     ./hyprland.nix

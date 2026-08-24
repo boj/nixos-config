@@ -73,11 +73,18 @@
   '';
 
   # Allow mosh UDP traffic
-  networking.firewall.allowedUDPPortRanges = [{from = 60000; to = 61000;}];
+  networking.firewall.allowedUDPPortRanges = [
+    {
+      from = 60000;
+      to = 61000;
+    }
+  ];
 
   environment.localBinInPath = true;
 
   programs.fish.enable = true;
+
+  services.envfs.enable = true;
 
   users.users.${username} = {
     isNormalUser = true;
