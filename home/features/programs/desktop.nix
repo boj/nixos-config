@@ -20,6 +20,13 @@ in {
       (chromium.override {
         enableWideVine = true;
         proprietaryCodecs = true;
+        # No Secret Service/keyring runs in this passwordless-autologin
+        # Hyprland session, so Chromium's portal key store fails to init
+        # (os_crypt.portal.prev_init_success=false) and re-derives an
+        # unstable key each launch, wiping cookies + the 1Password
+        # extension session. Pin the stable built-in "basic" key store so
+        # sessions persist across restarts.
+        commandLineArgs = "--password-store=basic";
       })
 
       # comms
