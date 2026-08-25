@@ -11,7 +11,7 @@
   # in hyprland so the session gets its own workspaces module. Defined at
   # top-level so other modules (kanshi, hyprland) can reference it by
   # absolute path, avoiding PATH-lookup failures when the compositor is
-  # started by greetd before the user profile is on PATH.
+  # started before the user profile is on PATH.
   waybar-session = pkgs.writeShellScriptBin "waybar-session" ''
     CFG_DIR="$HOME/.config/waybar"
     STYLE="$CFG_DIR/style.css"

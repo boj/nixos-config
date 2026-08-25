@@ -17,7 +17,15 @@
   ];
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
-  nix.settings.auto-optimise-store = true;
+
+  # NOTE: `auto-optimise-store` is intentionally left off. With it enabled the
+  # nix-daemon deduplicates/hardlinks every path as it is added to the store,
+  # under a global lock, during the realise+register phase of a rebuild —
+  # i.e. exactly while "generating the next state". On large generations this
+  # serialises store writes and makes `nixos-rebuild`/`nh` noticeably slower.
+  # Store optimisation is handled out-of-band by the weekly `nix.optimise`
+  # timer below instead, so builds stay fast and dedup still happens.
+
   nix.settings.substituters = [
     "https://cache.nixos.org"
     "https://hyprland.cachix.org"
@@ -43,9 +51,10 @@
     options = lib.mkDefault "--delete-older-than 7d";
   };
 
-  # `auto-optimise-store` only hardlinks paths as they are added. This
-  # timer sweeps the whole store periodically to catch anything that
-  # slipped through (older paths, paths imported via `nix copy`, etc.).
+  # Sole store optimiser: sweep the whole store periodically (out of the
+  # rebuild hot path) rather than hardlinking synchronously on every write.
+  # This deduplicates newly-added paths, older paths, and paths imported via
+  # `nix copy` without slowing down `nixos-rebuild`.
   nix.optimise = {
     automatic = lib.mkDefault true;
     dates = lib.mkDefault ["weekly"];
@@ -54,6 +63,7 @@
   environment.systemPackages = with pkgs; [
     cachix
     curl
+    dmidecode # `dmidecode -s bios-version` etc. — BIOS/DMI hardware diagnostics
     git
     mosh
     nh

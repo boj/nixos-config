@@ -81,6 +81,10 @@ in {
 
     wayland.windowManager.hyprland = {
       enable = true;
+      # Keep the hyprlang config generator. home-manager's default flipped to
+      # "lua" for stateVersion >= 26.05; our settings/binds/rules modules emit
+      # hyprlang, so pin it explicitly rather than inherit the version-gated default.
+      configType = "hyprlang";
     };
 
     home.sessionVariables = {

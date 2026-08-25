@@ -4,7 +4,8 @@
     ./gpu.nix
     ./ai.nix
     ./enshrouded.nix
-    ./greet.nix
+    ./autologin.nix
+    ./firmware.nix
     ./hyprland.nix
     ./kernel.nix
     ./nix-index.nix

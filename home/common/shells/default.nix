@@ -20,6 +20,7 @@
 
     # utils
     alsa-utils
+    bash
     duf
     fd
     fzf

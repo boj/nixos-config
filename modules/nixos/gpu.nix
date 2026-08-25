@@ -7,9 +7,9 @@
   cfg = config.my.gpu;
 in {
   options.my.gpu = lib.mkOption {
-    type = lib.types.enum ["amd" "nvidia" "none"];
+    type = lib.types.enum ["amd" "nvidia" "intel" "none"];
     default = "none";
-    description = "GPU vendor, used to select ROCm vs CUDA package variants.";
+    description = "GPU vendor, used to select ROCm vs CUDA vs Intel package variants.";
   };
 
   config = lib.mkMerge [
@@ -56,6 +56,20 @@ in {
     (lib.mkIf (cfg == "amd") {
       # ROCm OpenCL runtime — DaVinci Resolve requires this on AMD GPUs.
       hardware.graphics.extraPackages = [pkgs.rocmPackages.clr.icd];
+    })
+    (lib.mkIf (cfg == "intel") {
+      # Intel iGPU (i915/xe). VAAPI via intel-media-driver (iHD), oneVPL
+      # runtime, and the NEO OpenCL runtime for compute workloads.
+      hardware.graphics = {
+        enable = true;
+        enable32Bit = true;
+        extraPackages = with pkgs; [
+          intel-media-driver
+          vpl-gpu-rt
+          intel-compute-runtime
+        ];
+      };
+      environment.sessionVariables.LIBVA_DRIVER_NAME = "iHD";
     })
   ];
 }

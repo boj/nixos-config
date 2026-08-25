@@ -72,7 +72,7 @@
       };
       "worky" = mkHost {
         name = "worky";
-        gpu = "nvidia";
+        gpu = "intel";
       };
       "wsl" = mkHost {
         name = "wsl";

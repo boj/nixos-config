@@ -1,6 +1,7 @@
 {
   my.ai.enable = true;
-  my.greet.enable = true;
+  my.autologin.enable = true;
+  my.firmware.enable = true;
   my.hyprland.enable = true;
   my.kernel.enable = true;
   my.nixIndex.enable = true;

@@ -88,7 +88,11 @@ in {
     services.kanshi = {
       enable = true;
       systemdTarget = "hyprland-session.target";
-      profiles = cfg.profiles;
+      # home-manager renamed services.kanshi.profiles (attrset) to
+      # services.kanshi.settings (a list). Translate our attrset-shaped
+      # my.wayland.kanshi.profiles into the new list form so callers keep the
+      # simpler keyed API.
+      settings = lib.mapAttrsToList (name: p: {profile = {inherit name;} // p;}) cfg.profiles;
     };
   };
 }

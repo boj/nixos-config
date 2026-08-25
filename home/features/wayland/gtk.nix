@@ -6,6 +6,7 @@
 }: {
   config = lib.mkIf config.my.wayland.enable {
     home.pointerCursor = {
+      enable = true;
       gtk.enable = true;
       package = pkgs.bibata-cursors;
       name = "Bibata-Modern-Classic";
@@ -15,10 +16,10 @@
     gtk = {
       enable = true;
       gtk4.theme = null;
-      # theme = {
-      #   package = pkgs.flat-remix-gtk;
-      #   name = "Flat-Remix-GKT-Grey-Darkest";
-      # };
+      theme = {
+        # package = pkgs.flat-remix-gtk;
+        name = "Flat-Remix-GKT-Grey-Darkest";
+      };
 
       iconTheme = {
         package = pkgs.adwaita-icon-theme;
