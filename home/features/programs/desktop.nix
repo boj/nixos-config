@@ -5,8 +5,22 @@
   ...
 }: let
   cfg = config.my.programs.desktop;
+  # DaVinci Resolve Studio is licensed per-machine, so only hosts with a valid
+  # license get the Studio edition; everything else falls back to the free one.
+  davinciPkg =
+    if cfg.davinciEdition == "studio"
+    then pkgs.davinci-resolve-studio
+    else pkgs.davinci-resolve;
+  davinciBin = davinciPkg.meta.mainProgram;
 in {
-  options.my.programs.desktop.enable = lib.mkEnableOption "desktop programs";
+  options.my.programs.desktop = {
+    enable = lib.mkEnableOption "desktop programs";
+    davinciEdition = lib.mkOption {
+      type = lib.types.enum ["studio" "free"];
+      default = "free";
+      description = "Which DaVinci Resolve edition to install (Studio is licensed per-machine).";
+    };
+  };
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
@@ -40,7 +54,7 @@ in {
       # spotify
 
       # video
-      davinci-resolve-studio
+      davinciPkg
       obs-studio
 
       # misc
@@ -55,10 +69,10 @@ in {
     # davinci-resolve's FHS wrapper ("Unexpected capabilities but not setuid").
     # On hybrid NVIDIA laptops it additionally needs PRIME offload env vars so
     # its OpenGL context lands on the NVIDIA GPU alongside CUDA.
-    # `hiPrio` ensures this wrapper wins over the plain davinci-resolve-studio
+    # `hiPrio` ensures this wrapper wins over the plain davinciPkg binary
     # above in the user profile's bin directory.
     ++ [
-      (lib.hiPrio (pkgs.writeShellScriptBin "davinci-resolve-studio" ''
+      (lib.hiPrio (pkgs.writeShellScriptBin davinciBin ''
         ${lib.optionalString (config.my.gpu == "nvidia") ''
           export __NV_PRIME_RENDER_OFFLOAD=1
           export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
@@ -66,7 +80,7 @@ in {
           export __VK_LAYER_NV_optimus=NVIDIA_only
         ''}
         exec ${pkgs.util-linux}/bin/setpriv --ambient-caps=-all --inh-caps=-all \
-          ${pkgs.davinci-resolve-studio}/bin/davinci-resolve-studio "$@"
+          ${davinciPkg}/bin/${davinciBin} "$@"
       ''))
     ];
 

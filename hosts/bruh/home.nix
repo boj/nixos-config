@@ -1,5 +1,6 @@
 {
   my.programs.gaming.enable = true;
+  my.programs.desktop.davinciEdition = "studio";
   my.services.cloudflare-ddns = {
     enable = true;
     record = "enshrouded.brojo.io";
