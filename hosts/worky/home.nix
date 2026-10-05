@@ -70,4 +70,10 @@
     "hyprlock"
   ];
   my.wayland.hyprland.idleTimeout = 1200;
+
+  # Umbriel session (active). The laptop panel; external Dell monitors are
+  # arranged automatically. Adjust connector names via `umbriel outputs`.
+  my.wayland.umbriel.outputs = {
+    "eDP-1" = { mode = "1920x1200@60"; position = [0 1080]; scale = 1; };
+  };
 }

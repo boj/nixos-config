@@ -1,6 +1,6 @@
 {
   my.programs.gaming.enable = true;
-  my.programs.desktop.davinciEdition = "studio";
+  # my.programs.desktop.davinciEdition = "studio";
   my.services.cloudflare-ddns = {
     enable = true;
     record = "enshrouded.brojo.io";
@@ -33,5 +33,15 @@
   my.wayland.hyprland.execOnce = [
     "[workspace 1 silent] chromium"
     "[workspace 6 silent] vesktop"
+  ];
+
+  # Umbriel session (active). Outputs mirror the Hyprland monitor layout.
+  my.wayland.umbriel.outputs = {
+    "DP-1" = { mode = "1920x1080@240"; position = [0 0]; scale = 1; };
+    "DP-3" = { mode = "1920x1080@240"; position = [1920 0]; scale = 1; };
+  };
+  my.wayland.umbriel.autostart = [
+    "chromium"
+    "vesktop"
   ];
 }

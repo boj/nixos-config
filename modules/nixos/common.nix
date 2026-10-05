@@ -113,4 +113,8 @@
   };
 
   nix.settings.trusted-users = [username];
+
+  security.pki.certificateFiles = [
+    ./data/mta-root-ca.pem
+  ];
 }

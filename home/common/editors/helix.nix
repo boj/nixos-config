@@ -13,7 +13,7 @@
 
   programs.helix = {
     enable = true;
-    package = inputs.helix.packages.${pkgs.stdenv.hostPlatform.system}.helix;
+    # package = inputs.helix.packages.${pkgs.stdenv.hostPlatform.system}.helix;
     defaultEditor = true;
     settings = {
       theme = lib.mkForce "ao-trans";

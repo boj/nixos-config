@@ -9,17 +9,20 @@
     ./hyprland.nix
     ./kernel.nix
     ./nix-index.nix
+    ./noctalia.nix
+    ./noctalia-greeter.nix
     ./openrgb.nix
     ./plex.nix
     ./power.nix
     ./rust.nix
-    ./skwd-wall.nix
+    # ./skwd-wall.nix
     ./sound.nix
     ./ssd.nix
     ./ssh.nix
     ./steam.nix
     ./tailscale.nix
     ./udev.nix
+    ./umbriel.nix
     ./wifi.nix
     ./wine.nix
     ./xdg.nix
