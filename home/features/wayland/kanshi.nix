@@ -9,8 +9,8 @@
   waybar-set-workspaces = pkgs.writeShellScript "waybar-set-workspaces" ''
     export PATH="${lib.makeBinPath (with pkgs; [coreutils jq procps findutils])}"
     WORKSPACES="$1"
-    # Kanshi only runs under Hyprland (systemdTarget=hyprland-session.target),
-    # so always operate on the Hyprland config file.
+    # Hyprland-only helper (hosts gate it on my.wayland.hyprland.enable), so
+    # always operate on the Hyprland config file.
     CONFIG="$HOME/.config/waybar/config-hyprland.jsonc"
     [ ! -e "$CONFIG" ] && CONFIG="$HOME/.config/waybar/config.jsonc"
     [ ! -e "$CONFIG" ] && CONFIG="$HOME/.config/waybar/config"
@@ -87,7 +87,9 @@ in {
 
     services.kanshi = {
       enable = true;
-      systemdTarget = "hyprland-session.target";
+      # graphical-session.target is pulled in by both hyprland-session.target
+      # and umbriel-session.target, so kanshi runs under either compositor.
+      systemdTarget = "graphical-session.target";
       # home-manager renamed services.kanshi.profiles (attrset) to
       # services.kanshi.settings (a list). Translate our attrset-shaped
       # my.wayland.kanshi.profiles into the new list form so callers keep the

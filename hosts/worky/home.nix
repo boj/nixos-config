@@ -1,4 +1,12 @@
 {
+  config,
+  lib,
+  ...
+}: let
+  # The kanshi exec hooks drive hyprctl/waybar. Umbriel moves workspaces off a
+  # disconnected output (and back on reconnect) by itself, so skip them there.
+  hyprlandOnly = lib.optionals config.my.wayland.hyprland.enable;
+in {
   my.wayland.weather.latitude = 61.60;
   my.wayland.weather.longitude = -149.11;
   my.wayland.battery.enable = true;
@@ -40,11 +48,11 @@
           }
           {
             criteria = "eDP-1";
-            mode = "3840x2160@120";
+            mode = "1920x1200@60";
             position = "0,1080";
           }
         ];
-        exec = [
+        exec = hyprlandOnly [
           "move-workspaces 1:desc:Dell_Inc._DELL_P2417H_KH0NG77E1VVB 2:desc:Dell_Inc._DELL_P2417H_KH0NG77E1VVB 3:desc:Dell_Inc._DELL_P2417H_KH0NG77E1VVB 4:desc:Dell_Inc._DELL_P2417H_KH0NG7873KDI 5:desc:Dell_Inc._DELL_P2417H_KH0NG7873KDI 6:desc:Dell_Inc._DELL_P2417H_KH0NG7873KDI 7:eDP-1 8:eDP-1 9:eDP-1"
           ''waybar-set-workspaces '{"DP-8":[1,2,3],"DP-7":[4,5,6],"eDP-1":[7,8,9]}' ''
           "restart-waybar"
@@ -54,11 +62,11 @@
         outputs = [
           {
             criteria = "eDP-1";
-            mode = "3840x2160@60";
+            mode = "1920x1200@60";
             position = "0,0";
           }
         ];
-        exec = [
+        exec = hyprlandOnly [
           "move-workspaces 1:eDP-1 2:eDP-1 3:eDP-1 4:eDP-1 5:eDP-1 6:eDP-1 7:eDP-1 8:eDP-1 9:eDP-1"
           ''waybar-set-workspaces '{"*":[1,2,3,4,5,6,7,8,9]}' ''
           "restart-waybar"
@@ -71,9 +79,12 @@
   ];
   my.wayland.hyprland.idleTimeout = 1200;
 
-  # Umbriel session (active). The laptop panel; external Dell monitors are
-  # arranged automatically. Adjust connector names via `umbriel outputs`.
+  # Umbriel session (active). Mirrors the kanshi "docked" layout so outputs are
+  # right before kanshi applies; kanshi moves eDP-1 to 0,0 when undocked.
+  # Dells match by monitor identity (see `umbriel outputs`).
   my.wayland.umbriel.outputs = {
+    "Dell Inc. DELL P2417H KH0NG77E1VVB" = { mode = "1920x1080@60"; position = [0 0]; scale = 1; };
+    "Dell Inc. DELL P2417H KH0NG7873KDI" = { mode = "1920x1080@60"; position = [1920 0]; scale = 1; };
     "eDP-1" = { mode = "1920x1200@60"; position = [0 1080]; scale = 1; };
   };
 }
