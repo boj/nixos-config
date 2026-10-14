@@ -17,7 +17,24 @@ let cfg = config.my.wayland.noctalia; in {
       systemd.enable = false;
       settings = {
         shell.font = "JetBrainsMono Nerd Font";
-        bar.main.position = "left";
+        # Edge rail: full-height, flush to the left edge, with the inner
+        # corners carved concave so the bar flows into the window area. The
+        # screen-corner side stays square.
+        bar.main = {
+          position = "left";
+          thickness = 40;
+          margin_edge = 0;
+          margin_ends = 0;
+          radius = 18;
+          radius_top_left = 0;
+          radius_bottom_left = 0;
+          concave_edge_corners = true;
+          background_opacity = 0.92;
+          compositor_blur = true;
+          shadow = true;
+          padding = 12;
+          widget_spacing = 8;
+        };
         theme = {
           mode = "dark";
           source = "builtin";
