@@ -12,5 +12,6 @@
     ./terminals/wezterm.nix
     ./terminals/zellij.nix
     ./wayland
+    ./work
   ];
 }

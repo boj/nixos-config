@@ -7,6 +7,9 @@
   # disconnected output (and back on reconnect) by itself, so skip them there.
   hyprlandOnly = lib.optionals config.my.wayland.hyprland.enable;
 in {
+  # Nightly refresh of the MTA dashboard (served on the tailnet via `tailscale serve`).
+  my.work.mtaDashboard.enable = true;
+
   my.wayland.weather.latitude = 61.60;
   my.wayland.weather.longitude = -149.11;
   my.wayland.battery.enable = true;
