@@ -12,6 +12,7 @@
   networking.firewall.allowedUDPPorts = [5514];
 
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.memtest86.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelModules = ["i2c-dev" "i2c-piix4"];
   networking.hostName = "bruh";

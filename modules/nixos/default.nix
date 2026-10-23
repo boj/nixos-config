@@ -14,6 +14,7 @@
     ./openrgb.nix
     ./plex.nix
     ./power.nix
+    ./printer.nix
     ./rust.nix
     # ./skwd-wall.nix
     ./sound.nix

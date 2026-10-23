@@ -1,5 +1,12 @@
-{ config, lib, inputs, username, ... }:
-let cfg = config.my.noctalia-greeter; in {
+{
+  config,
+  lib,
+  inputs,
+  username,
+  ...
+}: let
+  cfg = config.my.noctalia-greeter;
+in {
   # greetd greeter styled to match Noctalia. Replaces the TTY autologin as the
   # login path. The flake module pulls in greetd and wires default_session to
   # noctalia-greeter-session; we only pick the default session/user and a theme.
@@ -17,8 +24,10 @@ let cfg = config.my.noctalia-greeter; in {
         user.default = username;
         appearance = {
           scheme = "Catppuccin";
+          hide_logo = true;
           theme_mode = "dark";
         };
+        clock.enabled = true;
       };
     };
   };

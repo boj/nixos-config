@@ -12,6 +12,7 @@
   my.firmware.enable = true;
   my.kernel.enable = true;
   my.nixIndex.enable = true;
+  my.services.printer.enable = true;
   my.sound.enable = true;
   my.ssd.enable = true;
   my.ssh.enable = true;
