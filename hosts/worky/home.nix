@@ -12,6 +12,7 @@ in {
 
   my.wayland.weather.latitude = 61.60;
   my.wayland.weather.longitude = -149.11;
+  my.wayland.noctalia.location.address = "Palmer, AK";
   my.wayland.battery.enable = true;
   my.wayland.hyprland.monitors = [
     "desc:Dell Inc. DELL P2417H KH0NG77E1VVB,1920x1080@60,0x0,1"
