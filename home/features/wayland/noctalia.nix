@@ -76,6 +76,74 @@ let cfg = config.my.wayland.noctalia; in {
           source = "builtin";
           builtin = "Catppuccin";
         };
+        # Lock screen context. The login box (bottom bar) auto-seeds per output
+        # with now-playing media, weather + forecast, and the password field.
+        # On top of that we float a clock, volume, system-monitor, and audio
+        # visualizer. Positions are authored against a 1920x1080 reference via
+        # placement_width/placement_height; Noctalia rescales them to each
+        # host's actual output resolution.
+        lockscreen_widgets = {
+          enabled = true;
+          widget_order = [
+            "clock_main"
+            "volume_main"
+            "sysmon_main"
+            "visualizer_main"
+          ];
+          widget = {
+            clock_main = {
+              type = "clock";
+              cx = 960.0;
+              cy = 190.0;
+              placement_width = 1920.0;
+              placement_height = 1080.0;
+              settings = {
+                format = "{:%H:%M}";
+                show_seconds = false;
+                background = true;
+                background_opacity = 0.92;
+              };
+            };
+            volume_main = {
+              type = "volume";
+              cx = 835.0;
+              cy = 360.0;
+              placement_width = 1920.0;
+              placement_height = 1080.0;
+              settings = {
+                background = true;
+                background_opacity = 0.92;
+              };
+            };
+            sysmon_main = {
+              type = "sysmon";
+              cx = 1085.0;
+              cy = 360.0;
+              placement_width = 1920.0;
+              placement_height = 1080.0;
+              settings = {
+                stat = "cpu_usage";
+                stat2 = "cpu_temp";
+                display = "graph";
+                background = true;
+                background_opacity = 0.92;
+              };
+            };
+            visualizer_main = {
+              type = "audio_visualizer";
+              cx = 960.0;
+              cy = 620.0;
+              placement_width = 1920.0;
+              placement_height = 1080.0;
+              settings = {
+                bands = 48;
+                mirrored = true;
+                centered = true;
+                background = false;
+              };
+            };
+          };
+        };
       };
     };
   };
