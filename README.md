@@ -1,3 +1,3 @@
-# NixOS Flakes Hyprland
+# NixOS Flakes Umriel
 
-![screenshot of hyprland setup](/hyprland.png)
+![screenshot of umbriel setup](/umbriel.png)
