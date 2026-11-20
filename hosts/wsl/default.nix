@@ -1,5 +1,5 @@
 {username, ...}: {
-  my.ai.enable = true;
+  # my.ai.enable = true;
   my.tailscale.enable = true;
   my.virtualization.docker.enable = true;
 

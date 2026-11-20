@@ -8,7 +8,7 @@
   cfg = config.my.wayland.umbriel;
 
   # IPC helper for Noctalia shell actions bound to keys.
-  noc = cmd: "spawn:noctalia msg ${cmd}";
+  noc = cmd: "spawn noctalia msg ${cmd}";
 
   # Absolute binary paths for media-key spawns (session PATH is not guaranteed).
   wpctl = "${pkgs.wireplumber}/bin/wpctl";
@@ -34,14 +34,14 @@
 
   # Workspace switch / move-to-workspace binds for workspaces 1-9.
   wsBinds = lib.listToAttrs (lib.concatMap (n: [
-    (lib.nameValuePair "Mod+${toString n}" "workspace-switch:${toString n}")
-    (lib.nameValuePair "Mod+Shift+${toString n}" "window-move-to-workspace:${toString n}")
+    (lib.nameValuePair "Mod+${toString n}" "workspace-switch ${toString n}")
+    (lib.nameValuePair "Mod+Shift+${toString n}" "window-move-to-workspace ${toString n}")
   ]) (lib.range 1 9));
 
   baseKeybinds = {
     # Applications and session
     "Mod+Return" = {
-      action = "spawn:ghostty";
+      action = "spawn ghostty";
       repeat = false;
     };
     "Mod+D" = {
@@ -76,16 +76,12 @@
     };
 
     # Screenshots (Noctalia capture + editor)
-    "Mod+Shift+D" = {
+    "Mod+Shift+S" = {
       action = noc "screenshot-region";
       repeat = false;
     };
-    "Mod+Shift+F" = {
+    "Print" = {
       action = noc "screenshot-fullscreen";
-      repeat = false;
-    };
-    "Mod+Shift+G" = {
-      action = noc "screenshot-annotate";
       repeat = false;
     };
 
@@ -143,46 +139,46 @@
 
     # Audio (direct wpctl/playerctl, matching the older Hyprland media key binds)
     "XF86AudioRaiseVolume" = {
-      action = "spawn:${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 5%+";
+      action = "spawn ${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 5%+";
       allow_when_locked = true;
     };
     "XF86AudioLowerVolume" = {
-      action = "spawn:${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 5%-";
+      action = "spawn ${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 5%-";
       allow_when_locked = true;
     };
     "XF86AudioMute" = {
-      action = "spawn:${toggle-mute}";
+      action = "spawn ${toggle-mute}";
       allow_when_locked = true;
       repeat = false;
     };
     "XF86AudioMicMute" = {
-      action = "spawn:${wpctl} set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
+      action = "spawn ${wpctl} set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
       allow_when_locked = true;
       repeat = false;
     };
     "XF86AudioPlay" = {
-      action = "spawn:${playerctl} play-pause";
+      action = "spawn ${playerctl} play-pause";
       allow_when_locked = true;
       repeat = false;
     };
     "XF86AudioPrev" = {
-      action = "spawn:${playerctl} previous";
+      action = "spawn ${playerctl} previous";
       allow_when_locked = true;
       repeat = false;
     };
     "XF86AudioNext" = {
-      action = "spawn:${playerctl} next";
+      action = "spawn ${playerctl} next";
       allow_when_locked = true;
       repeat = false;
     };
 
     # Brightness (direct brightnessctl, matching the older Hyprland media key binds)
     "XF86MonBrightnessUp" = {
-      action = "spawn:${brightnessctl} set 5%+";
+      action = "spawn ${brightnessctl} set 5%+";
       allow_when_locked = true;
     };
     "XF86MonBrightnessDown" = {
-      action = "spawn:${brightnessctl} set 5%-";
+      action = "spawn ${brightnessctl} set 5%-";
       allow_when_locked = true;
     };
   };

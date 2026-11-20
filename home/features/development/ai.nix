@@ -19,7 +19,8 @@ in {
       #   then llama-cpp-rocm
       #   else llama-cpp
       # )
-      ollama
+      llama-cpp-rocm
+      # ollama
       # opencode
     ];
   };

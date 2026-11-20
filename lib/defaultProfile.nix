@@ -1,5 +1,5 @@
 {
-  my.ai.enable = true;
+  # my.ai.enable = true;
   # Session: Noctalia shell + Umbriel compositor + Noctalia greeter.
   # To roll back to the old Hyprland TTY-autologin session, flip these:
   #   my.autologin.enable = true; my.hyprland.enable = true;

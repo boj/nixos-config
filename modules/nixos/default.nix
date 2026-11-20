@@ -2,7 +2,7 @@
   imports = [
     ./common.nix
     ./gpu.nix
-    ./ai.nix
+    # ./ai.nix
     ./enshrouded.nix
     ./autologin.nix
     ./firmware.nix
